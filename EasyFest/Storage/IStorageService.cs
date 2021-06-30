@@ -13,6 +13,10 @@ namespace Storage
 
         Festival GetFestival(string objectId);
 
+        void InsertFestival(Festival model);
+
+        void DeleteFestival(string objectId);
+
         #endregion
     }
 }
