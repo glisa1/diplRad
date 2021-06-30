@@ -1,15 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using GraphQLDataAccess.Schema;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using HotChocolate;
+using Microsoft.Extensions.Options;
+using EasyFest.Models;
+using Storage;
+using Storage.Models;
 
 namespace EasyFest
 {
@@ -26,6 +25,15 @@ namespace EasyFest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.Configure<FestDatabaseSettings>(
+                Configuration.GetSection(nameof(FestDatabaseSettings)));
+
+            services.AddSingleton<IFestDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<FestDatabaseSettings>>().Value);
+
+            services.AddSingleton<IStorageService, StorageService>();
+
             services
                 .AddGraphQLServer()
                 .AddQueryType<Query>();
