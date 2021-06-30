@@ -26,6 +26,10 @@ namespace Storage
 
         Task<FestivalLocation> GetFestivalLocationAsync(string festivalId);
 
+        List<FestivalLocation> GetAllFestivalLocations();
+
+        Task<List<FestivalLocation>> GetAllFestivalLocationsAsync();
+
         void InsertFestivalLocation(FestivalLocation model);
 
         Task InsertFestivalLocationAsync(FestivalLocation model);
@@ -33,6 +37,14 @@ namespace Storage
         void DeleteFestivalLocation(string objectId);
 
         Task DeleteFestivalLocationAsync(string objectId);
+
+        #endregion
+
+        #region Comments
+
+        List<Comments> GetAllCommentsForFestival(string festivalId);
+
+        Task<List<Comments>> GetAllCommentsForFestivalAsync(string festivalId);
 
         #endregion
     }

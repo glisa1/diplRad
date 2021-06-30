@@ -11,6 +11,7 @@ namespace Storage
 
         private readonly IMongoCollection<Festival> _festivals;
         private readonly IMongoCollection<FestivalLocation> _festivalLocations;
+        private readonly IMongoCollection<Comments> _commentsLocations;
 
         public StorageService(IFestDatabaseSettings settings)
         {
@@ -18,7 +19,8 @@ namespace Storage
             var database = client.GetDatabase(settings.DatabaseName);
 
             _festivals = database.GetCollection<Festival>(settings.FestivalCollectionName);
-            _festivalLocations = database.GetCollection<FestivalLocation>(settings.FestivalLocationCollectionname);
+            _festivalLocations = database.GetCollection<FestivalLocation>(settings.FestivalLocationCollectionName);
+            _commentsLocations = database.GetCollection<Comments>(settings.CommentsCollectionName);
         }
 
         #endregion
@@ -41,6 +43,10 @@ namespace Storage
 
         public async Task<FestivalLocation> GetFestivalLocationAsync(string festivalId) => await _festivalLocations.Find(x => x.FestivalId == festivalId).FirstOrDefaultAsync();
 
+        public List<FestivalLocation> GetAllFestivalLocations() => _festivalLocations.Find(_ => true).ToList();
+
+        public async Task<List<FestivalLocation>> GetAllFestivalLocationsAsync() => await _festivalLocations.Find(_ => true).ToListAsync();
+
         //Za insert treba da se proveri da li vec postoji lokacija, da se ne dupliraju
         public void InsertFestivalLocation(FestivalLocation model) => _festivalLocations.InsertOne(model);
 
@@ -50,6 +56,15 @@ namespace Storage
         public void DeleteFestivalLocation(string objectId) => _festivalLocations.DeleteOne(x => x.Id == objectId);
 
         public async Task DeleteFestivalLocationAsync(string objectId) => await _festivalLocations.DeleteOneAsync(x => x.Id == objectId);
+
+        #endregion
+
+        #region Comments
+
+        public List<Comments> GetAllCommentsForFestival(string festivalId) => _commentsLocations.Find(x => x.FestivalId == festivalId).ToList();
+
+        public async Task<List<Comments>> GetAllCommentsForFestivalAsync(string festivalId) 
+            => await _commentsLocations.Find(x => x.FestivalId == festivalId).ToListAsync();
 
         #endregion
     }

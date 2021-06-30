@@ -8,7 +8,8 @@ namespace Storage.Models
     public class FestDatabaseSettings : IFestDatabaseSettings
     {
         public string FestivalCollectionName { get; set; }
-        public string FestivalLocationCollectionname { get; set; }
+        public string FestivalLocationCollectionName { get; set; }
+        public string CommentsCollectionName { get; set; }
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
     }
@@ -16,7 +17,8 @@ namespace Storage.Models
     public interface IFestDatabaseSettings
     {
         string FestivalCollectionName { get; set; }
-        string FestivalLocationCollectionname { get; set; }
+        string FestivalLocationCollectionName { get; set; }
+        string CommentsCollectionName { get; set; }
         string ConnectionString { get; set; }
         string DatabaseName { get; set; }
     }

@@ -21,6 +21,7 @@ namespace EasyFest.Controllers
         public IActionResult Index()
         {
             var festivals = _storage.GetAllFestivals();
+            var locations = _storage.GetAllFestivalLocations();
             return View();
         }
 
