@@ -8,6 +8,10 @@ namespace Storage.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
+
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string FestivalId { get; set; }
 
         public double Latitude { get; set; }
