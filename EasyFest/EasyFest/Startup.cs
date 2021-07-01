@@ -9,6 +9,12 @@ using Microsoft.Extensions.Options;
 using EasyFest.Models;
 using Storage;
 using Storage.Models;
+using Storage.Services.MongoDbConnectService;
+using Storage.Services.FestivalService;
+using Storage.Services.FestivalLocationsService;
+using Storage.Services.CommentsService;
+using Storage.Services.AuthenticationService;
+using Storage.Services.UserService;
 
 namespace EasyFest
 {
@@ -32,7 +38,31 @@ namespace EasyFest
             services.AddSingleton<IFestDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<FestDatabaseSettings>>().Value);
 
-            services.AddSingleton<IStorageService, StorageService>();
+            services.AddSingleton<IMongoDbConnectService, MongoDbConnectService>();
+
+            services.AddSingleton<IFestivalService, FestivalService>();
+            services.AddSingleton<IFestivalLocationsService, FestivalLocationsService>();
+            services.AddSingleton<ICommentsService, CommentsService>();
+            services.AddSingleton<IUserService, UserService>();
+
+            services.AddSingleton<IAuthenticationService, AuthenticationService>();
+
+            //services.AddSingleton<IStorageService, StorageService>();
+
+            //set default authentication schemes
+            var authenticationBuilder = services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = FestAuthenticationDefaults.AuthenticationScheme;
+            });
+
+            //add main cookie authentication
+            authenticationBuilder.AddCookie(FestAuthenticationDefaults.AuthenticationScheme, options =>
+            {
+                options.Cookie.Name = $"{FestAuthenticationDefaults.Prefix}{FestAuthenticationDefaults.AuthenticationCookie}";
+                options.Cookie.HttpOnly = true;
+                options.LoginPath = FestAuthenticationDefaults.LoginPath;
+                options.AccessDeniedPath = FestAuthenticationDefaults.AccessDeniedPath;
+            });
 
             services
                 .AddGraphQLServer()

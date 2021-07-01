@@ -11,7 +11,7 @@ namespace Storage
 
         private readonly IMongoCollection<Festival> _festivals;
         private readonly IMongoCollection<FestivalLocation> _festivalLocations;
-        private readonly IMongoCollection<Comments> _commentsLocations;
+        private readonly IMongoCollection<Comment> _commentsLocations;
 
         public StorageService(IFestDatabaseSettings settings)
         {
@@ -20,7 +20,7 @@ namespace Storage
 
             _festivals = database.GetCollection<Festival>(settings.FestivalCollectionName);
             _festivalLocations = database.GetCollection<FestivalLocation>(settings.FestivalLocationCollectionName);
-            _commentsLocations = database.GetCollection<Comments>(settings.CommentsCollectionName);
+            _commentsLocations = database.GetCollection<Comment>(settings.CommentsCollectionName);
         }
 
         #endregion
@@ -61,10 +61,18 @@ namespace Storage
 
         #region Comments
 
-        public List<Comments> GetAllCommentsForFestival(string festivalId) => _commentsLocations.Find(x => x.FestivalId == festivalId).ToList();
+        public List<Comment> GetAllCommentsForFestival(string festivalId) => _commentsLocations.Find(x => x.FestivalId == festivalId).ToList();
 
-        public async Task<List<Comments>> GetAllCommentsForFestivalAsync(string festivalId) 
+        public async Task<List<Comment>> GetAllCommentsForFestivalAsync(string festivalId) 
             => await _commentsLocations.Find(x => x.FestivalId == festivalId).ToListAsync();
+
+        public void InsertComment(Comment model) => _commentsLocations.InsertOne(model);
+
+        public async Task InsertCommentAsync(Comment model) => await _commentsLocations.InsertOneAsync(model);
+
+        public void DeleteComment(string commentId) => _commentsLocations.DeleteOne(x => x.Id == commentId);
+
+        public async Task DeleteCommentAsync(string commentId) => await _commentsLocations.DeleteOneAsync(x => x.Id == commentId);
 
         #endregion
     }

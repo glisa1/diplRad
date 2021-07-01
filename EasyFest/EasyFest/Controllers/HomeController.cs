@@ -3,25 +3,42 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using EasyFest.Models;
 using Storage;
+using Storage.Services.CommentsService;
+using Storage.Services.FestivalService;
+using Storage.Services.FestivalLocationsService;
+using Storage.Services.UserService;
 
 namespace EasyFest.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IStorageService _storage;
+        //private readonly IStorageService _storage;
+        private readonly IFestivalService _festivalService;
+        private readonly IFestivalLocationsService _festivalLocationsService;
+        private readonly ICommentsService _commentsService;
+        private readonly IUserService _userService;
+
 
         public HomeController(ILogger<HomeController> logger,
-                                IStorageService storage)
+                                IFestivalService festivalService,
+                                IFestivalLocationsService festivallocationsService,
+                                ICommentsService commentsService,
+                                IUserService userService)
         {
             _logger = logger;
-            _storage = storage;
+            _festivalService = festivalService;
+            _festivalLocationsService = festivallocationsService;
+            _commentsService = commentsService;
+            _userService = userService;
+            //_storage = storage;
         }
 
         public IActionResult Index()
         {
-            var festivals = _storage.GetAllFestivals();
-            var locations = _storage.GetAllFestivalLocations();
+            var festivals = _festivalService.GetAllFestivals();
+            var locations = _festivalLocationsService.GetAllFestivalLocations();
+            
             return View();
         }
 

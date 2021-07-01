@@ -42,9 +42,17 @@ namespace Storage
 
         #region Comments
 
-        List<Comments> GetAllCommentsForFestival(string festivalId);
+        List<Comment> GetAllCommentsForFestival(string festivalId);
 
-        Task<List<Comments>> GetAllCommentsForFestivalAsync(string festivalId);
+        Task<List<Comment>> GetAllCommentsForFestivalAsync(string festivalId);
+
+        void InsertComment(Comment model);
+
+        Task InsertCommentAsync(Comment model);
+
+        void DeleteComment(string commentId);
+
+        Task DeleteCommentAsync(string commentId);
 
         #endregion
     }

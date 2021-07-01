@@ -3,15 +3,15 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Storage.Models
 {
-    public class Comments
+    public class Comment
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string UserName { get; set; }
 
-        public string Comment { get; set; }
+        public string CommentBody { get; set; }
 
         public int Rate { get; set; }
 
