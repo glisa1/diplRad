@@ -7,9 +7,11 @@ using Storage.Services.CommentsService;
 using Storage.Services.FestivalService;
 using Storage.Services.FestivalLocationsService;
 using Storage.Services.UserService;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EasyFest.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
