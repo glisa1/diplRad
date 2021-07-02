@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using HotChocolate;
+using MongoDB.Driver;
 using Storage.Models;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace Storage.Services.FestivalService
     public interface IFestivalService
     {
 
-        IMongoCollection<Festival> Festivals { get; }
+        //IMongoCollection<Festival> Festivals { get; }
 
         List<Festival> GetAllFestivals();
 
@@ -18,5 +19,7 @@ namespace Storage.Services.FestivalService
         void InsertFestival(Festival model);
 
         void DeleteFestival(string objectId);
+
+        IExecutable<Festival> GetFestivals();
     }
 }

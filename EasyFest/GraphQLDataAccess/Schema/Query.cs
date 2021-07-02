@@ -27,6 +27,11 @@ namespace GraphQLDataAccess.Schema
             return new Festival { Id = fest.Id, Name = fest.Name };
         }
 
+        public IExecutable<Storage.Models.Festival> GetFestivals()
+        {
+            return _festivalService.GetFestivals();
+        }
+
         //public IMongoCollection<Storage.Models.Festival> GetFestivals([Service] FestivalService festivalService)
         //{
         //    return festivalService.Festivals;
