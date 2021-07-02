@@ -1,4 +1,5 @@
-﻿using Storage.Models;
+﻿using HotChocolate;
+using Storage.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,8 @@ namespace Storage.Services.FestivalLocationsService
 {
     public interface IFestivalLocationsService
     {
+        IExecutable<FestivalLocation> GetFestivalLocations();
+
         FestivalLocation GetFestivalLocation(string festivalId);
 
         Task<FestivalLocation> GetFestivalLocationAsync(string festivalId);

@@ -15,6 +15,10 @@ using Storage.Services.FestivalLocationsService;
 using Storage.Services.CommentsService;
 using Storage.Services.AuthenticationService;
 using Storage.Services.UserService;
+using GraphQLDataAccess.Schema.Festival;
+using GraphQLDataAccess.Schema.FestivalLocation;
+using GraphQLDataAccess.Schema.Models.Comment;
+using GraphQLDataAccess.Schema.Models.User;
 
 namespace EasyFest
 {
@@ -67,7 +71,7 @@ namespace EasyFest
 
             services
                 .AddGraphQLServer()
-                .AddQueryType<Query>();
+                .AddQueryType<UserQLQuery>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

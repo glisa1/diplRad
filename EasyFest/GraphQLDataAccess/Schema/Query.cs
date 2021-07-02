@@ -1,5 +1,4 @@
-﻿using GraphQLDataAccess.Schema.Models;
-using HotChocolate;
+﻿using HotChocolate;
 using MongoDB.Driver;
 using Storage.Services.FestivalService;
 using System.Linq;
@@ -21,11 +20,11 @@ namespace GraphQLDataAccess.Schema
         //        Name = "TestName"
         //    };
 
-        public Festival GetFestival()
-        {
-            var fest = _festivalService.GetFestival("60db8b0061efa5f8cab3762b");
-            return new Festival { Id = fest.Id, Name = fest.Name };
-        }
+        //public Festival GetFestival()
+        //{
+        //    var fest = _festivalService.GetFestival("60db8b0061efa5f8cab3762b");
+        //    return new Festival { Id = fest.Id, Name = fest.Name };
+        //}
 
         public IExecutable<Storage.Models.Festival> GetFestivals()
         {

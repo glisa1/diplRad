@@ -1,4 +1,5 @@
-﻿using Storage.Models;
+﻿using HotChocolate;
+using Storage.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,8 @@ namespace Storage.Services.UserService
 {
     public interface IUserService
     {
+
+        IExecutable<User> GetUsers();
         User GetUserWithId(string userId);
 
         Task<User> GetUserWithIdAsync(string userId);

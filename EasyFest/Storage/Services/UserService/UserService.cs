@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using HotChocolate;
+using HotChocolate.Data;
+using MongoDB.Driver;
 using Storage.Models;
 using Storage.Services.MongoDbConnectService;
 using System;
@@ -22,6 +24,8 @@ namespace Storage.Services.UserService
         #endregion
 
         #region Methods
+
+        public IExecutable<User> GetUsers() => _users.AsExecutable();
 
         public User GetUserWithId(string userId) => _users.Find(x => x.Id == userId).FirstOrDefault();
 

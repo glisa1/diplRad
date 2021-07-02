@@ -13,15 +13,15 @@ namespace Storage.Services.FestivalService
     {
         #region Init
 
-        private readonly IMongoDbConnectService _dbConnection;
+        //private readonly IMongoDbConnectService _dbConnection;
         private readonly IMongoCollection<Festival> _festivals;
 
         //public IMongoCollection<Festival> Festivals { get { return _festivals; } }
 
         public FestivalService(IMongoDbConnectService db, IFestDatabaseSettings settings)
         {
-            _dbConnection = db;
-            _festivals = _dbConnection.database.GetCollection<Festival>(settings.FestivalCollectionName);
+            //_dbConnection = db;
+            _festivals = db.database.GetCollection<Festival>(settings.FestivalCollectionName);
         }
 
         #endregion

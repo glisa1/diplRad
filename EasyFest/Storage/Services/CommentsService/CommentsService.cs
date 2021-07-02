@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using HotChocolate;
+using HotChocolate.Data;
+using MongoDB.Driver;
 using Storage.Models;
 using Storage.Services.MongoDbConnectService;
 using System;
@@ -24,6 +26,8 @@ namespace Storage.Services.CommentsService
         #endregion
 
         #region Methods
+
+        public IExecutable<Comment> GetComments() => _commentsLocations.AsExecutable();
 
         public List<Comment> GetAllCommentsForFestival(string festivalId) => _commentsLocations.Find(x => x.FestivalId == festivalId).ToList();
 

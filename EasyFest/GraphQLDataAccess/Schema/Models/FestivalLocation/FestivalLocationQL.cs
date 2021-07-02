@@ -1,13 +1,11 @@
 ﻿using System;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Storage.Models
+namespace GraphQLDataAccess.Schema.FestivalLocation
 {
-    public class FestivalLocation
+    public class FestivalLocationQL
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
         public string FestivalId { get; set; }

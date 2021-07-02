@@ -1,4 +1,5 @@
-﻿using Storage.Models;
+﻿using HotChocolate;
+using Storage.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,8 @@ namespace Storage.Services.CommentsService
 {
     public interface ICommentsService
     {
+        IExecutable<Comment> GetComments();
+
         List<Comment> GetAllCommentsForFestival(string festivalId);
 
         Task<List<Comment>> GetAllCommentsForFestivalAsync(string festivalId);

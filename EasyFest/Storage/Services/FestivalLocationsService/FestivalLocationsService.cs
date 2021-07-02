@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using HotChocolate;
+using HotChocolate.Data;
+using MongoDB.Driver;
 using Storage.Models;
 using Storage.Services.MongoDbConnectService;
 using System;
@@ -24,6 +26,8 @@ namespace Storage.Services.FestivalLocationsService
         #endregion
 
         #region Methods
+
+        public IExecutable<FestivalLocation> GetFestivalLocations() => _festivalLocations.AsExecutable();
 
         public FestivalLocation GetFestivalLocation(string festivalId) => _festivalLocations.Find(x => x.FestivalId == festivalId).FirstOrDefault();
 
