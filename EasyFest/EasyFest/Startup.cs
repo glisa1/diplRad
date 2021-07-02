@@ -45,6 +45,7 @@ namespace EasyFest
             services.AddSingleton<ICommentsService, CommentsService>();
             services.AddSingleton<IUserService, UserService>();
 
+            services.AddHttpContextAccessor();
             services.AddSingleton<IAuthenticationService, AuthenticationService>();
 
             //services.AddSingleton<IStorageService, StorageService>();

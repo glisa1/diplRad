@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Login</h1>
+
+@Html.BeginForm("Login", "User", FormMethod.Post)
+{
+    @Html.Hidden("testId", 20);
+    <button type="submit">Log in</button>
+}
