@@ -96,9 +96,10 @@ namespace EasyFest
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app
+            app 
             .UseEndpoints(endpoints =>
             {
+                // /graphql endpoint
                 endpoints.MapGraphQL();
             });
         }

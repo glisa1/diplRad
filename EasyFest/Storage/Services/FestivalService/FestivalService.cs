@@ -14,6 +14,8 @@ namespace Storage.Services.FestivalService
         private readonly IMongoDbConnectService _dbConnection;
         private readonly IMongoCollection<Festival> _festivals;
 
+        public IMongoCollection<Festival> Festivals { get { return _festivals; } }
+
         public FestivalService(IMongoDbConnectService db, IFestDatabaseSettings settings)
         {
             _dbConnection = db;
