@@ -1,24 +1,40 @@
 ﻿using GraphQLDataAccess.Schema.Models;
 using HotChocolate;
+using MongoDB.Driver;
 using Storage.Services.FestivalService;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace GraphQLDataAccess.Schema
 {
     public class Query
     {
-        public Festival GetFestival() =>
-            new Festival
-            {
-                Name = "TestName"
-            };
+        private readonly IFestivalService _festivalService;
 
-        public Storage.Models.Festival GetFestival([Service] IFestivalService festivalService, string festivalId)
+        public Query(IFestivalService festivalService)
         {
-            return festivalService.GetFestival(festivalId);
+            _festivalService = festivalService;
         }
+
+        //public Festival GetFestival() =>
+        //    new Festival
+        //    {
+        //        Name = "TestName"
+        //    };
+
+        public Festival GetFestival()
+        {
+            var fest = _festivalService.GetFestival("60db8b0061efa5f8cab3762b");
+            return new Festival { Id = fest.Id, Name = fest.Name };
+        }
+
+        //public IMongoCollection<Storage.Models.Festival> GetFestivals([Service] FestivalService festivalService)
+        //{
+        //    return festivalService.Festivals;
+        //}
+
+        //public IQueryable<Storage.Models.Festival> GetFestivals([Service] IFestivalService festivalService)
+        //{
+        //    return festivalService.Festivals.AsQueryable();
+        //}
     }
 }

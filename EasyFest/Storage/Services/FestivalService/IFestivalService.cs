@@ -9,7 +9,7 @@ namespace Storage.Services.FestivalService
     public interface IFestivalService
     {
 
-        public IMongoCollection<Festival> Festivals { get; }
+        IMongoCollection<Festival> Festivals { get; }
 
         List<Festival> GetAllFestivals();
 
