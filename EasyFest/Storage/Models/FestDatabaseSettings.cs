@@ -11,6 +11,7 @@ namespace Storage.Models
         public string FestivalLocationCollectionName { get; set; }
         public string CommentsCollectionName { get; set; }
         public string UserCollectionName { get; set; }
+        public string RateCollectionName { get; set; }
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
     }
@@ -21,6 +22,7 @@ namespace Storage.Models
         string FestivalLocationCollectionName { get; set; }
         string CommentsCollectionName { get; set; }
         string UserCollectionName { get; set; }
+        string RateCollectionName { get; set; }
         string ConnectionString { get; set; }
         string DatabaseName { get; set; }
     }

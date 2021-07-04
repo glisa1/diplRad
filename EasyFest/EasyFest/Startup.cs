@@ -15,10 +15,9 @@ using Storage.Services.FestivalLocationsService;
 using Storage.Services.CommentsService;
 using Storage.Services.AuthenticationService;
 using Storage.Services.UserService;
-using GraphQLDataAccess.Schema.Festival;
-using GraphQLDataAccess.Schema.FestivalLocation;
-using GraphQLDataAccess.Schema.Models.Comment;
-using GraphQLDataAccess.Schema.Models.User;
+using Storage.Services.RateService;
+using GraphQL.Server.Ui.Voyager;
+using GraphQLDataAccess.Schema.Types;
 
 namespace EasyFest
 {
@@ -48,6 +47,7 @@ namespace EasyFest
             services.AddSingleton<IFestivalLocationsService, FestivalLocationsService>();
             services.AddSingleton<ICommentsService, CommentsService>();
             services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IRateService, RateService>();
 
             services.AddHttpContextAccessor();
             services.AddSingleton<IAuthenticationService, AuthenticationService>();
@@ -71,7 +71,16 @@ namespace EasyFest
 
             services
                 .AddGraphQLServer()
-                .AddQueryType<UserQLQuery>();
+                //.AddQueryType<RateQLQuery>()
+                //.AddQueryType<UserQLQuery>()
+                //.AddQueryType<FestivalLocationQLQuery>()
+                //.AddQueryType<FestivalQLQuery>()
+                .AddQueryType<Query>()
+                .AddType<FestivalType>()
+                //.AddMongoDbFiltering()
+                //.AddMongoDbSorting()
+                .AddMongoDbProjections();
+                //.AddQueryType<CommentQLQuery>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -107,6 +116,12 @@ namespace EasyFest
                 // /graphql endpoint
                 endpoints.MapGraphQL();
             });
+
+            app.UseGraphQLVoyager(new VoyagerOptions()
+            {
+                GraphQLEndPoint = "/graphql"
+            }, "/graphql-voyager");
+
         }
     }
 }

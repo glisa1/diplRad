@@ -29,10 +29,10 @@ namespace Storage.Services.CommentsService
 
         public IExecutable<Comment> GetComments() => _commentsLocations.AsExecutable();
 
-        public List<Comment> GetAllCommentsForFestival(string festivalId) => _commentsLocations.Find(x => x.FestivalId == festivalId).ToList();
+        public List<Comment> GetAllCommentsForFestival(string festivalId) => _commentsLocations.Find(x => x.Festival.Id == festivalId).ToList();
 
         public async Task<List<Comment>> GetAllCommentsForFestivalAsync(string festivalId)
-            => await _commentsLocations.Find(x => x.FestivalId == festivalId).ToListAsync();
+            => await _commentsLocations.Find(x => x.Festival.Id == festivalId).ToListAsync();
 
         public void InsertComment(Comment model) => _commentsLocations.InsertOne(model);
 

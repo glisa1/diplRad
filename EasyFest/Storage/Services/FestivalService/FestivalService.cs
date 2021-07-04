@@ -32,6 +32,8 @@ namespace Storage.Services.FestivalService
 
         public IExecutable<Festival> GetFestivals() => _festivals.AsExecutable();
 
+        public IExecutable<Festival> GetFestivalById(string id) => _festivals.Find(x => x.Id == id).AsExecutable();
+
         public Festival GetFestival(string objectId) => _festivals.Find<Festival>(x => x.Id == objectId).FirstOrDefault();
 
         public void InsertFestival(Festival model) => _festivals.InsertOne(model);

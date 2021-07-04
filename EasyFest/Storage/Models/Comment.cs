@@ -9,10 +9,16 @@ namespace Storage.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
+        [BsonRepresentation(BsonType.ObjectId)]
         public string UserId { get; set; }
 
         public string CommentBody { get; set; }
-        
+
+        [BsonRepresentation(BsonType.ObjectId)]
         public string FestivalId { get; set; }
+
+        public Festival Festival { get; set; }
+
+        public User User { get; set; }
     }
 }

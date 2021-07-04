@@ -1,44 +1,79 @@
 ﻿using HotChocolate;
+using HotChocolate.Data;
+using HotChocolate.Types;
 using MongoDB.Driver;
+using Storage.Services.CommentsService;
+using Storage.Services.FestivalLocationsService;
 using Storage.Services.FestivalService;
+using Storage.Services.RateService;
+using Storage.Services.UserService;
 using System.Linq;
 
 namespace GraphQLDataAccess.Schema
 {
     public class Query
     {
-        private readonly IFestivalService _festivalService;
+        #region Init
 
-        public Query(IFestivalService festivalService)
+        private readonly IFestivalService _festivalService;
+        private readonly IFestivalLocationsService _festivalLocationsService;
+        private readonly ICommentsService _commentsService;
+        private readonly IRateService _rateService;
+        private readonly IUserService _usersService;
+
+        public Query(IFestivalService festivalService,
+                                IFestivalLocationsService locationsService,
+                                ICommentsService festivalLocationsService,
+                                IRateService rateService,
+                                IUserService usersService)
         {
             _festivalService = festivalService;
+            _festivalLocationsService = locationsService;
+            _commentsService = festivalLocationsService;
+            _rateService = rateService;
+            _usersService = usersService;
         }
 
-        //public Festival GetFestival() =>
-        //    new Festival
-        //    {
-        //        Name = "TestName"
-        //    };
+        #endregion
 
-        //public Festival GetFestival()
-        //{
-        //    var fest = _festivalService.GetFestival("60db8b0061efa5f8cab3762b");
-        //    return new Festival { Id = fest.Id, Name = fest.Name };
-        //}
+        #region Methods
 
+        [UseProjection]
         public IExecutable<Storage.Models.Festival> GetFestivals()
         {
             return _festivalService.GetFestivals();
         }
 
-        //public IMongoCollection<Storage.Models.Festival> GetFestivals([Service] FestivalService festivalService)
-        //{
-        //    return festivalService.Festivals;
-        //}
+        [UseProjection]
+        public IExecutable<Storage.Models.Festival> GetFestivalById(string id)
+        {
+            return _festivalService.GetFestivalById(id);
+        }
 
-        //public IQueryable<Storage.Models.Festival> GetFestivals([Service] IFestivalService festivalService)
-        //{
-        //    return festivalService.Festivals.AsQueryable();
-        //}
+        [UseProjection]
+        public IExecutable<Storage.Models.FestivalLocation> GetFestivalLocations()
+        {
+            return _festivalLocationsService.GetFestivalLocations();
+        }
+
+        [UseProjection]
+        public IExecutable<Storage.Models.Comment> GetComments()
+        {
+            return _commentsService.GetComments();
+        }
+
+        [UseProjection]
+        public IExecutable<Storage.Models.Rate> GetRates()
+        {
+            return _rateService.GetRates();
+        }
+
+        [UseProjection]
+        public IExecutable<Storage.Models.User> GetUsers()
+        {
+            return _usersService.GetUsers();
+        }
+
+        #endregion
     }
 }

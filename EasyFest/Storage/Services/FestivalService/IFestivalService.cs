@@ -21,5 +21,7 @@ namespace Storage.Services.FestivalService
         void DeleteFestival(string objectId);
 
         IExecutable<Festival> GetFestivals();
+
+        IExecutable<Festival> GetFestivalById(string id);
     }
 }
