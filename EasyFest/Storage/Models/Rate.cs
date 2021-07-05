@@ -12,11 +12,11 @@ namespace Storage.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        //[BsonRepresentation(BsonType.ObjectId)]
-        //public string FestivalId { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string FestivalId { get; set; }
 
-        //[BsonRepresentation(BsonType.ObjectId)]
-        //public string UserId { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string UserId { get; set; }
 
         public double RateValue { get; set; }
 

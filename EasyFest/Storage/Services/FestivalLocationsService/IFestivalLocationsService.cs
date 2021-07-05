@@ -11,7 +11,7 @@ namespace Storage.Services.FestivalLocationsService
     {
         IExecutable<FestivalLocation> GetFestivalLocations();
 
-        IExecutable<FestivalLocation> GetFestivalLocationsForFestival(string festivalId);
+        Task<FestivalLocation> GetFestivalLocationForFestival(string festivalId);
 
         FestivalLocation GetFestivalLocation(string festivalId);
 

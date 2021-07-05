@@ -29,8 +29,8 @@ namespace Storage.Services.FestivalLocationsService
 
         public IExecutable<FestivalLocation> GetFestivalLocations() => _festivalLocations.AsExecutable();
 
-        public IExecutable<FestivalLocation> GetFestivalLocationsForFestival(string festivalId) 
-            => _festivalLocations.Find(x => x.FestivalId == festivalId).AsExecutable();
+        public async Task<FestivalLocation> GetFestivalLocationForFestival(string festivalId)
+            => await _festivalLocations.Find(x => x.FestivalId == festivalId).FirstOrDefaultAsync();
 
         public FestivalLocation GetFestivalLocation(string festivalId) => _festivalLocations.Find(x => x.FestivalId == festivalId).FirstOrDefault();
 

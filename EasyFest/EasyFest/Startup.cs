@@ -77,6 +77,10 @@ namespace EasyFest
                 //.AddQueryType<FestivalQLQuery>()
                 .AddQueryType<Query>()
                 .AddType<FestivalType>()
+                .AddType<FestivalLocationType>()
+                .AddType<CommentType>()
+                .AddType<RateType>()
+                .AddType<UserType>()
                 //.AddMongoDbFiltering()
                 //.AddMongoDbSorting()
                 .AddMongoDbProjections();

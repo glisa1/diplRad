@@ -29,6 +29,8 @@ namespace Storage.Services.CommentsService
 
         public IExecutable<Comment> GetComments() => _commentsLocations.AsExecutable();
 
+        public IExecutable<Comment> GetCommentsForFestival(string festivalId) => _commentsLocations.Find(x => x.FestivalId == festivalId).AsExecutable();
+
         public List<Comment> GetAllCommentsForFestival(string festivalId) => _commentsLocations.Find(x => x.Festival.Id == festivalId).ToList();
 
         public async Task<List<Comment>> GetAllCommentsForFestivalAsync(string festivalId)

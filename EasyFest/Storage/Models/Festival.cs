@@ -11,11 +11,6 @@ using System.Threading.Tasks;
 
 namespace Storage.Models
 {
-    //[Node(
-    //    IdField = nameof(Id),
-    //    NodeResolverType = typeof(FestivalResolver),
-    //    NodeResolver = nameof(FestivalResolver))
-    //    ]
     public class Festival
     {
         [BsonId]
@@ -29,35 +24,14 @@ namespace Storage.Models
         public int Month { get; set; }
 
         public int Day { get; set; }
-
-        //public IReadOnlyList<FestivalLocation> FestivalLocations { get; set; }
-
-        //[BsonRepresentation(BsonType.ObjectId)]
-        //public List<string> FestivalLocations { get; set; }
+        
+        //[BsonIgnore]
+        public FestivalLocation FestivalLocation { get; set; }
+        
+        //[BsonIgnore]
+        public ICollection<Rate> RatesList { get; set; } = new List<Rate>();
 
         //[BsonIgnore]
-        public ICollection<FestivalLocation> FestivalLocationsList { get; set; } = new List<FestivalLocation>();
-
-        //[BsonRepresentation(BsonType.ObjectId)]
-        //public List<string> Rates { get; set; }
-
-        //[BsonIgnore]
-        public IList<Rate> RatesList { get; set; }
-
-        //[BsonRepresentation(BsonType.ObjectId)]
-        //public List<string> Comments { get; set; }
-
-        //[BsonIgnore]
-        public IList<Comment> CommentsList { get; set; }
+        public ICollection<Comment> CommentsList { get; set; } = new List<Comment>();
     }
-
-    //public class FestivalResolver
-    //{
-    //    public Task<Festival> ResolveAsync(
-    //        [Service] IFestivalLocationsService festLocation,
-    //        Guid id)
-    //    {
-    //        return festLocation..Find(x => x.Id == id).FirstOrDefaultAsync();
-    //    }
-    //}
 }

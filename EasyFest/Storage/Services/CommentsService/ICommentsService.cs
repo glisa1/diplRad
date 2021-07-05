@@ -11,6 +11,8 @@ namespace Storage.Services.CommentsService
     {
         IExecutable<Comment> GetComments();
 
+        IExecutable<Comment> GetCommentsForFestival(string festivalId);
+
         List<Comment> GetAllCommentsForFestival(string festivalId);
 
         Task<List<Comment>> GetAllCommentsForFestivalAsync(string festivalId);

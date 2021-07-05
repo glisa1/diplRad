@@ -6,6 +6,7 @@ using Storage.Services.MongoDbConnectService;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Storage.Services.FestivalService
 {
@@ -33,6 +34,8 @@ namespace Storage.Services.FestivalService
         public IExecutable<Festival> GetFestivals() => _festivals.AsExecutable();
 
         public IExecutable<Festival> GetFestivalById(string id) => _festivals.Find(x => x.Id == id).AsExecutable();
+
+        public async Task<Festival> GetFestivalByIdAsync(string festivalId) => await _festivals.Find(x => x.Id == festivalId).FirstOrDefaultAsync();
 
         public Festival GetFestival(string objectId) => _festivals.Find<Festival>(x => x.Id == objectId).FirstOrDefault();
 

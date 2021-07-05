@@ -26,7 +26,7 @@ namespace Storage.Services.RateService
 
         public IExecutable<Rate> GetRates() => _rates.AsExecutable();
 
-        public IExecutable<Rate> GetRatesForFestival(string FestivalId) => _rates.Find(x => x.Festival.Id == FestivalId).AsExecutable();
+        public IExecutable<Rate> GetRatesForFestival(string FestivalId) => _rates.Find(x => x.FestivalId == FestivalId).AsExecutable();
 
         #endregion
     }

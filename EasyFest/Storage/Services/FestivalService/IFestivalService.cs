@@ -4,6 +4,7 @@ using Storage.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Storage.Services.FestivalService
 {
@@ -23,5 +24,7 @@ namespace Storage.Services.FestivalService
         IExecutable<Festival> GetFestivals();
 
         IExecutable<Festival> GetFestivalById(string id);
+
+        Task<Festival> GetFestivalByIdAsync(string festivalId);
     }
 }
