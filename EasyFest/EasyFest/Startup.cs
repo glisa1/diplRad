@@ -18,6 +18,8 @@ using Storage.Services.UserService;
 using Storage.Services.RateService;
 using GraphQL.Server.Ui.Voyager;
 using GraphQLDataAccess.Schema.Types;
+using GraphQLDataAccess.Schema.Mutations;
+using GraphQLDataAccess.Schema.MutationTypes;
 
 namespace EasyFest
 {
@@ -81,6 +83,8 @@ namespace EasyFest
                 .AddType<CommentType>()
                 .AddType<RateType>()
                 .AddType<UserType>()
+                .AddMutationType<UserMutation>()
+                .AddType<UserMutationType>()
                 //.AddMongoDbFiltering()
                 //.AddMongoDbSorting()
                 .AddMongoDbProjections();

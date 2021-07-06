@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using HotChocolate;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,10 @@ namespace Storage.Models
 
         public string Email { get; set; }
 
+        [GraphQLIgnore]
         public string Password { get; set; }
+
+        [GraphQLIgnore]
+        public string Salt { get; set; }
     }
 }

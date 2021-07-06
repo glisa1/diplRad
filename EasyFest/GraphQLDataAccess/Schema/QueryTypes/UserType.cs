@@ -22,6 +22,9 @@ namespace GraphQLDataAccess.Schema.Types
             descriptor.Field(f => f.Password)
                 .Description("User's account password.")
                 .Type<NonNullType<StringType>>();
+            descriptor.Field(f => f.Salt)
+                .Description("Password salt.")
+                .Type<NonNullType<StringType>>();
         }
     }
 }
