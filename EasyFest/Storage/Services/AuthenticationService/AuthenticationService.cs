@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Storage.Services.AuthenticationService
 {
@@ -28,7 +29,7 @@ namespace Storage.Services.AuthenticationService
             throw new NotImplementedException();
         }
 
-        public async void SignIn(User user, bool isPersistent)
+        public async Task SignInAsync(User user, bool isPersistent)
         {
             if (user == null)
                 throw new ArgumentNullException(nameof(user));
@@ -61,7 +62,7 @@ namespace Storage.Services.AuthenticationService
             //_cachedCustomer = customer;
         }
 
-        public async void SignOut()
+        public async Task SignOutAsync()
         {
             //reset cached customer
             //_cachedCustomer = null;
