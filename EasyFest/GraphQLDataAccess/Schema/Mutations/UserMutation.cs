@@ -101,7 +101,7 @@ namespace GraphQLDataAccess.Schema.Mutations
                         .Build());
             }
 
-            string userCredential = string.Empty;
+            string userCredential;
             if (emailEmpty)
                 userCredential = input.Username;
             else
