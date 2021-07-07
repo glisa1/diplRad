@@ -14,5 +14,7 @@ namespace Storage.Services.RateService
         IExecutable<Rate> GetRatesForFestival(string FestivalId);
 
         Task InsertRateAsync(Rate model);
+
+        Task<double> GetRateForFestivalAsync(string festivalId);
     }
 }

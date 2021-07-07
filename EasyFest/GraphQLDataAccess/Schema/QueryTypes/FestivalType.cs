@@ -39,15 +39,20 @@ namespace GraphQLDataAccess.Schema.Types
             descriptor.Field(f => f.Name)
                 .Description("Name of festival.")
                 .Type<NonNullType<StringType>>();
-            descriptor.Field(f => f.Rate)
-                .Description("Rate of festival.")
-                .Type<NonNullType<FloatType>>();
             descriptor.Field(f => f.Month)
                 .Description("Month in which festival takes place.")
                 .Type<NonNullType<IntType>>();
             descriptor.Field(f => f.Day)
                 .Description("Day in which festival takes place.")
                 .Type<NonNullType<IntType>>();
+            descriptor.Field(f => f.Rate)
+                .Description("Rate of festival.")
+                .Type<NonNullType<FloatType>>()
+                .Resolve(async context =>
+                {
+                    var initiative = context.Parent<Storage.Models.Festival>();
+                    return await _rateService.GetRateForFestivalAsync(initiative.Id);
+                });
             descriptor.Field(f => f.FestivalLocation)
                 .Description("Location of festival.")
                 .Type<FestivalLocationType>()
