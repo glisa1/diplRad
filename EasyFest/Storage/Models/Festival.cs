@@ -19,6 +19,7 @@ namespace Storage.Models
 
         public string Name { get; set; }
 
+        [BsonIgnore]
         public double Rate { get; set; }
 
         public int Month { get; set; }

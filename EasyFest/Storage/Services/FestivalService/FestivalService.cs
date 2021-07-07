@@ -41,6 +41,8 @@ namespace Storage.Services.FestivalService
 
         public void InsertFestival(Festival model) => _festivals.InsertOne(model);
 
+        public async Task InsertFestivalAsync(Festival model) => await _festivals.InsertOneAsync(model);
+
         public void DeleteFestival(string objectId) => _festivals.DeleteOne(x => x.Id == objectId);
 
         #endregion

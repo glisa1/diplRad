@@ -10,7 +10,7 @@ namespace GraphQLDataAccess.Schema.MutationTypes
     {
         protected override void Configure(IObjectTypeDescriptor<UserMutation> descriptor)
         {
-            descriptor.Description("Mutation used to add and change users.");
+            descriptor.Description("Mutation used to create or update users.");
             descriptor.Field(f => f.AddUser(default))
                 .Description("Adds new user.");
         }

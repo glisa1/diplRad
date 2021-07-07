@@ -6,6 +6,7 @@ using Storage.Services.MongoDbConnectService;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Storage.Services.RateService
 {
@@ -27,6 +28,8 @@ namespace Storage.Services.RateService
         public IExecutable<Rate> GetRates() => _rates.AsExecutable();
 
         public IExecutable<Rate> GetRatesForFestival(string FestivalId) => _rates.Find(x => x.FestivalId == FestivalId).AsExecutable();
+
+        public async Task InsertRateAsync(Rate model) => await _rates.InsertOneAsync(model);
 
         #endregion
     }
