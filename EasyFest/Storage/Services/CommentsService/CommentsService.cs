@@ -44,6 +44,8 @@ namespace Storage.Services.CommentsService
 
         public async Task DeleteCommentAsync(string commentId) => await _commentsLocations.DeleteOneAsync(x => x.Id == commentId);
 
+        public async Task DeleteCommentsByFestivalIdAsync(string festivalId) => await _commentsLocations.DeleteManyAsync(x => x.FestivalId == festivalId);
+
         #endregion
     }
 }

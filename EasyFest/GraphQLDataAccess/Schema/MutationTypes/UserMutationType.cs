@@ -13,6 +13,10 @@ namespace GraphQLDataAccess.Schema.MutationTypes
             descriptor.Description("Mutation used to create or update users.");
             descriptor.Field(f => f.AddUser(default))
                 .Description("Adds new user.");
+            descriptor.Field(f => f.LoginUser(default))
+                .Description("Logs user to application.");
+            descriptor.Field(f => f.DeleteUser(default))
+                .Description("Deletes user.");
         }
     }
 }

@@ -43,6 +43,16 @@ namespace Storage.Services.FestivalService
 
         public async Task InsertFestivalAsync(Festival model) => await _festivals.InsertOneAsync(model);
 
+        public async Task UpdateFestivalAsync(Festival model)
+        {
+            var filter = Builders<Festival>.Filter.Eq("id", model.Id);
+            var update = Builders<Festival>.Update.Set("Name", model.Name);
+            update.Set("Day", model.Day);
+            update.Set("Month", model.Month);
+
+            await _festivals.UpdateOneAsync(filter, update);
+        }
+
         public void DeleteFestival(string objectId) => _festivals.DeleteOne(x => x.Id == objectId);
 
         #endregion

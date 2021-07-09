@@ -28,5 +28,9 @@ namespace Storage.Services.FestivalLocationsService
         void DeleteFestivalLocation(string objectId);
 
         Task DeleteFestivalLocationAsync(string objectId);
+
+        Task UpdateFestivalLocationAsync(FestivalLocation festivalLocation);
+
+        Task DeleteFestivalLocationByFestivalIdAsync(string festivalId);
     }
 }

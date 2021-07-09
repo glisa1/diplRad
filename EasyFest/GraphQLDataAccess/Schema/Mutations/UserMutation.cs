@@ -79,7 +79,7 @@ namespace GraphQLDataAccess.Schema.Mutations
             return new UserCreatedPayload(model, input.ClientMutationId);
         }
 
-        public async Task<LoginPayload> LoginUserAsync(LoginInput input)
+        public async Task<LoginPayload> LoginUser(LoginInput input)
         {
             bool emailEmpty = string.IsNullOrEmpty(input.Email);
             bool usernameEmpty = string.IsNullOrEmpty(input.Username);
@@ -133,6 +133,11 @@ namespace GraphQLDataAccess.Schema.Mutations
             await _authService.SignInAsync(user, true);
 
             return new LoginPayload(input.ClientMutationId);
+        }
+
+        public async Task DeleteUser(string userId)
+        {
+            await _userService.DeleteUserAsync(userId);
         }
 
         #endregion

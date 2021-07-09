@@ -49,5 +49,23 @@ namespace GraphQLDataAccess.Schema.Mutations
 
             return new FestivalLocationCreatedPayload(newFestivalLocation, input.ClientMutationId);
         }
+
+        public async Task<FestivalLocationCreatedPayload> UpdateFestivalLocation(UpdateFestivalLocationInput input)
+        {
+            var newFestivalLocation = new FestivalLocation
+            {
+                Address = input.Address,
+                City = input.City,
+                Latitude = input.Latitude,
+                Longitude = input.Longitude,
+                State = input.State
+            };
+
+            // Razmisliti da se koristi model za create jer on vraca i festival i festivalId
+
+            await _festivalLocationsService.UpdateFestivalLocation(newFestivalLocation);
+
+            return new FestivalLocationCreatedPayload(newFestivalLocation, input.ClientMutationId);
+        }
     }
 }

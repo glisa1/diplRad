@@ -1,5 +1,6 @@
 ﻿using HotChocolate;
 using HotChocolate.Data;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Storage.Models;
 using Storage.Services.MongoDbConnectService;
@@ -49,6 +50,19 @@ namespace Storage.Services.FestivalLocationsService
         public void DeleteFestivalLocation(string objectId) => _festivalLocations.DeleteOne(x => x.Id == objectId);
 
         public async Task DeleteFestivalLocationAsync(string objectId) => await _festivalLocations.DeleteOneAsync(x => x.Id == objectId);
+
+        public async Task DeleteFestivalLocationByFestivalIdAsync(string festivalId) => await _festivalLocations.DeleteOneAsync(x => x.FestivalId == festivalId);
+
+        public async Task UpdateFestivalLocationAsync(FestivalLocation festivalLocation)
+        {
+            var filter = Builders<FestivalLocation>.Filter.Eq("id", festivalLocation.Id); //mozda ce morait _id
+            var update = Builders<FestivalLocation>.Update.Set("Address", festivalLocation.Address);
+            update.Set("City", festivalLocation.City);
+            update.Set("Longitude", festivalLocation.Longitude);
+            update.Set("Latitude", festivalLocation.Latitude);
+            update.Set("State", festivalLocation.State);
+            await _festivalLocations.UpdateOneAsync(filter, update);
+        }
 
         #endregion
     }

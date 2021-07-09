@@ -27,5 +27,7 @@ namespace Storage.Services.FestivalService
         IExecutable<Festival> GetFestivalById(string id);
 
         Task<Festival> GetFestivalByIdAsync(string festivalId);
+
+        Task UpdateFestivalAsync(Festival model);
     }
 }

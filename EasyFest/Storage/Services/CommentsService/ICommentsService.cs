@@ -24,5 +24,7 @@ namespace Storage.Services.CommentsService
         void DeleteComment(string commentId);
 
         Task DeleteCommentAsync(string commentId);
+
+        Task DeleteCommentsByFestivalIdAsync(string festivalId);
     }
 }

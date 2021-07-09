@@ -32,6 +32,8 @@ namespace Storage.Services.RateService
 
         public async Task InsertRateAsync(Rate model) => await _rates.InsertOneAsync(model);
 
+        public async Task DeleteRatesByFestivalidAsync(string festivalId) => await _rates.DeleteManyAsync(x => x.FestivalId == festivalId);
+
         /// <summary>
         /// Method returns rate value for festival from rates users gave.
         /// </summary>
