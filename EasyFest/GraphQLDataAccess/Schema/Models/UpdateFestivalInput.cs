@@ -10,13 +10,13 @@ namespace GraphQLDataAccess.Schema.Models
                                     string name,
                                     int month,
                                     int day,
-                                    string mutationId)
+                                    string clientMutationId)
         {
             FestivalId = festivalId;
             Name = name;
             Month = month;
             Day = day;
-            ClientMutationId = mutationId;
+            ClientMutationId = clientMutationId;
         }
 
         public string FestivalId { get; set; }

@@ -9,12 +9,12 @@ namespace GraphQLDataAccess.Schema.Models
         public LoginInput(string username,
                             string email,
                             string password,
-                            string mutationId)
+                            string clientMutationId)
         {
             Username = username;
             Email = email;
             Password = password;
-            ClientMutationId = mutationId;
+            ClientMutationId = clientMutationId;
         }
 
         public string Username { get; set; }

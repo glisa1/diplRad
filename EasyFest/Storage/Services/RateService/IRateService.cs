@@ -18,5 +18,7 @@ namespace Storage.Services.RateService
         Task DeleteRatesByFestivalidAsync(string festivalId);
 
         Task<double> GetRateForFestivalAsync(string festivalId);
+
+        Task UpdateRateAsync(Rate model);
     }
 }

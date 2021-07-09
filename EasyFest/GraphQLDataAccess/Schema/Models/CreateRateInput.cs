@@ -7,19 +7,15 @@ namespace GraphQLDataAccess.Schema.Models
 {
     public class CreateRateInput
     {
-        public CreateRateInput(double rate,
+        public CreateRateInput(double rateValue,
                             string festivalId,
                             string userId,
-                            Festival festival,
-                            User user,
-                            string mutationId)
+                            string clientMutationId)
         {
-            RateValue = rate;
+            RateValue = rateValue;
             FestivalId = festivalId;
             UserId = userId;
-            Festival = festival;
-            User = user;
-            ClientMutationId = mutationId;
+            ClientMutationId = clientMutationId;
         }
 
         public double RateValue { get; set; }
@@ -28,9 +24,9 @@ namespace GraphQLDataAccess.Schema.Models
 
         public string UserId { get; set; }
 
-        public Festival Festival { get; set; }
+        //public Festival Festival { get; set; }
 
-        public User User { get; set; }
+        //public User User { get; set; }
 
         public string ClientMutationId { get; set; }
     }

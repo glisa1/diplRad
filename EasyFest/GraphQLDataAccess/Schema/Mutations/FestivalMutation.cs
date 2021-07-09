@@ -1,6 +1,7 @@
 ﻿using GraphQLDataAccess.Schema.Models;
 using HotChocolate;
 using HotChocolate.Execution;
+using HotChocolate.Types;
 using Storage.Models;
 using Storage.Services.CommentsService;
 using Storage.Services.FestivalLocationsService;
@@ -34,6 +35,8 @@ namespace GraphQLDataAccess.Schema.Mutations
         }
 
         #endregion
+
+        #region Methods
 
         public async Task<FestivalCreatedPayload> CreateFestival(CreateFestivalInput input)
         {
@@ -93,5 +96,7 @@ namespace GraphQLDataAccess.Schema.Mutations
             await _rateService.DeleteRatesByFestivalidAsync(festivalId);
             await _commentService.DeleteCommentsByFestivalIdAsync(festivalId);
         }
+
+        #endregion
     }
 }

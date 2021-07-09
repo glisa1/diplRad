@@ -15,36 +15,46 @@ namespace Storage.Services.CommentsService
         #region Init
 
         //private readonly IMongoDbConnectService _dbConnection;
-        private readonly IMongoCollection<Comment> _commentsLocations;
+        private readonly IMongoCollection<Comment> _comments;
 
         public CommentsService(IMongoDbConnectService db, IFestDatabaseSettings settings)
         {
             //_dbConnection = db;
-            _commentsLocations = db.database.GetCollection<Comment>(settings.CommentsCollectionName);
+            _comments = db.database.GetCollection<Comment>(settings.CommentsCollectionName);
         }
 
         #endregion
 
         #region Methods
 
-        public IExecutable<Comment> GetComments() => _commentsLocations.AsExecutable();
+        public IExecutable<Comment> GetComments() => _comments.AsExecutable();
 
-        public IExecutable<Comment> GetCommentsForFestival(string festivalId) => _commentsLocations.Find(x => x.FestivalId == festivalId).AsExecutable();
+        public IExecutable<Comment> GetCommentsForFestival(string festivalId) => _comments.Find(x => x.FestivalId == festivalId).AsExecutable();
 
-        public List<Comment> GetAllCommentsForFestival(string festivalId) => _commentsLocations.Find(x => x.Festival.Id == festivalId).ToList();
+        public async Task<Comment> GetCommentById(string commentId) => await _comments.Find(x => x.Id == commentId).FirstOrDefaultAsync();
+
+        public List<Comment> GetAllCommentsForFestival(string festivalId) => _comments.Find(x => x.Festival.Id == festivalId).ToList();
 
         public async Task<List<Comment>> GetAllCommentsForFestivalAsync(string festivalId)
-            => await _commentsLocations.Find(x => x.Festival.Id == festivalId).ToListAsync();
+            => await _comments.Find(x => x.Festival.Id == festivalId).ToListAsync();
 
-        public void InsertComment(Comment model) => _commentsLocations.InsertOne(model);
+        public void InsertComment(Comment model) => _comments.InsertOne(model);
 
-        public async Task InsertCommentAsync(Comment model) => await _commentsLocations.InsertOneAsync(model);
+        public async Task InsertCommentAsync(Comment model) => await _comments.InsertOneAsync(model);
 
-        public void DeleteComment(string commentId) => _commentsLocations.DeleteOne(x => x.Id == commentId);
+        public void DeleteComment(string commentId) => _comments.DeleteOne(x => x.Id == commentId);
 
-        public async Task DeleteCommentAsync(string commentId) => await _commentsLocations.DeleteOneAsync(x => x.Id == commentId);
+        public async Task DeleteCommentAsync(string commentId) => await _comments.DeleteOneAsync(x => x.Id == commentId);
 
-        public async Task DeleteCommentsByFestivalIdAsync(string festivalId) => await _commentsLocations.DeleteManyAsync(x => x.FestivalId == festivalId);
+        public async Task DeleteCommentsByFestivalIdAsync(string festivalId) => await _comments.DeleteManyAsync(x => x.FestivalId == festivalId);
+
+        public async Task UpdateCommentAsync(Comment model)
+        {
+            var filter = Builders<Comment>.Filter.Eq(s => s.Id, model.Id);
+            var update = Builders<Comment>.Update.Set(s => s.CommentBody, model.CommentBody);
+
+            var res = await _comments.UpdateOneAsync(filter, update);
+        }
 
         #endregion
     }

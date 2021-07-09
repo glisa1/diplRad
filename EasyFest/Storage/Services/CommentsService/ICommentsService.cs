@@ -13,6 +13,8 @@ namespace Storage.Services.CommentsService
 
         IExecutable<Comment> GetCommentsForFestival(string festivalId);
 
+        Task<Comment> GetCommentById(string commentId);
+
         List<Comment> GetAllCommentsForFestival(string festivalId);
 
         Task<List<Comment>> GetAllCommentsForFestivalAsync(string festivalId);
@@ -26,5 +28,7 @@ namespace Storage.Services.CommentsService
         Task DeleteCommentAsync(string commentId);
 
         Task DeleteCommentsByFestivalIdAsync(string festivalId);
+
+        Task UpdateCommentAsync(Comment model);
     }
 }

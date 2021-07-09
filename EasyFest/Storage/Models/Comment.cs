@@ -17,8 +17,10 @@ namespace Storage.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string FestivalId { get; set; }
 
+        [BsonIgnore]
         public Festival Festival { get; set; }
 
+        [BsonIgnore]
         public User User { get; set; }
     }
 }

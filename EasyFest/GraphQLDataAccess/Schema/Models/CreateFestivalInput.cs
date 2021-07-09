@@ -9,12 +9,12 @@ namespace GraphQLDataAccess.Schema.Models
         public CreateFestivalInput(string name,
                                     int month,
                                     int day,
-                                    string mutationId)
+                                    string clientMutationId)
         {
             Name = name;
             Month = month;
             Day = day;
-            ClientMutationId = mutationId;
+            ClientMutationId = clientMutationId;
         }
 
         public string Name { get; set; }

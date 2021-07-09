@@ -12,7 +12,7 @@ namespace GraphQLDataAccess.Schema.Models
                                             string address,
                                             string city,
                                             string state,
-                                            string mutationId)
+                                            string clientMutationId)
         {
             FestivalLocationId = festivalLocationId;
             Longitude = longitude;
@@ -20,7 +20,7 @@ namespace GraphQLDataAccess.Schema.Models
             Address = address;
             City = city;
             State = state;
-            ClientMutationId = mutationId;
+            ClientMutationId = clientMutationId;
         }
 
         public string FestivalLocationId { get; set; }

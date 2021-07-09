@@ -1,6 +1,7 @@
 ﻿using GraphQLDataAccess.Schema.Models;
 using HotChocolate;
 using HotChocolate.Execution;
+using HotChocolate.Types;
 using Storage.Models;
 using Storage.Services.FestivalLocationsService;
 using System;
@@ -22,6 +23,8 @@ namespace GraphQLDataAccess.Schema.Mutations
         }
 
         #endregion
+
+        #region Methods
 
         public async Task<FestivalLocationCreatedPayload> CreateFestivalLocation(CreateFestivalLocationInput input)
         {
@@ -63,9 +66,25 @@ namespace GraphQLDataAccess.Schema.Mutations
 
             // Razmisliti da se koristi model za create jer on vraca i festival i festivalId
 
-            await _festivalLocationsService.UpdateFestivalLocation(newFestivalLocation);
+            await _festivalLocationsService.UpdateFestivalLocationAsync(newFestivalLocation);
 
             return new FestivalLocationCreatedPayload(newFestivalLocation, input.ClientMutationId);
         }
+
+        public async Task DeleteFestivalLocationAsync(string festivalLocationId)
+        {
+            if (string.IsNullOrEmpty(festivalLocationId))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("The festivalId cannot be empty.")
+                        .SetCode("FESTIVALID_EMPTY")
+                        .Build());
+            }
+
+            await _festivalLocationsService.DeleteFestivalLocationAsync(festivalLocationId);
+        }
+
+        #endregion
     }
 }

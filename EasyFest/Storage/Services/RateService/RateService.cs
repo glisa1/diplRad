@@ -34,6 +34,15 @@ namespace Storage.Services.RateService
 
         public async Task DeleteRatesByFestivalidAsync(string festivalId) => await _rates.DeleteManyAsync(x => x.FestivalId == festivalId);
 
+        public async Task UpdateRateAsync(Rate model)
+        {
+            var filter = Builders<Rate>.Filter.Eq("FestivalId", model.FestivalId) &
+                Builders<Rate>.Filter.Eq("UserId", model.UserId);
+            var update = Builders<Rate>.Update.Set("RateValue", model.RateValue);
+
+            await _rates.UpdateOneAsync(filter, update);
+        }
+
         /// <summary>
         /// Method returns rate value for festival from rates users gave.
         /// </summary>

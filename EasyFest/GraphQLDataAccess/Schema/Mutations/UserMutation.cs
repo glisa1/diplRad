@@ -1,6 +1,7 @@
 ﻿using GraphQLDataAccess.Schema.Models;
 using HotChocolate;
 using HotChocolate.Execution;
+using HotChocolate.Types;
 using Storage.Models;
 using Storage.Services.AuthenticationService;
 using Storage.Services.UserService;
@@ -118,8 +119,11 @@ namespace GraphQLDataAccess.Schema.Mutations
                         .Build());
             }
 
-            using var sha = SHA512.Create();
-            byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(input.Password + user.Salt));
+            byte[] hash;
+            using (var sha = SHA512.Create())
+            {
+                hash = sha.ComputeHash(Encoding.UTF8.GetBytes(input.Password + user.Salt));
+            }
 
             if (!Convert.ToBase64String(hash).Equals(user.Password, StringComparison.Ordinal))
             {

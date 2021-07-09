@@ -8,19 +8,23 @@ namespace GraphQLDataAccess.Schema.Models
     public class CreateCommentInput
     {
         public CreateCommentInput(string userId, 
-                                string comment, 
+                                string commentId,
+                                string commentBody, 
                                 string festivalId,
-                                User user,
-                                Festival festival,
-                                string mutationId)
+                                //User user,
+                                //Festival festival,
+                                string clientMutationId)
         {
             UserId = userId;
             FestivalId = festivalId;
-            CommentBody = comment;
-            User = user;
-            Festival = festival;
-            ClientMutationId = mutationId;
+            CommentBody = commentBody;
+            CommentId = commentId;
+            //User = user;
+            //Festival = festival;
+            ClientMutationId = clientMutationId;
         }
+
+        public string CommentId { get; set; }
 
         public string CommentBody { get; set; }
 
@@ -28,9 +32,9 @@ namespace GraphQLDataAccess.Schema.Models
 
         public string FestivalId { get; set; }
 
-        public User User { get; set; }
+        //public User User { get; set; }
 
-        public Festival Festival { get; set; }
+        //public Festival Festival { get; set; }
 
         public string ClientMutationId { get; set; }
     }
