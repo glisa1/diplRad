@@ -29,5 +29,9 @@ namespace Storage.Services.FestivalService
         Task<Festival> GetFestivalByIdAsync(string festivalId);
 
         Task UpdateFestivalAsync(Festival model);
+
+        Task<bool> GetFestivalByName(string festivalName);
+
+        Task DeleteFestivalAsync(string festivalId);
     }
 }

@@ -8,7 +8,7 @@ namespace GraphQLDataAccess.Schema.Models
     public class CreateFestivalLocationInput
     {
         public CreateFestivalLocationInput(string festivalId,
-                                            Festival festival,
+                                            //Festival festival,
                                             double latitude,
                                             double longitude,
                                             string state,
@@ -17,7 +17,7 @@ namespace GraphQLDataAccess.Schema.Models
                                             string clientMutationId)
         {
             FestivalId = festivalId;
-            Festival = festival;
+            //Festival = festival;
             Latitude = latitude;
             Longitude = longitude;
             State = state;
@@ -28,7 +28,7 @@ namespace GraphQLDataAccess.Schema.Models
 
         public string FestivalId { get; set; }
 
-        public Festival Festival { get; set; }
+        //public Festival Festival { get; set; }
 
         public double Latitude { get; set; }
 

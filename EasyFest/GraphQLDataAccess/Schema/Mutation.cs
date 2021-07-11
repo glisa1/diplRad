@@ -178,11 +178,21 @@ namespace GraphQLDataAccess.Schema
                         .Build());
             }
 
+
+            var festLocation = await _locationService.GetFestivalLocationAsync(input.FestivalId);
+            if (festLocation != null)
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("Location for this festival already exists.")
+                        .SetCode("LOCATION_ALREADY_EXISTS")
+                        .Build());
+            }
+
             var newFestivalLocation = new FestivalLocation
             {
                 Address = input.Address,
                 City = input.City,
-                Festival = input.Festival,
                 FestivalId = input.FestivalId,
                 Latitude = input.Latitude,
                 Longitude = input.Longitude,
@@ -196,8 +206,18 @@ namespace GraphQLDataAccess.Schema
 
         public async Task<FestivalLocationCreatedPayload> UpdateFestivalLocation(UpdateFestivalLocationInput input)
         {
+            if (string.IsNullOrEmpty(input.FestivalLocationId))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("The festivalId cannot be empty.")
+                        .SetCode("FESTIVALID_EMPTY")
+                        .Build());
+            }
+
             var newFestivalLocation = new FestivalLocation
             {
+                Id = input.FestivalLocationId,
                 Address = input.Address,
                 City = input.City,
                 Latitude = input.Latitude,
@@ -212,7 +232,7 @@ namespace GraphQLDataAccess.Schema
             return new FestivalLocationCreatedPayload(newFestivalLocation, input.ClientMutationId);
         }
 
-        public async Task DeleteFestivalLocation(string festivalLocationId)
+        public async Task<bool> DeleteFestivalLocation(string festivalLocationId)
         {
             if (string.IsNullOrEmpty(festivalLocationId))
             {
@@ -224,6 +244,8 @@ namespace GraphQLDataAccess.Schema
             }
 
             await _locationService.DeleteFestivalLocationAsync(festivalLocationId);
+
+            return true;
         }
 
         #endregion
@@ -241,26 +263,14 @@ namespace GraphQLDataAccess.Schema
                         .Build());
             }
 
-            var newFestival = new Festival
-            {
-                Name = input.Name,
-                Day = input.Day,
-                Month = input.Month
-            };
+            var isNameTaken = await _festivalService.GetFestivalByName(input.Name);
 
-            await _festivalService.InsertFestivalAsync(newFestival);
-
-            return new FestivalCreatedPayload(newFestival, input.ClientMutationId);
-        }
-
-        public async Task<FestivalCreatedPayload> UpdateFestival(UpdateFestivalInput input)
-        {
-            if (string.IsNullOrEmpty(input.Name))
+            if (isNameTaken)
             {
                 throw new QueryException(
                     ErrorBuilder.New()
-                        .SetMessage("Name cannot be empty.")
-                        .SetCode("NAME_EMPTY")
+                        .SetMessage("Festival with given name already exists.")
+                        .SetCode("FESTIVAL_NAME_EXISTS")
                         .Build());
             }
 
@@ -276,17 +286,58 @@ namespace GraphQLDataAccess.Schema
             return new FestivalCreatedPayload(newFestival, input.ClientMutationId);
         }
 
+        public async Task<FestivalCreatedPayload> UpdateFestival(UpdateFestivalInput input)
+        {
+            if (string.IsNullOrEmpty(input.FestivalId))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("FestivalId cannot be empty.")
+                        .SetCode("FESTIVALID_EMPTY")
+                        .Build());
+            }
+
+            if (!string.IsNullOrEmpty(input.Name))
+            {
+                var isNameTaken = await _festivalService.GetFestivalByName(input.Name);
+
+                if (isNameTaken)
+                {
+                    throw new QueryException(
+                        ErrorBuilder.New()
+                            .SetMessage("Festival with given name already exists.")
+                            .SetCode("FESTIVAL_NAME_EXISTS")
+                            .Build());
+                }
+            }
+
+            var newFestival = new Festival
+            {
+                Id = input.FestivalId,
+                Name = input.Name,
+                Day = input.Day,
+                Month = input.Month
+            };
+
+            await _festivalService.UpdateFestivalAsync(newFestival);
+
+            return new FestivalCreatedPayload(newFestival, input.ClientMutationId);
+        }
+
         /// <summary>
         /// Deletes festival and all adjacent data.
         /// </summary>
         /// <param name="festivalId"></param>
         /// <returns></returns>
-        public async Task DeleteFestival(string festivalId)
+        public async Task<bool> DeleteFestival(string festivalId)
         {
             //We call each service that deletes adjacent data.
             await _locationService.DeleteFestivalLocationByFestivalIdAsync(festivalId);
             await _rateService.DeleteRatesByFestivalidAsync(festivalId);
             await _commentService.DeleteCommentsByFestivalIdAsync(festivalId);
+            await _festivalService.DeleteFestivalAsync(festivalId);
+
+            return true;
         }
 
         #endregion

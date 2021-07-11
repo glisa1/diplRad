@@ -20,8 +20,10 @@ namespace Storage.Models
 
         public double RateValue { get; set; }
 
+        [BsonIgnore]
         public Festival Festival { get; set; }
 
+        [BsonIgnore]
         public User User { get; set; }
     }
 }

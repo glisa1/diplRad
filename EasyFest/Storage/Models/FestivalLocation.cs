@@ -13,6 +13,7 @@ namespace Storage.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string FestivalId { get; set; }
 
+        [BsonIgnore]
         public Festival Festival { get; set; }
 
         public double Latitude { get; set; }

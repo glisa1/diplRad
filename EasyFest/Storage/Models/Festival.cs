@@ -26,13 +26,13 @@ namespace Storage.Models
 
         public int Day { get; set; }
         
-        //[BsonIgnore]
+        [BsonIgnore]
         public FestivalLocation FestivalLocation { get; set; }
         
-        //[BsonIgnore]
+        [BsonIgnore]
         public ICollection<Rate> RatesList { get; set; } = new List<Rate>();
 
-        //[BsonIgnore]
+        [BsonIgnore]
         public ICollection<Comment> CommentsList { get; set; } = new List<Comment>();
     }
 }

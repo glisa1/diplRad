@@ -55,12 +55,14 @@ namespace Storage.Services.FestivalLocationsService
 
         public async Task UpdateFestivalLocationAsync(FestivalLocation festivalLocation)
         {
-            var filter = Builders<FestivalLocation>.Filter.Eq("id", festivalLocation.Id); //mozda ce morait _id
-            var update = Builders<FestivalLocation>.Update.Set("Address", festivalLocation.Address);
-            update.Set("City", festivalLocation.City);
-            update.Set("Longitude", festivalLocation.Longitude);
-            update.Set("Latitude", festivalLocation.Latitude);
-            update.Set("State", festivalLocation.State);
+            var filter = Builders<FestivalLocation>.Filter.Eq(s => s.Id, festivalLocation.Id); //mozda ce morait _id
+            var update = Builders<FestivalLocation>.Update
+                .Set(s => s.City, festivalLocation.City)
+                .Set(s => s.Address, festivalLocation.Address)
+                .Set(s => s.Latitude, festivalLocation.Latitude)
+                .Set(s => s.Longitude, festivalLocation.Longitude)
+                .Set(s => s.State, festivalLocation.State);
+
             await _festivalLocations.UpdateOneAsync(filter, update);
         }
 

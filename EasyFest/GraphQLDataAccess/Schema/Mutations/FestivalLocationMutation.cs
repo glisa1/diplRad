@@ -41,7 +41,7 @@ namespace GraphQLDataAccess.Schema.Mutations
             {
                 Address = input.Address,
                 City = input.City,
-                Festival = input.Festival,
+                //Festival = input.Festival,
                 FestivalId = input.FestivalId,
                 Latitude = input.Latitude,
                 Longitude = input.Longitude,
