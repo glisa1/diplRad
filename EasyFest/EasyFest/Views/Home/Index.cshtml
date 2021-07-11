@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="text-center">
@@ -10,3 +11,6 @@
 <div>
     @Html.ActionLink("Login", "Login", "User")
 </div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Home.js"></script>

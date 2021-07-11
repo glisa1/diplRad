@@ -32,16 +32,6 @@ namespace EasyFest.Controllers
         [HttpPost]
         public IActionResult Login(int testId)
         {
-            //User logUser = new User
-            //{
-            //    Email = "test@mail.com",
-            //    Password = "testPwd",
-            //    Username = "testUsrname",
-            //    Id = "1"
-            //};
-
-            //_authService.SignInAsync(logUser, true);
-
             return View();
         }
 

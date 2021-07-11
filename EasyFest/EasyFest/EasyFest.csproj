@@ -25,6 +25,10 @@
     <Folder Include="Factories\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\js\Home.js" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace GraphQLDataAccess.Schema
 {
-    public class Query
+    public class Query : IQuery
     {
         #region Init
 

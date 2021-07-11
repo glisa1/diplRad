@@ -1,45 +1,30 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using EasyFest.Models;
-using Storage;
-using Storage.Services.CommentsService;
-using Storage.Services.FestivalService;
-using Storage.Services.FestivalLocationsService;
-using Storage.Services.UserService;
-using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
+using System.Threading;
+using GraphQL.Types;
+using GraphQLDataAccess.Schema.Types;
+using GraphQLDataAccess.Schema;
 
 namespace EasyFest.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        //private readonly IStorageService _storage;
-        private readonly IFestivalService _festivalService;
-        private readonly IFestivalLocationsService _festivalLocationsService;
-        private readonly ICommentsService _commentsService;
-        private readonly IUserService _userService;
+        //private readonly IQuery _query;
+        //public HomeController(IQuery query)
+        //{
+        //    _query = query;
+        //}
 
 
-        public HomeController(ILogger<HomeController> logger,
-                                IFestivalService festivalService,
-                                IFestivalLocationsService festivallocationsService,
-                                ICommentsService commentsService,
-                                IUserService userService)
+        public async Task<IActionResult> Index()
         {
-            _logger = logger;
-            _festivalService = festivalService;
-            _festivalLocationsService = festivallocationsService;
-            _commentsService = commentsService;
-            _userService = userService;
-            //_storage = storage;
-        }
+            //CancellationToken cancelationToken = new CancellationToken();
+            //var festivals = await _query.GetFestivals().ToListAsync(cancelationToken);
 
-        public IActionResult Index()
-        {
-            var festivals = _festivalService.GetAllFestivals();
-            var locations = _festivalLocationsService.GetAllFestivalLocations();
-            
+            //var inputs = query.Variables.ToInputs();
+
             return View();
         }
 
