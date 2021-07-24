@@ -20,6 +20,7 @@ using GraphQL.Server.Ui.Voyager;
 using GraphQLDataAccess.Schema.Types;
 using GraphQLDataAccess.Schema.Mutations;
 using GraphQLDataAccess.Schema.MutationTypes;
+using EasyFest.Factories;
 
 namespace EasyFest
 {
@@ -44,6 +45,8 @@ namespace EasyFest
                 sp.GetRequiredService<IOptions<FestDatabaseSettings>>().Value);
 
             services.AddSingleton<IMongoDbConnectService, MongoDbConnectService>();
+
+            services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
 
             services.AddSingleton<IFestivalService, FestivalService>();
             services.AddSingleton<IFestivalLocationsService, FestivalLocationsService>();

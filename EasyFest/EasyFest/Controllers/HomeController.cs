@@ -6,24 +6,29 @@ using System.Threading;
 using GraphQL.Types;
 using GraphQLDataAccess.Schema.Types;
 using GraphQLDataAccess.Schema;
+using EasyFest.Factories;
 
 namespace EasyFest.Controllers
 {
     public class HomeController : Controller
     {
-        //private readonly IQuery _query;
-        //public HomeController(IQuery query)
-        //{
-        //    _query = query;
-        //}
+        #region Init
 
+        private readonly IHttpClientFactory _client;
+
+        public HomeController(IHttpClientFactory httpClientFactory)
+        {
+            _client = httpClientFactory;
+        }
+
+        #endregion
 
         public async Task<IActionResult> Index()
         {
-            //CancellationToken cancelationToken = new CancellationToken();
-            //var festivals = await _query.GetFestivals().ToListAsync(cancelationToken);
+            //FestivalFactory fact = new FestivalFactory();
+            //await fact.PrepareFestival();
 
-            //var inputs = query.Variables.ToInputs();
+            var festivals = await _client.QueryGet<FestivalList>(GraphQLCommModel.QueryFestival);
 
             return View();
         }
