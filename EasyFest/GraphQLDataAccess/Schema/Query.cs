@@ -8,6 +8,7 @@ using Storage.Services.FestivalService;
 using Storage.Services.RateService;
 using Storage.Services.UserService;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GraphQLDataAccess.Schema
 {
@@ -44,10 +45,16 @@ namespace GraphQLDataAccess.Schema
             return _festivalService.GetFestivals();
         }
 
+        //[UseProjection]
+        //public IExecutable<Storage.Models.Festival> GetFestivalById(string id)
+        //{
+        //    return _festivalService.GetFestivalById(id);
+        //}
+
         [UseProjection]
-        public IExecutable<Storage.Models.Festival> GetFestivalById(string id)
+        public async Task<Storage.Models.Festival> GetFestivalById(string id)
         {
-            return _festivalService.GetFestivalById(id);
+            return await _festivalService.GetFestivalByIdAsync(id);
         }
 
         [UseProjection]

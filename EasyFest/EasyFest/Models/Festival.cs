@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EasyFest.Models
 {
@@ -19,5 +16,34 @@ namespace EasyFest.Models
 
         [JsonProperty("day")]
         public int Day { get; set; }
+
+        [JsonProperty("rate")]
+        public double Rate { get; set; }
+
+        [JsonProperty("festivalLocation")]
+        public FestivalLocation FestivalLocation { get; set; }
+    }
+
+    //public class FestivalWithLocation : Festival
+    //{
+    //    [JsonProperty("festivalLocation")]
+    //    public FestivalLocation Location { get; set; }
+    //}
+
+    public class FestivalById
+    {
+        [JsonProperty("festivalById")]
+        public Festival Festival { get; set; }
+    }
+
+    public class FestivalList
+    {
+        public FestivalList()
+        {
+            Festivals = new List<Festival>();
+        }
+
+        [JsonProperty("festivals")]
+        public List<Festival> Festivals { get; set; }
     }
 }

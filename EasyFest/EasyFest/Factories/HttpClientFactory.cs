@@ -1,7 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using EasyFest.Models;
+using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,7 +28,7 @@ namespace EasyFest.Factories
             var response = await client.PostAsync("https://localhost:44337/graphql", content);
 
             var responseString = await response.Content.ReadAsStringAsync();
-            var responseData = JsonConvert.DeserializeObject < ResponseData<T>>(responseString);
+            var responseData = JsonConvert.DeserializeObject<ResponseData<T>>(responseString);
             return responseData;
         }
 

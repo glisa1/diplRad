@@ -30,20 +30,20 @@ namespace EasyFest.Factories
         }
     }
 
-    public class FestivalList
-    {
-        public FestivalList()
-        {
-            Festivals = new List<Festival>();
-        }
+    //public class FestivalList
+    //{
+    //    public FestivalList()
+    //    {
+    //        Festivals = new List<Festival>();
+    //    }
 
-        [JsonProperty("festivals")]
-        public List<Festival> Festivals { get; set; }
-    }
+    //    [JsonProperty("festivals")]
+    //    public List<Festival> Festivals { get; set; }
+    //}
 
-    public class ResponseData<T>
-    {
-        [JsonProperty("data")]
-        public T Data { get; set; }
-    }
+    //public class ResponseData<T>
+    //{
+    //    [JsonProperty("data")]
+    //    public T Data { get; set; }
+    //}
 }

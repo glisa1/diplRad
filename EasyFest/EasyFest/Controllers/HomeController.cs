@@ -30,7 +30,7 @@ namespace EasyFest.Controllers
 
             var festivals = await _client.QueryGet<FestivalList>(GraphQLCommModel.QueryFestival);
 
-            return View();
+            return View(festivals);
         }
 
         public IActionResult Privacy()

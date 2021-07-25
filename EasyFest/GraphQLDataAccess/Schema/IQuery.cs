@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GraphQLDataAccess.Schema
 {
@@ -9,7 +10,9 @@ namespace GraphQLDataAccess.Schema
     {
         IExecutable<Storage.Models.Festival> GetFestivals();
 
-        IExecutable<Storage.Models.Festival> GetFestivalById(string id);
+        //IExecutable<Storage.Models.Festival> GetFestivalById(string id);
+
+        Task<Storage.Models.Festival> GetFestivalById(string id);
 
         IExecutable<Storage.Models.FestivalLocation> GetFestivalLocations();
 
