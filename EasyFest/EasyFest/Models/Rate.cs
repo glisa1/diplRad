@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace EasyFest.Models
 {
-    public class Comment
+    public class Rate
     {
         [JsonProperty("id")]
         public string Id { get; set; }
 
+        [JsonProperty("festivalId")]
+        public string FestivalId { get; set; }
+
         [JsonProperty("userId")]
         public string UserId { get; set; }
 
-        [JsonProperty("commentBody")]
-        public string CommentBody { get; set; }
+        [JsonProperty("rateValue")]
+        public double RateValue { get; set; }
 
         [JsonProperty("festival")]
         public Festival Festival { get; set; }

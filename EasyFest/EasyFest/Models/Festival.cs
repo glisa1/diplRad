@@ -5,6 +5,11 @@ namespace EasyFest.Models
 {
     public class Festival
     {
+        public Festival()
+        {
+            Comments = new List<Comment>();
+        }
+
         [JsonProperty("id")]
         public string Id { get; set; }
 
@@ -22,6 +27,9 @@ namespace EasyFest.Models
 
         [JsonProperty("festivalLocation")]
         public FestivalLocation FestivalLocation { get; set; }
+
+        [JsonProperty("commentsList")]
+        public List<Comment> Comments { get; set; }
     }
 
     //public class FestivalWithLocation : Festival
