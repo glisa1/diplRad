@@ -32,6 +32,9 @@ namespace GraphQLDataAccess.Schema.Types
             descriptor.Field(f => f.CommentBody)
                 .Description("Content of comment. What user wrote.")
                 .Type<NonNullType<StringType>>();
+            descriptor.Field(f => f.CreatedOn)
+                .Description("Date of comment creation.")
+                .Type<DateTimeType>();
             descriptor.Field(f => f.FestivalId)
                 .Description("Festival identificator.")
                 .Type<NonNullType<StringType>>();

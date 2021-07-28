@@ -1,6 +1,10 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+@import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -73,7 +77,7 @@ body {
 /* CUSTOM */
 
 .commentsContainer{
-    max-height: 465px;
+    max-height: 365px;
     overflow-y: auto;
 }
 
@@ -93,7 +97,7 @@ body {
 }
 
 .mapContainer {
-    height: 500px;
+    height: 400px;
     z-index: 1;
 }
 
@@ -115,6 +119,11 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.descriptionContainer{
+    overflow-y: auto;
+    max-height: 100px;
 }
 
 /*CUSTOM MODAL*/
@@ -154,3 +163,240 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
+
+/* RATING STARS */
+
+fieldset, label {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 20px;
+}
+
+h1 {
+    font-size: 1.5em;
+    margin: 10px;
+}
+
+/****** Style Star Rating Widget *****/
+
+.rating {
+    border: none;
+    float: left;
+}
+
+.rating > input {
+    display: none;
+}
+
+.rating > label:before {
+    margin: 5px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.rating > .half:before {
+    content: "\f089";
+    position: absolute;
+}
+
+.rating > label {
+    color: #ddd;
+    float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label {
+    color: #FFD700;
+}
+/* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label {
+    color: #FFED85;
+} 
+
+/* RATING STARS END */
+
+/* RADIAL PROGRESS BAR */
+
+.progress {
+    width: 100px;
+    height: 100px;
+}
+
+.progress .track, .progress .fill {
+    fill: rgba(0, 0, 0, 0);
+    stroke-width: 3;
+    transform: rotate(90deg)translate(0px, -80px);
+}
+
+.progress .track {
+    stroke: rgb(56, 71, 83);
+}
+
+.progress .fill {
+    stroke: rgb(255, 255, 255);
+    stroke-dasharray: 219.99078369140625;
+    stroke-dashoffset: -219.99078369140625;
+    transition: stroke-dashoffset 1s;
+}
+
+.progress.blue .fill {
+    stroke: rgb(104, 214, 198);
+}
+
+.progress.green .fill {
+    stroke: rgb(186, 223, 172);
+}
+
+.progress .text {
+    font-family: 'Open Sans';
+    fill: rgb(255, 255, 255);
+    text-anchor: middle;
+}
+
+.progress .value, .progress .stand-value {
+    font-family: 'Open Sans';
+    text-anchor: middle;
+}
+
+.progress .text {
+    font-size: 12px;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+/* RADIAL PROGRESS BAR END */
+
+/* TOOLTIP */
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+/* TOOLTIP */
+
+/* COMMENT BOX */
+
+.detailBox {
+    width: 320px;
+    border: 1px solid #bbb;
+    margin: 50px;
+}
+
+.titleBox {
+    background-color: #fdfdfd;
+    padding: 10px;
+}
+
+.titleBox label {
+    color: #444;
+    margin: 0;
+    display: inline-block;
+}
+
+.commentBox {
+    padding: 10px;
+    border-top: 1px dotted #bbb;
+}
+
+.commentBox .form-group:first-child, .actionBox .form-group:first-child {
+    width: 80%;
+}
+
+.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
+    width: 18%;
+}
+
+.actionBox .form-group * {
+    width: 100%;
+}
+
+.taskDescription {
+    margin-top: 10px 0;
+}
+
+.commentList {
+    padding: 0;
+    list-style: none;
+    max-height: 360px;
+    overflow: auto;
+}
+
+.commentList li {
+    margin: 0;
+    margin-top: 10px;
+}
+
+.commentList li > div {
+    display: table-cell;
+}
+
+.commenterImage {
+    width: 30px;
+    margin-right: 5px;
+    height: 100%;
+    float: left;
+}
+
+.commenterImage img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.commentText p {
+    margin: 0;
+}
+
+.sub-text {
+    color: #aaa;
+    font-family: verdana;
+    font-size: 11px;
+}
+
+.actionBox {
+    border-top: 1px dotted #bbb;
+    padding: 10px;
+}
+
+/* COMMENT BOX END */

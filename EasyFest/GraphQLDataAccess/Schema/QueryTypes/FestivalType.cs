@@ -45,6 +45,9 @@ namespace GraphQLDataAccess.Schema.Types
             descriptor.Field(f => f.Day)
                 .Description("Day in which festival takes place.")
                 .Type<NonNullType<IntType>>();
+            descriptor.Field(f => f.Description)
+                .Description("Description for festival.")
+                .Type<StringType>();
             descriptor.Field(f => f.Rate)
                 .Description("Rate of festival.")
                 .Type<NonNullType<FloatType>>()

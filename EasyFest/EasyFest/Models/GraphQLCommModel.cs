@@ -10,15 +10,16 @@ namespace EasyFest.Models
         /// <summary>
         /// Gets all about festival.
         /// </summary>
-        public static string QueryFestival => "query {festivals { id name day month rate }}";
+        public static string QueryFestival => "query {festivals { id name day month rate" +
+            " festivalLocation{city state} }}";
 
         /// <summary>
         /// Gets query by id with details and location.
         /// </summary>
         public static string QueryFestivalDetailsWithLocation => 
             "query {festivalById(id: \"{0}\")" + 
-            " { id name day month rate" + 
+            " { id name day month rate description" + 
             " festivalLocation{ address city state longitude latitude } " + 
-            " commentsList{id commentBody user{id username}} }}";
+            " commentsList{id commentBody createdOn user{id username}} }}";
     }
 }

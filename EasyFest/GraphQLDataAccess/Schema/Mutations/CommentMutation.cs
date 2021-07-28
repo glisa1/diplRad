@@ -4,6 +4,7 @@ using HotChocolate.Execution;
 using HotChocolate.Types;
 using Storage.Models;
 using Storage.Services.CommentsService;
+using System;
 using System.Threading.Tasks;
 
 namespace GraphQLDataAccess.Schema.Mutations
@@ -56,7 +57,8 @@ namespace GraphQLDataAccess.Schema.Mutations
             {
                 CommentBody = input.CommentBody,
                 UserId = input.UserId,
-                FestivalId = input.FestivalId//,
+                FestivalId = input.FestivalId,
+                CreatedOn = DateTime.Now
                 //Festival = input.Festival,
                 //User = input.User
             };

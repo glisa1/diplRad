@@ -3,34 +3,54 @@
 @{
     ViewData["Title"] = "FestivalDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var rateValue = "Not yet rated.";
-    if(Model.Data.Festival.Rate > 0)
-    {
-        rateValue = "Rated  " + Model.Data.Festival.Rate.ToString() + "/5.00";
-    }
 }
-
-<h1>@Model.Data.Festival.Name <small>@rateValue</small></h1>
-<div class="container">
-
-    @Html.Hidden("FestivalName", Model.Data.Festival.Name)
-
-    @if (Model.Data.Festival.FestivalLocation != null)
-    {
-        <div class="col-md-6 float-left">
-            <h3>Festival location</h3>
-            <div id="map" class="mapContainer"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>@Model.Data.Festival.Name</h1>
+                <div class="descriptionContainer">
+                    <p>@Model.Data.Festival.Description</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <svg style="background-color: white; margin-left: 20px;" class="progress blue noselect" x="0px" y="0px" viewBox="0 0 80 80">
+                    <path class="track" d="M5,40a35,35 0 1,0 70,0a35,35 0 1,0 -70,0" />
+                    <path class="fill" d="M5,40a35,35 0 1,0 70,0a35,35 0 1,0 -70,0" />
+                    <text style="font-size:10px; fill: black;" class="value" x="50%" y="55%"></text>
+                </svg>
+                <fieldset class="rating">
+                    <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
+                    <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
+                    <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label>
+                    <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+                    <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
+                    <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+                </fieldset>
+            </div>
         </div>
-        @Html.Hidden("Latitude", Model.Data.Festival.FestivalLocation.Latitude)
-        @Html.Hidden("Longitude", Model.Data.Festival.FestivalLocation.Longitude)
-    }
-    else
-    {
-        <div class="col-md-6 float-left">The location for festival has not yet been set.</div>
-    }
+
+        @Html.Hidden("FestivalName", Model.Data.Festival.Name)
+        @Html.Hidden("FestivalRate", Model.Data.Festival.Rate)
+        @if (Model.Data.Festival.FestivalLocation != null)
+        {
+            <div class="col-md-6 float-left">
+                @*<h3>Festival location</h3>*@
+                <div id="map" class="mapContainer"></div>
+            </div>
+            @Html.Hidden("Latitude", Model.Data.Festival.FestivalLocation.Latitude)
+            @Html.Hidden("Longitude", Model.Data.Festival.FestivalLocation.Longitude)
+        }
+        else
+        {
+            <div class="col-md-6 float-left">The location for festival has not yet been set.</div>
+        }
 
     <div class="col-md-6 float-right">
-        <h3>Comments</h3>
+        @*<h3>Comments</h3>
         <div id="comments" class="commentsContainer">
             @foreach (var comment in Model.Data.Festival.Comments)
             {
@@ -40,22 +60,46 @@
                 </div>
             }
         </div>
-        <button class="newCommentBtn" id="myBtn">Add comment</button>
+        <button class="newCommentBtn" id="myBtn">Add comment</button>*@
+        <div class="actionBox" @*style="max-height: 400px; overflow-y: auto;"*@>
+            <ul class="commentList">
+                @foreach (var comment in Model.Data.Festival.Comments)
+                {
+                    <li>
+                        <div class="commenterImage">
+                            <img src="http://placekitten.com/50/50" />
+                            <span class="sub-text">@comment.User.Username</span>
+                        </div>
+                        <div class="commentText">
+                            <p class="">@comment.CommentBody</p> <span class="date sub-text">@comment.CreatedOn.ToString("dddd, dd MMMM yyyy")</span>
+                        </div>
+                    </li>
+                }
+            </ul>
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="Your comments" />
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-default">Add</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<div id="myModal" class="modal">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Insert comment text:</p>
-        <input id="newCommentText" type="text" />
-        <span style="color:red; display:none;" id="newCommentValidation">Can not be emtpy!</span>
-        <button style="margin-top: 5px;" type="button" id="addNewComment">Add</button>
     </div>
 
-</div>
+    <div id="myModal" class="modal">
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/js/Festival.js"></script>
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Insert comment text:</p>
+            <input id="newCommentText" type="text" />
+            <span style="color:red; display:none;" id="newCommentValidation">Can not be emtpy!</span>
+            <button style="margin-top: 5px;" type="button" id="addNewComment">Add</button>
+        </div>
+
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/Festival.js"></script>

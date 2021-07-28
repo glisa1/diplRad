@@ -21,7 +21,16 @@
     var marker = L.marker([latitude, longitude]).addTo(mymap);
     marker.bindPopup("<b>" + festName + "</b>").openPopup();
 
-    setModal();
+    //setModal();
+
+    // RADIAL PROGRESS BAR
+    var festRate = $('#FestivalRate').val();
+    var max = -219.99078369140625;
+    $.each($('.progress'), function (index, value) {
+        percent = festRate * 20;
+        $(value).children($('.fill')).attr('style', 'stroke-dashoffset: ' + ((100 - percent) / 100) * max);
+        $(value).children($('.value')).text(festRate + '/5.00');
+    });
 });
 
 $('#addNewComment').click(function () {

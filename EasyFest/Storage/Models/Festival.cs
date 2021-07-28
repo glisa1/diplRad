@@ -24,6 +24,7 @@ namespace Storage.Models
 
         public int Month { get; set; }
 
+        public string Description { get; set; }
         public int Day { get; set; }
         
         [BsonIgnore]

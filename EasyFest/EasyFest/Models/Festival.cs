@@ -22,6 +22,9 @@ namespace EasyFest.Models
         [JsonProperty("day")]
         public int Day { get; set; }
 
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
         [JsonProperty("rate")]
         public double Rate { get; set; }
 

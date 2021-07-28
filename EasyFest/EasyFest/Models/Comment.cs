@@ -22,5 +22,8 @@ namespace EasyFest.Models
 
         [JsonProperty("user")]
         public User User { get; set; }
+
+        [JsonProperty("createdOn")]
+        public DateTime CreatedOn { get; set; }
     }
 }

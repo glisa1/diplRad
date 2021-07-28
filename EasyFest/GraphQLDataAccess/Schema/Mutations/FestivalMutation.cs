@@ -53,7 +53,8 @@ namespace GraphQLDataAccess.Schema.Mutations
             {
                 Name = input.Name,
                 Day = input.Day,
-                Month = input.Month
+                Month = input.Month,
+                Description = input.Description
             };
 
             await _festivalService.InsertFestivalAsync(newFestival);

@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
 
 namespace Storage.Models
 {
@@ -11,6 +12,9 @@ namespace Storage.Models
 
         [BsonRepresentation(BsonType.ObjectId)]
         public string UserId { get; set; }
+
+        [BsonRepresentation(BsonType.DateTime)]
+        public DateTime CreatedOn { get; set; }
 
         public string CommentBody { get; set; }
 
