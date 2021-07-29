@@ -54,7 +54,8 @@ namespace GraphQLDataAccess.Schema.Mutations
                 Name = input.Name,
                 Day = input.Day,
                 Month = input.Month,
-                Description = input.Description
+                Description = input.Description,
+                ImageName = new Guid().ToString()
             };
 
             await _festivalService.InsertFestivalAsync(newFestival);

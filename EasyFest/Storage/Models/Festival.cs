@@ -22,9 +22,15 @@ namespace Storage.Models
         [BsonIgnore]
         public double Rate { get; set; }
 
+        [BsonIgnore]
+        public int NumberOfComments { get; set; }
+
         public int Month { get; set; }
 
         public string Description { get; set; }
+
+        public string ImageName { get; set; }
+
         public int Day { get; set; }
         
         [BsonIgnore]

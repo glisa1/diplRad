@@ -19,6 +19,8 @@ namespace Storage.Services.CommentsService
 
         Task<List<Comment>> GetAllCommentsForFestivalAsync(string festivalId);
 
+        Task<int> GetNumberOfCommentsForFestival(string festivalId);
+
         void InsertComment(Comment model);
 
         Task InsertCommentAsync(Comment model);

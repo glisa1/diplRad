@@ -38,6 +38,12 @@ namespace EasyFest.Controllers
             return View();
         }
 
+        public IActionResult Image(string imageName)
+        {
+            var image = System.IO.File.OpenRead("..\\EasyFest\\Images\\" + imageName + ".jpg");
+            return File(image, "image/jpeg");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

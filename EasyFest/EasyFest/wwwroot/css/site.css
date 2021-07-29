@@ -76,7 +76,12 @@ body {
 
 /* CUSTOM */
 
-.commentsContainer{
+.festInfoContainer {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.commentsContainer {
     max-height: 365px;
     overflow-y: auto;
 }

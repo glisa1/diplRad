@@ -35,6 +35,13 @@ namespace Storage.Services.CommentsService
 
         public List<Comment> GetAllCommentsForFestival(string festivalId) => _comments.Find(x => x.Festival.Id == festivalId).ToList();
 
+        public async Task<int> GetNumberOfCommentsForFestival(string festivalId)
+        {
+            var filter = Builders<Comment>.Filter.Eq(s => s.FestivalId, festivalId);
+
+            return (int)await _comments.CountDocumentsAsync(filter);
+        }
+
         public async Task<List<Comment>> GetAllCommentsForFestivalAsync(string festivalId)
             => await _comments.Find(x => x.Festival.Id == festivalId).ToListAsync();
 

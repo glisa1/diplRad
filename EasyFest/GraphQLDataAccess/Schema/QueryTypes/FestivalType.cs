@@ -48,6 +48,9 @@ namespace GraphQLDataAccess.Schema.Types
             descriptor.Field(f => f.Description)
                 .Description("Description for festival.")
                 .Type<StringType>();
+            descriptor.Field(f => f.ImageName)
+                .Description("Image for festival")
+                .Type<StringType>();
             descriptor.Field(f => f.Rate)
                 .Description("Rate of festival.")
                 .Type<NonNullType<FloatType>>()
@@ -55,6 +58,14 @@ namespace GraphQLDataAccess.Schema.Types
                 {
                     var initiative = context.Parent<Storage.Models.Festival>();
                     return await _rateService.GetRateForFestivalAsync(initiative.Id);
+                });
+            descriptor.Field(f => f.NumberOfComments)
+                .Description("Gets the number of comments for festival.")
+                .Type<NonNullType<IntType>>()
+                .Resolve(async context =>
+                {
+                    var initiative = context.Parent<Storage.Models.Festival>();
+                    return await _commentsService.GetNumberOfCommentsForFestival(initiative.Id);
                 });
             descriptor.Field(f => f.FestivalLocation)
                 .Description("Location of festival.")

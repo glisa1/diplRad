@@ -25,8 +25,14 @@ namespace EasyFest.Models
         [JsonProperty("description")]
         public string Description { get; set; }
 
+        [JsonProperty("imageName")]
+        public string ImageName { get; set; }
+
         [JsonProperty("rate")]
         public double Rate { get; set; }
+
+        [JsonProperty("numberOfComments")]
+        public int NumberOfComments { get; set; }
 
         [JsonProperty("festivalLocation")]
         public FestivalLocation FestivalLocation { get; set; }
