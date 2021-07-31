@@ -81,6 +81,11 @@ namespace GraphQLDataAccess.Schema
             return _usersService.GetUsers();
         }
 
+        public async Task<double> GetUserRateForFestival(string festivalId, string userId)
+        {
+            return await _rateService.GetRateForFestivalGivenByUser(festivalId, userId);
+        }
+
         #endregion
     }
 }

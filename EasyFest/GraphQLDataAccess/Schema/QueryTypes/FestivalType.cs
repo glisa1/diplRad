@@ -59,6 +59,14 @@ namespace GraphQLDataAccess.Schema.Types
                     var initiative = context.Parent<Storage.Models.Festival>();
                     return await _rateService.GetRateForFestivalAsync(initiative.Id);
                 });
+            //descriptor.Field(f => f.RateByCurrentUser)
+            //    .Description("Rate given to festival by current user.")
+            //    .Type<FloatType>()
+            //    .Resolve(async context =>
+            //    {
+            //        var initiative = context.Parent<Storage.Models.Festival>();
+            //        return await _rateService.GetRateForFestivalGivenByUser(initiative.Id);
+            //    });
             descriptor.Field(f => f.NumberOfComments)
                 .Description("Gets the number of comments for festival.")
                 .Type<NonNullType<IntType>>()

@@ -110,6 +110,7 @@ namespace GraphQLDataAccess.Schema
                 CommentBody = input.CommentBody,
                 UserId = input.UserId,
                 FestivalId = input.FestivalId,
+                CreatedOn = DateTime.Now,
                 Festival = festival,
                 User = user
             };
@@ -119,7 +120,7 @@ namespace GraphQLDataAccess.Schema
             return new CommentCreatedPayload(newComment, input.ClientMutationId);
         }
 
-        public async Task<CommentCreatedPayload> UpdateComment(CreateCommentInput input)
+        public async Task<CommentCreatedPayload> UpdateComment(UpdateCommentInput input)
         {
             if (string.IsNullOrEmpty(input.CommentBody))
             {
@@ -406,7 +407,7 @@ namespace GraphQLDataAccess.Schema
 
             await _rateService.InsertRateAsync(newRate);
 
-            return new RateCreatedPayload(newRate, input.ClientMutationId);
+            return new RateCreatedPayload(newRate, festival, input.ClientMutationId);
         }
 
         public async Task<RateCreatedPayload> UpdateRate(CreateRateInput input)
@@ -471,7 +472,8 @@ namespace GraphQLDataAccess.Schema
 
             await _rateService.UpdateRateAsync(newRate);
 
-            return new RateCreatedPayload(newRate, input.ClientMutationId);
+
+            return new RateCreatedPayload(newRate, festival, input.ClientMutationId);
         }
 
         #endregion

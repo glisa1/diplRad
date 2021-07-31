@@ -11,8 +11,8 @@ namespace GraphQLDataAccess.Schema.MutationTypes
         protected override void Configure(IObjectTypeDescriptor<RateMutation> descriptor)
         {
             descriptor.Description("Mutation used to create or update rates.");
-            descriptor.Field(f => f.CreateRate(default))
-                .Description("Creates rate.");
+            //descriptor.Field(f => f.CreateRate(default))
+            //    .Description("Creates rate.");
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿var ratedByUser = 0;
+
+$(document).ready(function () {
     var mapArea = $('#map');
     if (mapArea == undefined) {
         return;
@@ -25,12 +27,18 @@
 
     // RADIAL PROGRESS BAR
     var festRate = $('#FestivalRate').val();
-    var max = -219.99078369140625;
-    $.each($('.progress'), function (index, value) {
-        percent = festRate * 20;
-        $(value).children($('.fill')).attr('style', 'stroke-dashoffset: ' + ((100 - percent) / 100) * max);
-        $(value).children($('.value')).text(festRate + '/5.00');
-    });
+    InitProgressBar(festRate);
+    //var max = -219.99078369140625;
+    //$.each($('.progress'), function (index, value) {
+    //    percent = festRate * 20;
+    //    $(value).children($('.fill')).attr('style', 'stroke-dashoffset: ' + ((100 - percent) / 100) * max);
+    //    $(value).children($('.value')).text(festRate + '/5.00');
+    //});
+
+    GetRatedByUser();
+
+    //SetRating($('#RatedByUser').val());
+    //SetRating();
 });
 
 $('#addNewComment').click(function () {
@@ -41,8 +49,112 @@ $('#addNewComment').click(function () {
     }
 
     $('#newCommentValidation').hide();
-    alert('Treba pozvati mutaciju sa tekstom:' + commentText);
+    //string userId, string festivalId, string commentBody
+    $.ajax({
+        type: "POST",
+        url: "/Festival/PostComment",
+        data: {
+            'userId': $('#LoggedUserId').val(), 'festivalId': $('#FestivalId').val(), 'commentBody': commentText
+        },
+        success: function (result) {
+            if (result.code == 200) {
+                AddNewComment(commentText);
+                $('#newCommentText').val('');
+            }
+        }
+    });
 });
+
+$('.ratingStar').change(function () {
+    var rateVal = $(this).val();
+    var link = "/Festival/CreateRate";
+    if (ratedByUser > 0) {
+        link = "/Festival/UpdateRate";
+    }
+
+    $.ajax({
+        data: {
+            'userId': $('#LoggedUserId').val(), 'festivalId': $('#FestivalId').val(), 'rateValue': rateVal},
+        type: "POST",
+        url: link,
+        success: function (result) {
+            if (result.code == 200) {
+                InitProgressBar(result.rate);
+            }
+        }
+    });
+});
+
+//Sets rating star if user alerady voted.
+function SetRating() {
+    if (ratedByUser == 0.5) {
+        $('#starhalf').prop('checked', true);
+    }
+    else if (ratedByUser == 1) {
+        $('#star1').prop('checked', true);
+    }
+    else if (ratedByUser == 1.5) {
+        $('#star1half').prop('checked', true);
+    }
+    else if (ratedByUser == 2) {
+        $('#star2').prop('checked', true);
+    }
+    else if (ratedByUser == 2.5) {
+        $('#star2half').prop('checked', true);
+    }
+    else if (ratedByUser == 3) {
+        $('#star3').prop('checked', true);
+    }
+    else if (ratedByUser == 3.5) {
+        $('#star3half').prop('checked', true);
+    }
+    else if (ratedByUser == 4) {
+        $('#star4').prop('checked', true);
+    }
+    else if (ratedByUser == 4.5) {
+        $('#star4half').prop('checked', true);
+    }
+    else if (ratedByUser == 5) {
+        $('#star5').prop('checked', true);
+    }
+}
+
+function GetRatedByUser() {
+    //var queryToSend = { 'query': 'query{festivalById(id: "' + $('#FestivalId').val() + '"){rateByCurrentUser}}' };
+    $.ajax({
+        type: "post",
+        url: "/Festival/GetUserRateForFestival",
+        data: { 'festivalId': $('#FestivalId').val(), 'userId': $('#LoggedUserId').val()},
+        success: function (response) {
+            if (response.code == 200) {
+                ratedByUser = response.rate;
+                SetRating();
+            }
+        },
+        error: function (response) {
+            console.log(response);
+        }
+    });
+}
+
+function InitProgressBar(progress) {
+    var max = -219.99078369140625;
+    $.each($('.progress'), function (index, value) {
+        percent = progress * 20;
+        $(value).children($('.fill')).attr('style', 'stroke-dashoffset: ' + ((100 - percent) / 100) * max);
+        $(value).children($('.value')).text(progress + '/5.00');
+    });
+}
+
+function AddNewComment(commentText) {
+    var newElem = '<li><div class="commenterImage"><img src="https://placekitten.com/50/50" />';
+    newElem += '<span class="sub-text">@comment.User.Username</span></div>';
+    newElem += '<div class="commentText">';
+    newElem += '<p class="">' + commentText + '</p> <span class="date sub-text">dd MMMM yyyy</span>';
+    newElem += '</div></li>';
+
+    $('#commentListUl').append(newElem);
+}
 
 //function setModal() {
 //    // Get the modal

@@ -30,6 +30,10 @@ namespace EasyFest.Models
 
         [JsonProperty("rate")]
         public double Rate { get; set; }
+                
+        //Gets rate given to certain festival by current user.
+        [JsonProperty("rateByCurrentUser")]
+        public double RateByCurrentUser { get; set; }
 
         [JsonProperty("numberOfComments")]
         public int NumberOfComments { get; set; }
@@ -47,6 +51,12 @@ namespace EasyFest.Models
     //    public FestivalLocation Location { get; set; }
     //}
 
+    public class FestivalForQuery
+    {
+        [JsonProperty("festival")]
+        public Festival Festival { get; set; }
+    }
+
     public class FestivalById
     {
         [JsonProperty("festivalById")]
@@ -62,5 +72,11 @@ namespace EasyFest.Models
 
         [JsonProperty("festivals")]
         public List<Festival> Festivals { get; set; }
+    }
+
+    public class UserRateForFestival
+    {
+        [JsonProperty("userRateForFestival")]
+        public double Rate { get; set; }
     }
 }

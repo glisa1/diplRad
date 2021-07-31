@@ -23,6 +23,9 @@ namespace Storage.Models
         public double Rate { get; set; }
 
         [BsonIgnore]
+        public double RateByCurrentUser { get; set; }
+
+        [BsonIgnore]
         public int NumberOfComments { get; set; }
 
         public int Month { get; set; }

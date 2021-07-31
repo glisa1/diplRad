@@ -2,6 +2,7 @@
 using HotChocolate.Data;
 using MongoDB.Driver;
 using Storage.Models;
+using Storage.Services.AuthenticationService;
 using Storage.Services.MongoDbConnectService;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,12 @@ namespace Storage.Services.RateService
         #region Init
 
         private readonly IMongoCollection<Rate> _rates;
+        private readonly IAuthenticationService _authService;
 
-        public RateService(IMongoDbConnectService db, IFestDatabaseSettings settings)
+        public RateService(IMongoDbConnectService db, IFestDatabaseSettings settings, IAuthenticationService auth)
         {
             _rates = db.database.GetCollection<Rate>(settings.RateCollectionName);
+            _authService = auth;
         }
 
         #endregion
@@ -62,6 +65,26 @@ namespace Storage.Services.RateService
 
             return result.Select(_ => _.Rate).FirstOrDefault();
         }
+
+        public async Task<double> GetRateForFestivalGivenByUser(string festivalId, string userId)
+        {
+            //var user = await _authService.GetAuthenticatedCustomer();
+            //if (user != null)
+            //{
+            //    var rate = await _rates.Find(x => x.FestivalId == festivalId && x.UserId == user.Id).FirstOrDefaultAsync();
+
+            //}
+
+            //return 0;
+
+            var rate = await _rates.Find(x => x.FestivalId == festivalId && x.UserId == userId).FirstOrDefaultAsync();
+
+            if (rate == null)
+                return 0;
+
+            return rate.RateValue;
+        }
+
         #endregion
     }
 }
