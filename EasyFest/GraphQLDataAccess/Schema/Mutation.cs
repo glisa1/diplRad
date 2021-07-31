@@ -530,14 +530,12 @@ namespace GraphQLDataAccess.Schema
 
         public async Task<LoginPayload> LoginUser(LoginInput input)
         {
-            bool emailEmpty = string.IsNullOrEmpty(input.Email);
-            bool usernameEmpty = string.IsNullOrEmpty(input.Username);
-            if (emailEmpty && usernameEmpty)
+            if (string.IsNullOrEmpty(input.Username))
             {
                 throw new QueryException(
                     ErrorBuilder.New()
-                        .SetMessage("The email or username mustn not be empty.")
-                        .SetCode("EMAIL_USERNAME_EMPTY")
+                        .SetMessage("The username mustn not be empty.")
+                        .SetCode("USERNAME_EMPTY")
                         .Build());
             }
 
@@ -550,13 +548,7 @@ namespace GraphQLDataAccess.Schema
                         .Build());
             }
 
-            string userCredential;
-            if (emailEmpty)
-                userCredential = input.Username;
-            else
-                userCredential = input.Email;
-
-            var user = await _userService.GetUserWithUsernameOrEmailAsync(userCredential, emailEmpty);
+            var user = await _userService.GetUserWithUsernameAsync(input.Username);
 
             if (user is null)
             {

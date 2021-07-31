@@ -15,7 +15,7 @@ namespace Storage.Services.UserService
 
         Task<User> GetUserWithIdAsync(string userId);
 
-        Task<User> GetUserWithUsernameOrEmailAsync(string usernameOrEmail, bool isUsername);
+        Task<User> GetUserWithUsernameAsync(string username);
 
         void AddUser(User user);
 

@@ -24,6 +24,6 @@ namespace Storage.Services.AuthenticationService
         /// Get authenticated customer
         /// </summary>
         /// <returns>Customer</returns>
-        User GetAuthenticatedCustomer();
+        Task<User> GetAuthenticatedCustomer();
     }
 }

@@ -29,16 +29,9 @@ namespace Storage.Services.UserService
 
         public User GetUserWithId(string userId) => _users.Find(x => x.Id == userId).FirstOrDefault();
 
-        public async Task<User> GetUserWithUsernameOrEmailAsync(string usernameOrEmail, bool isUsername)
+        public async Task<User> GetUserWithUsernameAsync(string username)
         {
-            if (isUsername)
-            {
-                return await _users.Find(x => x.Username == usernameOrEmail).FirstOrDefaultAsync();
-            }
-            else
-            {
-                return await _users.Find(x => x.Email == usernameOrEmail).FirstOrDefaultAsync();
-            }
+            return await _users.Find(x => x.Username == username).FirstOrDefaultAsync();
         }
 
         public async Task<User> GetUserWithIdAsync(string userId) => await _users.Find(x => x.Id == userId).FirstOrDefaultAsync();

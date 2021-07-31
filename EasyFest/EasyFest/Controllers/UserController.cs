@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EasyFest.Factories;
+using EasyFest.Models;
+using GraphQLDataAccess.Schema.Models;
 using Microsoft.AspNetCore.Mvc;
 using Storage.Models;
 using Storage.Services.AuthenticationService;
@@ -13,10 +16,13 @@ namespace EasyFest.Controllers
         #region Init
 
         private readonly IAuthenticationService _authService;
+        private readonly IHttpClientFactory _client;
 
-        public UserController(IAuthenticationService authenticationService)
+        public UserController(IAuthenticationService authenticationService,
+                                IHttpClientFactory httpClientFactory)
         {
             _authService = authenticationService;
+            _client = httpClientFactory;
         }
 
         #endregion
@@ -26,18 +32,40 @@ namespace EasyFest.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            TempData.Add("hasError", false);
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(int testId)
+        public async Task<IActionResult> Login(UserLoginModel model)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var mutationString = GraphQLCommModel.MutationLogInUser
+                .Replace("{0}", model.Username)
+                .Replace("{1}", model.Password);
+
+            var result = await _client.MutationDo<LoginInput>(mutationString);
+
+            if (result.Errors != null)
+            {
+                TempData.Add("hasError", true);
+                TempData.Add("errorMessage", result.Errors[0].Message);
+                return View("Login");
+            }
+
+            await _authService.SignInAsync(new Storage.Models.User { Username = model.Username }, true);
+
+            return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            return View();
+            await _authService.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
 
         #endregion

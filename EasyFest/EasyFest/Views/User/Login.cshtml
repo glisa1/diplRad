@@ -1,13 +1,46 @@
-﻿
+﻿@model UserLoginModel
 @{
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Login</h1>
-
-@Html.BeginForm("Login", "User", FormMethod.Post)
+@if ((bool)TempData["hasError"])
 {
-    @Html.Hidden("testId", 20);
-    <button type="submit">Log in</button>
+    @Html.Hidden("HasError", true);
+    @Html.Hidden("ErrorMessage", TempData["errorMessage"].ToString());
 }
+
+<h1 class="text-center mb-3" style="font-size: 2.5em;">Login</h1>
+
+<form asp-action="Login" asp-controller="User" method="post" class="g-3" autocomplete="off">
+    <div class="form-group">
+        <label asp-for="Username" class="control-label"></label>
+        <input asp-for="Username" aria-describedby="emailHelp" class="form-control" />
+        <small id="usernameHelp" class="form-text text-muted">Enter your username for better experience.</small>
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password" class="control-label"></label>
+        <input asp-for="Password" aria-describedby="passwordHelp" class="form-control" />
+        <small id="passwordHelp" class="form-text text-muted">Don't forget your password.</small>
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Log in</button>
+</form>
+
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <img src="~/modalError.png" alt="Error" style="width:50px; height:50px; margin-left:45%;" />
+        <p style="margin-top:5px; font-size:20px;" id="errorMessageModal">Can not be emtpy!</p>
+    </div>
+
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Login.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>

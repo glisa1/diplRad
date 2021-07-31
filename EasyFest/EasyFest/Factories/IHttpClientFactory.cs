@@ -9,5 +9,7 @@ namespace EasyFest.Factories
     public interface IHttpClientFactory
     {
         Task<ResponseData<T>> QueryGet<T>(string queryValue);
+
+        Task<ResponseData<T>> MutationDo<T>(string mutationValue);
     }
 }
