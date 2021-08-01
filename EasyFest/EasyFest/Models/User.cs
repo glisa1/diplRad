@@ -18,6 +18,9 @@ namespace EasyFest.Models
         [JsonProperty("email")]
         public string Email { get; set; }
 
+        [JsonProperty("isAdmin")]
+        public bool IsAdmin { get; set; }
+
         [JsonProperty("commentsPostedByUser")]
         public int CommentsPostedByUser { get; set; }
 
@@ -32,6 +35,12 @@ namespace EasyFest.Models
     {
         [JsonProperty("userById")]
         public User User { get; set; }
+    }
+
+    public class DeleteUserPayload
+    {
+        [JsonProperty("deleteUser")]
+        public bool Status { get; set; }
     }
 
     public class UserLoginModel

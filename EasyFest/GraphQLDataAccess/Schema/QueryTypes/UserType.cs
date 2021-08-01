@@ -41,6 +41,9 @@ namespace GraphQLDataAccess.Schema.Types
             descriptor.Field(f => f.Salt)
                 .Description("Password salt.")
                 .Type<NonNullType<StringType>>();
+            descriptor.Field(f => f.IsAdmin)
+                .Description("Is user administrator.")
+                .Type<BooleanType>();
             descriptor.Field(f => f.CommentsPostedByUser)
                 .Description("Number of comments user posted.")
                 .Type<IntType>()

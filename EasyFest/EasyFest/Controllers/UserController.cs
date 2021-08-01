@@ -111,6 +111,17 @@ namespace EasyFest.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteAccount(string userId)
+        {
+            await _authService.SignOutAsync();
+
+            var mutation = GraphQLCommModel.MutationDeleteUser.Replace("{0}", userId);
+            var result = await _client.QueryGet<DeleteUserPayload>(mutation);
+
+            return Json(new { code = 200 });
+        }
+
         #endregion
 
     }

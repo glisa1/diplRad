@@ -16,6 +16,7 @@ namespace Storage.Services.CommentsService
 
         //private readonly IMongoDbConnectService _dbConnection;
         private readonly IMongoCollection<Comment> _comments;
+        private readonly string AnonymousUserId = "6106de62946372b04f718750";
 
         public CommentsService(IMongoDbConnectService db, IFestDatabaseSettings settings)
         {
@@ -61,6 +62,14 @@ namespace Storage.Services.CommentsService
             var update = Builders<Comment>.Update.Set(s => s.CommentBody, model.CommentBody);
 
             var res = await _comments.UpdateOneAsync(filter, update);
+        }
+
+        public async Task SetCommentsAuthorToAnonymous(string userId)
+        {
+            var filter = Builders<Comment>.Filter.Eq(s => s.UserId, userId);
+            var update = Builders<Comment>.Update.Set(s => s.UserId, AnonymousUserId);
+
+            var res = await _comments.UpdateManyAsync(filter, update);
         }
 
         public async Task<int> GetNumberOfCommentsPostedByUser(string userId)

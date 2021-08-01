@@ -33,6 +33,8 @@ namespace Storage.Services.CommentsService
 
         Task UpdateCommentAsync(Comment model);
 
+        Task SetCommentsAuthorToAnonymous(string userId);
+
         Task<int> GetNumberOfCommentsPostedByUser(string userId);
     }
 }

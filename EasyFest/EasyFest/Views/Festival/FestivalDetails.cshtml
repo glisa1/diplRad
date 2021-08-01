@@ -4,14 +4,16 @@
     ViewData["Title"] = "FestivalDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
     bool loggedIn = (bool)TempData["loggedInUser"];
+    bool isAdmin = (bool)TempData["IsAdmin"];
     string dynamicDisabled = loggedIn ? string.Empty : "disabled";
+    string monthName = new DateTime(2021, Model.Data.Festival.Month, 1).ToString("MMMM");
 }
     @*@Html.Hidden("RatedByUser", Model.Data.Festival.RateByCurrentUser)*@
     @Html.Hidden("FestivalId", Model.Data.Festival.Id)
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
-                <h1>@Model.Data.Festival.Name</h1>
+            <div class="col-md-7">
+                <h1>@Model.Data.Festival.Name<small>, starts @monthName @Model.Data.Festival.Day.</small></h1>
                 <div class="descriptionContainer">
                     <p>@Model.Data.Festival.Description</p>
                 </div>
@@ -35,6 +37,12 @@
                     <input class="ratingStar" type="radio" id="starhalf" name="rating" value="0.5" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
                 </fieldset>
             </div>
+            @if (isAdmin)
+            {
+                <div class="col-md-1">
+                    <button type="button" onclick="deleteFestival()" class="btn btn-danger">Delete festival</button>
+                </div>
+            }
         </div>
 
         @Html.Hidden("FestivalName", Model.Data.Festival.Name)
@@ -54,17 +62,6 @@
         }
 
         <div class="col-md-6 float-right">
-            @*<h3>Comments</h3>
-            <div id="comments" class="commentsContainer">
-                @foreach (var comment in Model.Data.Festival.Comments)
-                {
-                    <div id="commentBody" class="commentContainer">
-                        <strong>@comment.User.Username</strong>
-                        <p>@comment.CommentBody</p>
-                    </div>
-                }
-            </div>
-            <button class="newCommentBtn" id="myBtn">Add comment</button>*@
             <div class="actionBox" @*style="max-height: 400px; overflow-y: auto;"*@>
                 <ul id="commentListUl" class="commentList">
                     @if (Model.Data.Festival.Comments.Count > 0)
@@ -107,6 +104,20 @@
                 }
             </div>
         </div>
+    </div>
+
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p style="margin-top:5px; font-size:20px;" id="errorMessageModal">Are you sure you want to delete this festival and all related data?</p>
+            <div style="width:100%;">
+                <button id="btnNo" type="button" class="btn btn-info">No</button>
+                <button id="btnYes" type="button" class="btn btn-danger float-right">Yes</button>
+            </div>
+        </div>
+
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -18,6 +18,7 @@ namespace Storage.Services.RateService
 
         private readonly IMongoCollection<Rate> _rates;
         private readonly IAuthenticationService _authService;
+        private readonly string AnonymousUserId = "6106de62946372b04f718750";
 
         public RateService(IMongoDbConnectService db, IFestDatabaseSettings settings, IAuthenticationService auth)
         {
@@ -44,6 +45,14 @@ namespace Storage.Services.RateService
             var update = Builders<Rate>.Update.Set("RateValue", model.RateValue);
 
             await _rates.UpdateOneAsync(filter, update);
+        }
+
+        public async Task SetRatesAuthorToAnonymous(string userId)
+        {
+            var filter = Builders<Rate>.Filter.Eq(x => x.UserId, userId);
+            var update = Builders<Rate>.Update.Set(x => x.UserId, AnonymousUserId);
+
+            await _rates.UpdateManyAsync(filter, update);
         }
 
         /// <summary>

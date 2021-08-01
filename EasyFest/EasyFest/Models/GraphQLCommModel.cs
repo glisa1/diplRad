@@ -16,7 +16,7 @@ namespace EasyFest.Models
         /// <summary>
         /// Used to get informations about currently logged in user.
         /// </summary>
-        public static string QueryLoggedUser => "query {user {id username}}";
+        public static string QueryLoggedUser => "query {user {id username isAdmin}}";
 
         /// <summary>
         /// Gets query by id with details and location.
@@ -112,5 +112,12 @@ namespace EasyFest.Models
         public static string MutationCreateComment =>
             "mutation {addComment(input: {" +
             "userId: \"{0}\", festivalId: \"{1}\", commentBody: \"{2}\"}){clientMutationId}}";
+
+        /// <summary>
+        /// Deletes given user.
+        /// {0} - User id
+        /// </summary>
+        public static string MutationDeleteUser =>
+            "mutation {deleteUser(userId: \"{0}\")}";
     }
 }

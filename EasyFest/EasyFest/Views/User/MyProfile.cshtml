@@ -16,7 +16,7 @@
     </div>
 }
 else
-{ 
+{
     var userModel = Model.Data.User;
     <div class="container-fluid">
         <div class="row">
@@ -45,7 +45,22 @@ else
         </div>
     </div>
 
-    <form>
-        <button type="submit" class="btn btn-danger mt-2">Delete account</button>
-    </form>
+    <button type="button" onclick="deleteAccount('@userModel.Id')" class="btn btn-danger mt-2">Delete account</button>
+
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p style="margin-top:5px; font-size:20px;" id="errorMessageModal">Are you sure you want to delete your profile?</p>
+            <div style="width:100%;">
+                <button id="btnNo" type="button" class="btn btn-info">No</button>
+                <button id="btnYes" type="button" class="btn btn-danger float-right">Yes</button>
+            </div>
+        </div>
+
+    </div>
 }
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/MyProfile.js"></script>

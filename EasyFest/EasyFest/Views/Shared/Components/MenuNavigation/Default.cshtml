@@ -23,6 +23,8 @@
                 {
                     TempData.Remove("loggedInUser");
                     TempData.Add("loggedInUser", false);
+                    TempData.Remove("IsAdmin");
+                    TempData.Add("IsAdmin", false);
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Register">Register</a>
                     </li>
@@ -34,6 +36,16 @@
                 {
                     TempData.Remove("loggedInUser");
                     TempData.Add("loggedInUser", true);
+                    if (Model.IsAdmin)
+                    {
+                        TempData.Remove("IsAdmin");
+                        TempData.Add("IsAdmin", true);
+                    }
+                    else
+                    {
+                        TempData.Remove("IsAdmin");
+                        TempData.Add("IsAdmin", false);
+                    }
                     @Html.Hidden("LoggedUserId", Model.Id);
                     @Html.Hidden("LoggedUsername", Model.Username);
                     <li class="nav-item">

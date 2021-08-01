@@ -23,7 +23,7 @@ namespace EasyFest.Components
             var user = await _authService.GetAuthenticatedCustomer();
             //var items = await GetItemsAsync(maxPriority, isDone);
             if (user != null)
-                return View(new User { Email = user.Email, Id = user.Id, Username = user.Username });
+                return View(new User { Email = user.Email, Id = user.Id, Username = user.Username, IsAdmin = user.IsAdmin });
             else
                 return View(new User());
         }

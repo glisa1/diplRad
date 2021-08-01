@@ -601,9 +601,13 @@ namespace GraphQLDataAccess.Schema
             return new LoginPayload(input.ClientMutationId);
         }
 
-        public async Task DeleteUser(string userId)
+        public async Task<bool> DeleteUser(string userId)
         {
+            await _rateService.SetRatesAuthorToAnonymous(userId);
+            await _commentService.SetCommentsAuthorToAnonymous(userId);
             await _userService.DeleteUserAsync(userId);
+
+            return true;
         }
 
         #endregion

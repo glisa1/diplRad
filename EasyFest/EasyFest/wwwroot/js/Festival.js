@@ -80,6 +80,7 @@ $('.ratingStar').change(function () {
         success: function (result) {
             if (result.code == 200) {
                 InitProgressBar(result.rate);
+                ratedByUser = rateVal;
             }
         }
     });
@@ -156,37 +157,59 @@ function AddNewComment(commentText, commentDate) {
     $('#commentListUl').append(newElem);
 }
 
-//function setModal() {
-//    // Get the modal
-//    var modal = document.getElementById("myModal");
+function deleteFestival() {
+    var festivalId = $('#FestivalId').val();
+    setModal(festivalId);
+}
 
-//    // Get the button that opens the modal
-//    var btn = document.getElementById("myBtn");
+function setModal(festivalId) {
+    // Get the modal
+    var modal = document.getElementById("myModal");
 
-//    // Get the <span> element that closes the modal
-//    var span = document.getElementsByClassName("close")[0];
+    // Get the button that opens the modal
+    var btnNo = document.getElementById("btnNo");
 
-//    // When the user clicks on the button, open the modal
-//    btn.onclick = function () {
-//        modal.style.display = "block";
-//    }
+    var btnYes = document.getElementById("btnYes");
 
-//    // When the user clicks on <span> (x), close the modal
-//    span.onclick = function () {
-//        emptyModalValues();
-//        modal.style.display = "none";
-//    }
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
 
-//    // When the user clicks anywhere outside of the modal, close it
-//    window.onclick = function (event) {
-//        if (event.target == modal) {
-//            emptyModalValues();
-//            modal.style.display = "none";
-//        }
-//    }
-//}
+    // When the user clicks on the button, open the modal
+    //btn.onclick = function () {
+    modal.style.display = "block";
+    //}
 
-//function emptyModalValues() {
-//    $('#newCommentValidation').hide();
-//    $('#newCommentText').val('');
-//}
+    btnNo.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    btnYes.onclick = function () {
+        deleteFestivalConfirmed(festivalId);
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+}
+
+function deleteFestivalConfirmed(festivalId) {
+    alert('Festival boom: ' + festivalId);
+    //$.ajax({
+    //    type: "POST",
+    //    data: { 'festivalId': festivalId },
+    //    url: '/User/DeleteAccount',
+    //    success: function (result) {
+    //        if (result.code == 200) {
+    //            location.href = '/Home/Index';
+    //        }
+    //    }
+    //})
+}

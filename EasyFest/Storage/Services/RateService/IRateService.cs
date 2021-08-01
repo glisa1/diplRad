@@ -21,6 +21,8 @@ namespace Storage.Services.RateService
 
         Task UpdateRateAsync(Rate model);
 
+        Task SetRatesAuthorToAnonymous(string userId);
+
         Task<double> GetRateForFestivalGivenByUser(string festivalId, string userId);
 
         Task<int> GetNumberOfRatesByUser(string userId);
