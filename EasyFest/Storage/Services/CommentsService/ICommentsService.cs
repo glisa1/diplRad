@@ -32,5 +32,7 @@ namespace Storage.Services.CommentsService
         Task DeleteCommentsByFestivalIdAsync(string festivalId);
 
         Task UpdateCommentAsync(Comment model);
+
+        Task<int> GetNumberOfCommentsPostedByUser(string userId);
     }
 }

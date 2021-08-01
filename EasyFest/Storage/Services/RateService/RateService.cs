@@ -85,6 +85,11 @@ namespace Storage.Services.RateService
             return rate.RateValue;
         }
 
+        public async Task<int> GetNumberOfRatesByUser(string userId)
+        {
+            return (int)await _rates.Find(x => x.UserId == userId).CountDocumentsAsync();
+        }
+
         #endregion
     }
 }

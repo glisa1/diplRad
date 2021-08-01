@@ -58,6 +58,12 @@ namespace GraphQLDataAccess.Schema
         }
 
         [UseProjection]
+        public async Task<Storage.Models.User> GetUserById(string id)
+        {
+            return await _usersService.GetUserWithIdAsync(id);
+        }
+
+        [UseProjection]
         public IExecutable<Storage.Models.FestivalLocation> GetFestivalLocations()
         {
             return _festivalLocationsService.GetFestivalLocations();

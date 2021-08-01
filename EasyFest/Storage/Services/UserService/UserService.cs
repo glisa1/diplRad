@@ -34,6 +34,11 @@ namespace Storage.Services.UserService
             return await _users.Find(x => x.Username == username).FirstOrDefaultAsync();
         }
 
+        public async Task<User> GetUserWithEmailAsync(string email)
+        {
+            return await _users.Find(x => x.Email == email).FirstOrDefaultAsync();
+        }
+
         public async Task<User> GetUserWithIdAsync(string userId) => await _users.Find(x => x.Id == userId).FirstOrDefaultAsync();
 
         public void AddUser(User user) => _users.InsertOne(user);

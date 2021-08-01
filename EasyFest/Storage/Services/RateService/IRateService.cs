@@ -22,5 +22,7 @@ namespace Storage.Services.RateService
         Task UpdateRateAsync(Rate model);
 
         Task<double> GetRateForFestivalGivenByUser(string festivalId, string userId);
+
+        Task<int> GetNumberOfRatesByUser(string userId);
     }
 }

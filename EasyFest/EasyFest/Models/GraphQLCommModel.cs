@@ -37,6 +37,19 @@ namespace EasyFest.Models
             "query {userRateForFestival(festivalId: \"{0}\", userId: \"{1}\")}";
 
         /// <summary>
+        /// Gets user by id.
+        /// {0} - User id
+        /// </summary>
+        public static string QueryGetUserById =>
+            "query {userById(id: \"{0}\"){id username email commentsPostedByUser ratesGivenByUser}}";
+
+        /// <summary>
+        /// Gets list of festivals for festivals map.
+        /// </summary>
+        public static string QueryGetFestivalMap =>
+            "query{festivals{id name rate numberOfComments festivalLocation{latitude longitude}}}";
+
+        /// <summary>
         /// Given user is loged in.
         /// {0} - Username
         /// {1} - Password
@@ -45,6 +58,20 @@ namespace EasyFest.Models
             "mutation {loginUser(input: {" + 
             "username: \"{0}\", " + 
             "password: \"{1}\", " +
+            "clientMutationId: \"testMutationId\"" +
+            "}){clientMutationId} }";
+
+        /// <summary>
+        /// Creates user.
+        /// {0} - Username
+        /// {1} - Password
+        /// {2} - Email
+        /// </summary>
+        public static string MutationCreateUser =>
+            "mutation {addUser(input: {" +
+            "username: \"{0}\", " +
+            "password: \"{1}\", " +
+            "email: \"{2}\", " +
             "clientMutationId: \"testMutationId\"" +
             "}){clientMutationId} }";
 

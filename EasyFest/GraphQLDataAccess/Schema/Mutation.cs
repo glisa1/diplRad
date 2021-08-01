@@ -509,6 +509,26 @@ namespace GraphQLDataAccess.Schema
                         .Build());
             }
 
+            var user = await _userService.GetUserWithUsernameAsync(input.Username);
+            if (user != null)
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("Username already exists.")
+                        .SetCode("USERNAME_EXISTS")
+                        .Build());
+            }
+
+            user = await _userService.GetUserWithEmailAsync(input.Email);
+            if (user != null)
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("Email already exists.")
+                        .SetCode("EMAIL_EXISTS")
+                        .Build());
+            }
+
             string salt = Guid.NewGuid().ToString("N");
 
             byte[] hash;

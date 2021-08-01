@@ -63,6 +63,11 @@ namespace Storage.Services.CommentsService
             var res = await _comments.UpdateOneAsync(filter, update);
         }
 
+        public async Task<int> GetNumberOfCommentsPostedByUser(string userId)
+        {
+            return (int)await _comments.Find(x => x.UserId == userId).CountDocumentsAsync();
+        }
+
         #endregion
     }
 }

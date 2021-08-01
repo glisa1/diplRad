@@ -1,0 +1,51 @@
+﻿@model ResponseData<UserById>
+
+@{
+    ViewData["Title"] = "My profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>My profile</h1>
+
+@if (Model.Errors != null)
+{
+    <div class="container-fluid">
+        <h3>We are sorry!</h3>
+        <p>An error occured while trying to load data about your profile.</p>
+        <p>@Model.Errors[0].Message</p>
+    </div>
+}
+else
+{ 
+    var userModel = Model.Data.User;
+    <div class="container-fluid">
+        <div class="row">
+            <div class="profileImage col-md-4 col-lg-4">
+                <img src="https://placekitten.com/150/150" />
+                @*<span class="sub-text">@comment.User.Username</span>*@
+            </div>
+            <div class="col-md-8 col-lg-8">
+                <div class="form-control">
+                    <label>Username:</label>
+                    <span>@userModel.Username</span>
+                </div>
+                <div class="form-control">
+                    <label>Email address:</label>
+                    <span>@userModel.Email</span>
+                </div>
+                <div class="form-control">
+                    <label>Comments posted:</label>
+                    <span>@userModel.CommentsPostedByUser</span>
+                </div>
+                <div class="form-control">
+                    <label>Rates given:</label>
+                    <span>@userModel.RatesGivenByUser</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form>
+        <button type="submit" class="btn btn-danger mt-2">Delete account</button>
+    </form>
+}

@@ -1,0 +1,40 @@
+﻿@model ResponseData<FestivalList>
+@{
+    ViewData["Title"] = "Festival map";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Festival map</h1>
+
+<div class="container-fluid">
+    @if (Model.Errors != null)
+    {
+        <h3>We are sorry!</h3>
+        <p>An error occured while trying to load data about festivals.</p>
+        <p>@Model.Errors[0].Message</p>
+    }
+    else
+    {
+        <div class="col-md-11 float-left">
+            <div id="allMap" class="allMapContainer"></div>
+        </div>
+
+        int festivalLocations = 0;
+        foreach(var fest in Model.Data.Festivals)
+        {
+            if (fest.FestivalLocation != null)
+            {
+                @Html.Hidden("festLocId" + festivalLocations.ToString(), fest.Id);
+                @Html.Hidden("festLocName" + festivalLocations.ToString(), fest.Name);
+                @Html.Hidden("festLocRate" + festivalLocations.ToString(), fest.Rate);
+                @Html.Hidden("festLocLat" + festivalLocations.ToString(), fest.FestivalLocation.Latitude);
+                @Html.Hidden("festLocLon" + festivalLocations.ToString(), fest.FestivalLocation.Longitude);
+                festivalLocations++;
+            }
+        }
+        @Html.Hidden("FesLocNum", festivalLocations);
+    }
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/FestivalMap.js"></script>

@@ -17,6 +17,12 @@ namespace Storage.Models
 
         public string Email { get; set; }
 
+        [BsonIgnore]
+        public int CommentsPostedByUser { get; set; }
+
+        [BsonIgnore]
+        public int RatesGivenByUser { get; set; }
+
         [GraphQLIgnore]
         public string Password { get; set; }
 

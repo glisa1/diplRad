@@ -90,7 +90,14 @@ namespace EasyFest.Controllers
                 return Json(new { code = 400, status = "ERROR" });
             }
 
-            return Json(new { code = 200 });
+            return Json(new { code = 200, creationDate = DateTime.Now.ToString("dddd, dd MMMM yyyy") });
+        }
+
+        public async Task<IActionResult> FestivalMap()
+        {
+            var festivals = await _client.QueryGet<FestivalList>(GraphQLCommModel.QueryGetFestivalMap);
+
+            return View(festivals);
         }
     }
 }

@@ -58,7 +58,7 @@ $('#addNewComment').click(function () {
         },
         success: function (result) {
             if (result.code == 200) {
-                AddNewComment(commentText);
+                AddNewComment(commentText, result.creationDate);
                 $('#newCommentText').val('');
             }
         }
@@ -146,11 +146,11 @@ function InitProgressBar(progress) {
     });
 }
 
-function AddNewComment(commentText) {
+function AddNewComment(commentText, commentDate) {
     var newElem = '<li><div class="commenterImage"><img src="https://placekitten.com/50/50" />';
-    newElem += '<span class="sub-text">@comment.User.Username</span></div>';
+    newElem += '<span class="sub-text">' + $('#LoggedUsername').val() + '</span></div>';
     newElem += '<div class="commentText">';
-    newElem += '<p class="">' + commentText + '</p> <span class="date sub-text">dd MMMM yyyy</span>';
+    newElem += '<p class="">' + commentText + '</p> <span class="date sub-text">' + commentDate + '</span>';
     newElem += '</div></li>';
 
     $('#commentListUl').append(newElem);

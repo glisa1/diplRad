@@ -68,6 +68,49 @@ namespace EasyFest.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        public IActionResult Register()
+        {
+            TempData.Add("hasError", false);
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(UserRegisterModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Register");
+            }
+
+            var mutationString = GraphQLCommModel.MutationCreateUser
+                .Replace("{0}", model.Username)
+                .Replace("{1}", model.Password)
+                .Replace("{2}", model.Email);
+
+            var result = await _client.MutationDo<LoginInput>(mutationString);
+
+            if (result.Errors != null)
+            {
+                TempData.Add("hasError", true);
+                TempData.Add("errorMessage", result.Errors[0].Message);
+                return View("Register");
+            }
+
+            await _authService.SignInAsync(new Storage.Models.User { Username = model.Username }, true);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MyProfile(string userId)
+        {
+            var queryString = GraphQLCommModel.QueryGetUserById.Replace("{0}", userId);
+            var model = await _client.QueryGet<UserById>(queryString);
+
+            return View(model);
+        }
+
         #endregion
 
     }
