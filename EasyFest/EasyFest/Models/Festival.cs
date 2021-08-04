@@ -1,5 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
 
 namespace EasyFest.Models
 {
@@ -21,6 +25,12 @@ namespace EasyFest.Models
 
         [JsonProperty("day")]
         public int Day { get; set; }
+
+        [JsonProperty("endDay")]
+        public int EndDay { get; set; }
+
+        [JsonProperty("endMonth")]
+        public int EndMonth { get; set; }
 
         [JsonProperty("description")]
         public string Description { get; set; }
@@ -78,5 +88,35 @@ namespace EasyFest.Models
     {
         [JsonProperty("userRateForFestival")]
         public double Rate { get; set; }
+    }
+
+    public class NewFestivalViewModel
+    {
+        public string Id { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string Name { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Start date")]
+        public DateTime StartDate { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "End date")]
+        public DateTime EndDate { get; set; }
+
+        [StringLength(500)]
+        public string Description { get; set; }
+
+        public string ImageName { get; set; }
+
+        [Required]
+        [Display(Name = "File")]
+        public IFormFile Image { get; set; }
+
+        public FestivalLocationViewModel FestivalLocation { get; set; }
     }
 }

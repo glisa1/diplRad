@@ -99,5 +99,55 @@ namespace EasyFest.Controllers
 
             return View(festivals);
         }
+
+        public async Task<IActionResult> DeleteFestival(string festivalId, string userId)
+        {
+            var queryString = GraphQLCommModel.QueryGetIsUserAdmin
+                .Replace("{0}", userId);
+
+            var user = await _client.QueryGet<UserById>(queryString);
+
+            if (user.Errors != null)
+            {
+                return Json(new { code = 400, message = user.Errors[0].Message, authorized = true });
+            }
+
+            if (!user.Data.User.IsAdmin)
+            {
+                return Json(new { code = 400, authorized = false });
+            }
+
+            queryString = GraphQLCommModel.QueryFestivalImageName
+                .Replace("{0}", festivalId);
+
+            var festival = await _client.QueryGet<FestivalById>(queryString);
+
+            if (festival.Errors != null)
+            {
+                return Json(new { code = 400, message = festival.Errors[0].Message, authorized = true });
+            }
+
+            var mutationString = GraphQLCommModel.MutationDeleteFestival
+                .Replace("{0}", festivalId);
+
+            var result = await _client.MutationDo<UpdateRateQueryModel>(mutationString);
+
+            if (result.Errors != null)
+            {
+                return Json(new { code = 400, message = result.Errors[0].Message, authorized = true });
+            }
+
+            System.IO.File.Delete("..\\EasyFest\\Images\\" + festival.Data.Festival.ImageName + ".jpg");
+
+            return Json(new { code = 200 });
+        }
+
+        public IActionResult NewFestival()
+        {
+            if (!(bool)TempData["IsAdmin"])
+                return Forbid();
+
+            return View();
+        }
     }
 }

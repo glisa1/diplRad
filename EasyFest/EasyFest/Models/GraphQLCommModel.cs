@@ -24,9 +24,17 @@ namespace EasyFest.Models
         /// </summary>
         public static string QueryFestivalDetailsWithLocation => 
             "query {festivalById(id: \"{0}\")" +
-            " { id name day month rate description imageName " + 
+            " { id name day month rate description imageName endDay endMonth " + 
             " festivalLocation{ address city state longitude latitude } " + 
             " commentsList{id commentBody createdOn user{id username}} }}";
+
+        /// <summary>
+        /// Gets query by id with details and location.
+        /// {0} - id of festival
+        /// </summary>
+        public static string QueryFestivalImageName =>
+            "query {festivalById(id: \"{0}\")" +
+            " { imageName }}";
 
         /// <summary>
         /// Gets rate given by user for festival.
@@ -42,6 +50,13 @@ namespace EasyFest.Models
         /// </summary>
         public static string QueryGetUserById =>
             "query {userById(id: \"{0}\"){id username email commentsPostedByUser ratesGivenByUser}}";
+
+        /// <summary>
+        /// Gets user by id.
+        /// {0} - User id
+        /// </summary>
+        public static string QueryGetIsUserAdmin =>
+            "query {userById(id: \"{0}\"){isAdmin}}";
 
         /// <summary>
         /// Gets list of festivals for festivals map.
@@ -119,5 +134,12 @@ namespace EasyFest.Models
         /// </summary>
         public static string MutationDeleteUser =>
             "mutation {deleteUser(userId: \"{0}\")}";
+
+        /// <summary>
+        /// Deletes given festival.
+        /// {0} - Festival id
+        /// </summary>
+        public static string MutationDeleteFestival =>
+            "mutation {deleteFestival(festivalId: \"{0}\")}";
     }
 }

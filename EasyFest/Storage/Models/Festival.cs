@@ -35,6 +35,10 @@ namespace Storage.Models
         public string ImageName { get; set; }
 
         public int Day { get; set; }
+
+        public int EndDay { get; set; }
+
+        public int EndMonth { get; set; }
         
         [BsonIgnore]
         public FestivalLocation FestivalLocation { get; set; }

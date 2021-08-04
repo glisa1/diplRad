@@ -1,0 +1,97 @@
+﻿@model NewFestivalViewModel
+@{
+    ViewData["Title"] = "NewFestival";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create new festival</h1>
+
+<ul class="nav nav-pills">
+    <li class="nav-item">
+        <a class="nav-link newFestivalNavLink active" id="detailsPill" aria-current="page" href="#">Festival details</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link newFestivalNavLink" id="locationPill" href="#">Location details</a>
+    </li>
+</ul>
+
+<form asp-action="Register" asp-controller="User" method="post" class="g-3" autocomplete="off">
+    <div id="festivalDetailsContainer">
+        <div class="form-group mt-3">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" aria-describedby="nameHelp" class="form-control" />
+            <small id="nameHelp" class="form-text text-muted">Name of the festival.</small>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="control-label"></label>
+            <textarea asp-for="Description" aria-describedby="descHelp" class="form-control" style="max-height:90px;"></textarea>
+            <small id="descHelp" class="form-text text-muted">Tell us everything you know about this festival.</small>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-inline">
+            <div class="form-group mb-2">
+                <label asp-for="StartDate" class="control-label" style="justify-content: left;"></label>
+                <input asp-for="StartDate" aria-describedby="passwordRepeatHelp" class="form-control" />
+                <small id="passwordRepeatHelp" class="form-text text-muted">Day when show starts.</small>
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="EndDate" class="control-label ml-3" style="justify-content: left;"></label>
+                <input asp-for="EndDate" aria-describedby="passwordHelp" class="form-control mx-sm-3" />
+                <small id="passwordHelp" class="form-text text-muted">Day everyone goes home.</small>
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Image" class="control-label"></label>
+            <input asp-for="Image" aria-describedby="passwordHelp" class="form-control-file" />
+            <small id="passwordHelp" class="form-text text-muted">Give us nice picture of festival.</small>
+            <span asp-validation-for="Image" class="text-danger"></span>
+        </div>
+    </div>
+    <div id="festivalLocationContainer" style="display:none;">
+        <div id="newMap" class="newMapContainer mb-3 mt-3"></div>
+        <div class="form-inline">
+            <div class="form-group">
+                <label asp-for="FestivalLocation.Latitude" class="control-label" style="justify-content: left;"></label>
+                <input asp-for="FestivalLocation.Latitude" aria-describedby="passwordHelp" class="form-control mr-3" />
+                <small id="passwordHelp" class="form-text text-muted">Geographical latitude.</small>
+                <span asp-validation-for="FestivalLocation.Latitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FestivalLocation.Longitude" class="control-label" style="justify-content: left;"></label>
+                <input asp-for="FestivalLocation.Longitude" aria-describedby="passwordHelp" class="form-control mr-3" />
+                <small id="passwordHelp" class="form-text text-muted">Geographical longitude.</small>
+                <span asp-validation-for="FestivalLocation.Longitude" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-inline">
+            <div class="form-group">
+                <label asp-for="FestivalLocation.State" class="control-label" style="justify-content: left;"></label>
+                <input asp-for="FestivalLocation.State" aria-describedby="passwordHelp" class="form-control mr-3" />
+                <small id="passwordHelp" class="form-text text-muted">Festival's country.</small>
+                <span asp-validation-for="FestivalLocation.State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FestivalLocation.City" class="control-label" style="justify-content: left;"></label>
+                <input asp-for="FestivalLocation.City" aria-describedby="passwordHelp" class="form-control mr-3" />
+                <small id="passwordHelp" class="form-text text-muted">Festival's city.</small>
+                <span asp-validation-for="FestivalLocation.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FestivalLocation.Address" class="control-label" style="justify-content: left;"></label>
+                <input asp-for="FestivalLocation.Address" aria-describedby="passwordHelp" class="form-control mr-3" />
+                <small id="passwordHelp" class="form-text text-muted">Address of festival.</small>
+                <span asp-validation-for="FestivalLocation.Address" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+        <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/NewFestival.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>

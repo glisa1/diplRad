@@ -7,13 +7,14 @@
     bool isAdmin = (bool)TempData["IsAdmin"];
     string dynamicDisabled = loggedIn ? string.Empty : "disabled";
     string monthName = new DateTime(2021, Model.Data.Festival.Month, 1).ToString("MMMM");
+    string monthNameEnd = new DateTime(2021, Model.Data.Festival.EndMonth, 1).ToString("MMMM");
 }
     @*@Html.Hidden("RatedByUser", Model.Data.Festival.RateByCurrentUser)*@
     @Html.Hidden("FestivalId", Model.Data.Festival.Id)
     <div class="container">
         <div class="row">
             <div class="col-md-7">
-                <h1>@Model.Data.Festival.Name<small>, starts @monthName @Model.Data.Festival.Day.</small></h1>
+                <h1>@Model.Data.Festival.Name<small>, starts @monthName @Model.Data.Festival.Day ends @monthNameEnd @Model.Data.Festival.EndDay</small></h1>
                 <div class="descriptionContainer">
                     <p>@Model.Data.Festival.Description</p>
                 </div>
@@ -116,6 +117,16 @@
                 <button id="btnNo" type="button" class="btn btn-info">No</button>
                 <button id="btnYes" type="button" class="btn btn-danger float-right">Yes</button>
             </div>
+        </div>
+
+    </div>
+
+    <div id="myErrorModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <img src="~/modalError.png" alt="Error" style="width:50px; height:50px; margin-left:42%;" />
+            <p style="margin-top:30px; text-align:center; font-size:20px;" id="errorMessageModalError"></p>
         </div>
 
     </div>

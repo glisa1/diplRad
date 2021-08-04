@@ -200,16 +200,76 @@ function setModal(festivalId) {
     }
 }
 
+function CloseModal() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
+}
+
 function deleteFestivalConfirmed(festivalId) {
-    alert('Festival boom: ' + festivalId);
-    //$.ajax({
-    //    type: "POST",
-    //    data: { 'festivalId': festivalId },
-    //    url: '/User/DeleteAccount',
-    //    success: function (result) {
-    //        if (result.code == 200) {
-    //            location.href = '/Home/Index';
-    //        }
-    //    }
-    //})
+    var loggedInUser = $('#LoggedUserId').val();
+    $.ajax({
+        type: "POST",
+        data: { 'festivalId': festivalId, 'userId': loggedInUser },
+        url: '/Festival/DeleteFestival',
+        success: function (result) {
+            if (result.code == 200) {
+                location.href = '/Home/Index';
+            }
+            else {
+                if (!result.authorized) {
+                    CloseModal();
+                    setErrorModalText('You are not authorized for this action!');
+                    setErrorModal();
+                }
+                if (result.message) {
+                    CloseModal();
+                    setErrorModalText(result.message);
+                    setErrorModal();
+                }
+            }
+        }
+    })
+}
+
+function setErrorModal() {
+    // Get the modal
+    var modal = document.getElementById("myErrorModal");
+
+    // Get the button that opens the modal
+    //var btnNo = document.getElementById("btnNo");
+
+    //var btnYes = document.getElementById("btnYes");
+
+    // Get the <span> element that closes the modal
+    //var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    //btn.onclick = function () {
+    modal.style.display = "block";
+    //}
+
+    //btnNo.onclick = function () {
+    //    modal.style.display = "none";
+    //}
+
+    //btnYes.onclick = function () {
+    //    deleteFestivalConfirmed(festivalId);
+    //}
+
+    // When the user clicks on <span> (x), close the modal
+    //span.onclick = function () {
+    //    modal.style.display = "none";
+    //}
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+}
+
+function setErrorModalText(text) {
+    $('#errorMessageModalError').text('');
+    $('#errorMessageModalError').text(text);
 }
