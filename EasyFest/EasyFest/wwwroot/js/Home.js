@@ -13,3 +13,7 @@
 //}).done(function(result) {
 //        cosnole.log(result);
 //});
+
+function newFestival() {
+    location.href = '/Festival/NewFestival';
+}

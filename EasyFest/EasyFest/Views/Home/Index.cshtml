@@ -3,15 +3,25 @@
 @{
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    bool isAdmin = false;
+    if (TempData["IsAdmin"] != null)
+    {
+        isAdmin = (bool)TempData["IsAdmin"];
+    }
 }
 
 <div class="container">
 
     <!-- Page Heading -->
-    <h1 class="my-4">
-        Find the best festival
-        <small>it's easy!</small>
-    </h1>
+    <div class="row">
+        <div class="col-md-10">
+            <h1 class="my-4">
+                Find the best festival
+                <small>it's easy!</small>
+            </h1>
+        </div>
+        @await Component.InvokeAsync("NewFestivalBtn")
+    </div>
 
     <div class="row">
         @foreach (var data in Model.Data.Festivals)

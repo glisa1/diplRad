@@ -1,0 +1,8 @@
+﻿@model EasyFest.Models.User
+
+@if (Model.IsAdmin)
+{
+    <div class="col-md-1">
+        <button onclick="newFestival()" class="btn btn-outline-primary my-4"><i class="glyphicon glyphicon-plus"></i> Add festival</button>
+    </div>
+}
