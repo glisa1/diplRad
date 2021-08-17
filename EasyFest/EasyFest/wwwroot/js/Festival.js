@@ -162,6 +162,11 @@ function deleteFestival() {
     setModal(festivalId);
 }
 
+function updateFestival() {
+    var festivalId = $('#FestivalId').val();
+    location.href = '/Festival/UpdateFestival?festivalId=' + festivalId;
+}
+
 function setModal(festivalId) {
     // Get the modal
     var modal = document.getElementById("myModal");

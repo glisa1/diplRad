@@ -43,7 +43,7 @@ namespace Storage.Services.FestivalService
 
         public async Task InsertFestivalAsync(Festival model) => await _festivals.InsertOneAsync(model);
 
-        public async Task<bool> GetFestivalByName(string festivalName)
+        public async Task<bool> GetFestivalByNameAsync(string festivalName)
         {
             var count = await _festivals.Find(x => x.Name == festivalName).CountDocumentsAsync();
             if (count > 0)
@@ -52,12 +52,26 @@ namespace Storage.Services.FestivalService
             return false;
         }
 
+        public async Task<string> GetFestivalIdByNameAsync(string festivalName)
+        {
+            var foundFest = await _festivals.Find(x => x.Name == festivalName).FirstOrDefaultAsync();
+            if (foundFest != null)
+            {
+                return foundFest.Id;
+            }
+
+            return null;
+        }
+
         public async Task UpdateFestivalAsync(Festival model)
         {
             var filter = Builders<Festival>.Filter.Eq(s => s.Id, model.Id);
             var update = Builders<Festival>.Update
                 .Set(s => s.Name, model.Name)
+                .Set(s => s.Description, model.Description)
                 .Set(s => s.Day, model.Day)
+                .Set(s => s.EndDay, model.EndDay)
+                .Set(s => s.EndMonth, model.EndMonth)
                 .Set(s => s.Month, model.Month);
 
             await _festivals.UpdateOneAsync(filter, update);

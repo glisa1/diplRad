@@ -119,4 +119,35 @@ namespace EasyFest.Models
 
         public FestivalLocationViewModel FestivalLocation { get; set; }
     }
+
+    public class UpdateFestivalViewModel
+    {
+        public string Id { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string Name { get; set; }
+
+        public string OldName { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Start date")]
+        public DateTime StartDate { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "End date")]
+        public DateTime EndDate { get; set; }
+
+        [StringLength(500)]
+        public string Description { get; set; }
+
+        public string ImageName { get; set; }
+
+        [Display(Name = "File")]
+        public IFormFile Image { get; set; }
+
+        public FestivalLocationViewModel FestivalLocation { get; set; }
+    }
 }

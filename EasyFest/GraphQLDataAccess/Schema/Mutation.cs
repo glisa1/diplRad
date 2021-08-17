@@ -264,7 +264,7 @@ namespace GraphQLDataAccess.Schema
                         .Build());
             }
 
-            var isNameTaken = await _festivalService.GetFestivalByName(input.Name);
+            var isNameTaken = await _festivalService.GetFestivalByNameAsync(input.Name);
 
             if (isNameTaken)
             {
@@ -279,10 +279,37 @@ namespace GraphQLDataAccess.Schema
             {
                 Name = input.Name,
                 Day = input.Day,
-                Month = input.Month
+                Month = input.Month,
+                Description = input.Description,
+                EndDay = input.EndDay,
+                EndMonth = input.EndMonth,
+                ImageName = input.ImageName
             };
 
             await _festivalService.InsertFestivalAsync(newFestival);
+
+            var newFest = await _festivalService.GetFestivalIdByNameAsync(input.Name);
+
+            if (newFest == null)
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("Error creating festival.")
+                        .SetCode("FESTIVAL_CREATE_EXISTS")
+                        .Build());
+            }
+
+            var newFestivalLocation = new FestivalLocation
+            {
+                Address = input.Address,
+                City = input.City,
+                Latitude = input.Latitude,
+                Longitude = input.Longitude,
+                State = input.State,
+                FestivalId = newFest
+            };
+
+            await _locationService.InsertFestivalLocationAsync(newFestivalLocation);
 
             return new FestivalCreatedPayload(newFestival, input.ClientMutationId);
         }
@@ -298,9 +325,18 @@ namespace GraphQLDataAccess.Schema
                         .Build());
             }
 
-            if (!string.IsNullOrEmpty(input.Name))
+            if (string.IsNullOrEmpty(input.Name))
             {
-                var isNameTaken = await _festivalService.GetFestivalByName(input.Name);
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("Name cannot be empty.")
+                        .SetCode("NAME_EMPTY")
+                        .Build());
+            }
+
+            if (input.CheckName > 0)
+            {
+                var isNameTaken = await _festivalService.GetFestivalByNameAsync(input.Name);
 
                 if (isNameTaken)
                 {
@@ -317,10 +353,26 @@ namespace GraphQLDataAccess.Schema
                 Id = input.FestivalId,
                 Name = input.Name,
                 Day = input.Day,
-                Month = input.Month
+                Month = input.Month,
+                Description = input.Description,
+                EndDay = input.EndDay,
+                EndMonth = input.EndMonth,
+                ImageName = input.ImageName
             };
 
             await _festivalService.UpdateFestivalAsync(newFestival);
+
+            var newFestivalLocation = new FestivalLocation
+            {
+                FestivalId = input.FestivalId,
+                Address = input.Address,
+                City = input.City,
+                Latitude = input.Latitude,
+                Longitude = input.Longitude,
+                State = input.State
+            };
+
+            await _locationService.UpdateFestivalLocationAsync(newFestivalLocation);
 
             return new FestivalCreatedPayload(newFestival, input.ClientMutationId);
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using EasyFest.Factories;
@@ -142,12 +143,159 @@ namespace EasyFest.Controllers
             return Json(new { code = 200 });
         }
 
+        [HttpGet]
         public IActionResult NewFestival()
         {
             if (!(bool)TempData["IsAdmin"])
                 return Forbid();
 
             return View();
+        }
+
+        public async Task<IActionResult> NewFestival(NewFestivalViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("NewFestival");
+            }
+
+            model.ImageName = Guid.NewGuid().ToString();
+
+            var mutationString = GraphQLCommModel.MutationCreateFestival
+                .Replace("{0}", model.Name)
+                .Replace("{1}", model.StartDate.Month.ToString())
+                .Replace("{2}", model.StartDate.Day.ToString())
+                .Replace("{3}", model.EndDate.Month.ToString())
+                .Replace("{4}", model.EndDate.Day.ToString())
+                .Replace("{5}", model.Description)
+                .Replace("{6}", model.ImageName)
+                .Replace("{7}", model.FestivalLocation.Latitude.ToString())
+                .Replace("{8}", model.FestivalLocation.Longitude.ToString())
+                .Replace("{9}", model.FestivalLocation.Address)
+                .Replace("{10}", model.FestivalLocation.City)
+                .Replace("{11}", model.FestivalLocation.State);
+
+            var result = await _client.MutationDo<UpdateRateQueryModel>(mutationString);
+
+            if (result.Errors != null)
+            {
+                return Json(new { code = 400, message = result.Errors[0].Message, authorized = true });
+            }
+
+            using (FileStream fs = System.IO.File.Create("..\\EasyFest\\Images\\" + model.ImageName + ".jpg"))
+            {
+                await model.Image.CopyToAsync(fs);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateFestival(string festivalId)
+        {
+            if (!(bool)TempData["IsAdmin"])
+                return Forbid();
+
+            var queryString = GraphQLCommModel.QueryGetFestivalForEdit.Replace("{0}", festivalId);
+            var data = await _client.QueryGet<FestivalById>(queryString);
+
+            if (data.Errors != null)
+            {
+                return Json(new { code = 400, message = data.Errors[0].Message, authorized = true });
+            }
+
+            var festival = data.Data.Festival;
+
+            UpdateFestivalViewModel model = new UpdateFestivalViewModel
+            {
+                Description = festival.Description,
+                EndDate = new DateTime(DateTime.Now.Year, festival.EndMonth, festival.EndDay),
+                Id = festivalId,
+                Name = festival.Name,
+                OldName = festival.Name,
+                ImageName = festival.ImageName,
+                StartDate = new DateTime(DateTime.Now.Year, festival.Month, festival.Day),
+                FestivalLocation = new FestivalLocationViewModel
+                {
+                    Address = festival.FestivalLocation.Address,
+                    City = festival.FestivalLocation.City,
+                    Latitude = festival.FestivalLocation.Latitude,
+                    Longitude = festival.FestivalLocation.Longitude,
+                    State = festival.FestivalLocation.State
+                }
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateFestival(UpdateFestivalViewModel model)
+        {
+            if (!(bool)TempData["IsAdmin"])
+                return Forbid();
+
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("NewFestival");
+            }
+
+            var mutationString = string.Empty;
+
+            if (model.Name == model.OldName)
+            {
+                mutationString = GraphQLCommModel.MutationUpdateFestival
+                    .Replace("{0}", model.Name)
+                    .Replace("{1}", model.StartDate.Month.ToString())
+                    .Replace("{2}", model.StartDate.Day.ToString())
+                    .Replace("{3}", model.EndDate.Month.ToString())
+                    .Replace("{4}", model.EndDate.Day.ToString())
+                    .Replace("{5}", model.Description)
+                    .Replace("{6}", model.ImageName)
+                    .Replace("{7}", model.FestivalLocation.Latitude.ToString())
+                    .Replace("{8}", model.FestivalLocation.Longitude.ToString())
+                    .Replace("{9}", model.FestivalLocation.Address)
+                    .Replace("{10}", model.FestivalLocation.City)
+                    .Replace("{11}", model.FestivalLocation.State)
+                    .Replace("{12}", string.Empty)
+                    .Replace("{13}", model.Id)
+                    .Replace("{14}", 0.ToString());
+            }
+            else
+            {
+                mutationString = GraphQLCommModel.MutationUpdateFestival
+                    .Replace("{0}", model.Name)
+                    .Replace("{1}", model.StartDate.Month.ToString())
+                    .Replace("{2}", model.StartDate.Day.ToString())
+                    .Replace("{3}", model.EndDate.Month.ToString())
+                    .Replace("{4}", model.EndDate.Day.ToString())
+                    .Replace("{5}", model.Description)
+                    .Replace("{6}", model.ImageName)
+                    .Replace("{7}", model.FestivalLocation.Latitude.ToString())
+                    .Replace("{8}", model.FestivalLocation.Longitude.ToString())
+                    .Replace("{9}", model.FestivalLocation.Address)
+                    .Replace("{10}", model.FestivalLocation.City)
+                    .Replace("{11}", model.FestivalLocation.State)
+                    .Replace("{12}", string.Empty)
+                    .Replace("{13}", model.Id)
+                    .Replace("{14}", 1.ToString());
+            }
+
+            var result = await _client.MutationDo<UpdateRateQueryModel>(mutationString);
+
+            if (result.Errors != null)
+            {
+                return Json(new { code = 400, message = result.Errors[0].Message, authorized = true });
+            }
+
+            // Only if new picture was uploaded we copy it.
+            if (model.Image != null)
+            {
+                using (FileStream fs = System.IO.File.Create("..\\EasyFest\\Images\\" + model.ImageName + ".jpg"))
+                {
+                    await model.Image.CopyToAsync(fs);
+                }
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

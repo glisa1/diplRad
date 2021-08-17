@@ -1,8 +1,11 @@
-﻿@model NewFestivalViewModel
+﻿@model UpdateFestivalViewModel
 @{
-    ViewData["Title"] = "New festival";
+    ViewData["Title"] = "Update festival";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@Html.Hidden("PosLat", Model.FestivalLocation.Latitude)
+@Html.Hidden("PosLng", Model.FestivalLocation.Longitude)
 
 <h1>Create new festival</h1>
 
@@ -15,8 +18,10 @@
     </li>
 </ul>
 
-<form id="newFestForm" asp-action="NewFestival" asp-controller="Festival" method="post" class="g-3" enctype="multipart/form-data" autocomplete="off">
+<form id="editFestForm" asp-action="UpdateFestival" asp-controller="Festival" method="post" class="g-3" enctype="multipart/form-data" autocomplete="off">
     <div id="festivalDetailsContainer">
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.OldName)
         <div class="form-group mt-3">
             <label asp-for="Name" class="control-label"></label>
             <input asp-for="Name" aria-describedby="nameHelp" class="form-control" />
@@ -46,9 +51,10 @@
         <div class="form-group mb-2">
             <label asp-for="Image" class="control-label"></label>
             <input asp-for="Image" aria-describedby="passwordHelp" class="form-control-file" accept=".jpg" />
-            <small id="passwordHelp" class="form-text text-muted">Give us nice picture of festival.</small>
+            <small id="passwordHelp" class="form-text text-muted">Upload new image if you have better.</small>
             <span asp-validation-for="Image" class="text-danger"></span>
         </div>
+        @Html.HiddenFor(m => m.ImageName)
     </div>
     <div id="festivalLocationContainer" style="display:none;">
         <div id="newMap" class="newMapContainer mb-3 mt-3"></div>
@@ -88,7 +94,7 @@
         </div>
     </div>
 
-        <button type="submit" class="btn btn-primary">Register</button>
+    <button type="submit" class="btn btn-primary">Update</button>
 </form>
 
 <div id="newFestModal" class="modal">
@@ -105,6 +111,6 @@
 </div>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/js/NewFestival.js"></script>
+<script src="~/js/UpdateFestival.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>

@@ -55,7 +55,7 @@ namespace Storage.Services.FestivalLocationsService
 
         public async Task UpdateFestivalLocationAsync(FestivalLocation festivalLocation)
         {
-            var filter = Builders<FestivalLocation>.Filter.Eq(s => s.Id, festivalLocation.Id); //mozda ce morait _id
+            var filter = Builders<FestivalLocation>.Filter.Eq(s => s.FestivalId, festivalLocation.FestivalId); //mozda ce morait _id
             var update = Builders<FestivalLocation>.Update
                 .Set(s => s.City, festivalLocation.City)
                 .Set(s => s.Address, festivalLocation.Address)

@@ -11,13 +11,31 @@ namespace GraphQLDataAccess.Schema.Models
                                     int month,
                                     int day,
                                     string description,
+                                    int endMonth,
+                                    int endDay,
+                                    string imageName,
+                                    double latitude,
+                                    double longitude,
+                                    string address,
+                                    string city,
+                                    string state,
+                                    int checkName,
                                     string clientMutationId)
         {
             FestivalId = festivalId;
             Name = name;
             Month = month;
             Day = day;
+            EndMonth = endMonth;
+            EndDay = endDay;
             Description = description;
+            ImageName = imageName;
+            Latitude = latitude;
+            Longitude = longitude;
+            Address = address;
+            City = city;
+            State = state;
+            CheckName = checkName;
             ClientMutationId = clientMutationId;
         }
 
@@ -29,7 +47,25 @@ namespace GraphQLDataAccess.Schema.Models
 
         public int Day { get; set; }
 
+        public int EndMonth { get; set; }
+
+        public int EndDay { get; set; }
+
         public string Description { get; set; }
+
+        public string ImageName { get; set; }
+
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
+
+        public string Address { get; set; }
+
+        public string City { get; set; }
+
+        public string State { get; set; }
+
+        public int CheckName { get; set; }
 
         public string ClientMutationId { get; set; }
     }

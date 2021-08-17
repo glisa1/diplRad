@@ -22,6 +22,7 @@ namespace Storage.Services.FestivalService
         void DeleteFestival(string objectId);
 
         Task InsertFestivalAsync(Festival model);
+
         IExecutable<Festival> GetFestivals();
 
         IExecutable<Festival> GetFestivalById(string id);
@@ -30,7 +31,9 @@ namespace Storage.Services.FestivalService
 
         Task UpdateFestivalAsync(Festival model);
 
-        Task<bool> GetFestivalByName(string festivalName);
+        Task<bool> GetFestivalByNameAsync(string festivalName);
+
+        Task<string> GetFestivalIdByNameAsync(string festivalName);
 
         Task DeleteFestivalAsync(string festivalId);
     }

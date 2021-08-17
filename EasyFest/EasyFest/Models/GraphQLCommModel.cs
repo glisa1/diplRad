@@ -65,6 +65,16 @@ namespace EasyFest.Models
             "query{festivals{id name rate numberOfComments festivalLocation{latitude longitude}}}";
 
         /// <summary>
+        /// Gets query by id with details and location.
+        /// {0} - id of festival
+        /// </summary>
+        public static string QueryGetFestivalForEdit =>
+            "query {festivalById(id: \"{0}\")" +
+            " { id name day month description imageName endDay endMonth " +
+            " festivalLocation{ address city state longitude latitude } " +
+            " }}";
+
+        /// <summary>
         /// Given user is loged in.
         /// {0} - Username
         /// {1} - Password
@@ -141,5 +151,76 @@ namespace EasyFest.Models
         /// </summary>
         public static string MutationDeleteFestival =>
             "mutation {deleteFestival(festivalId: \"{0}\")}";
+
+
+        /// <summary>
+        /// Creates new festival.
+        /// {0} - name,
+        /// {1} - month,
+        /// {2} - day,
+        /// {3} - endMonth,
+        /// {4} - endDay,
+        /// {5} - description,
+        /// {6} - imageName,
+        /// {7} - latitude,
+        /// {8} - longitude,
+        /// {9} - address,
+        /// {10} - city,
+        /// {11} - state,
+        /// {12} - clientMutationId
+        /// </summary>
+        public static string MutationCreateFestival =>
+            "mutation {createFestival(input: {" + 
+            " name: \"{0}\", " +
+            " month: {1}, " +
+            " day: {2}, " +
+            " endMonth: {3}, " +
+            " endDay: {4}, " +
+            " description: \"{5}\", " +
+            " imageName: \"{6}\", " +
+            " latitude: {7}, " +
+            " longitude: {8}, " +
+            " address: \"{9}\", " +
+            " city: \"{10}\", " +
+            " state: \"{11}\", " +
+            " clientMutationId: \"{12}\", " +
+            "}){clientMutationId}}";
+
+
+        /// <summary>
+        /// Updates the festival.
+        /// {0} - name,
+        /// {1} - month,
+        /// {2} - day,
+        /// {3} - endMonth,
+        /// {4} - endDay,
+        /// {5} - description,
+        /// {6} - imageName,
+        /// {7} - latitude,
+        /// {8} - longitude,
+        /// {9} - address,
+        /// {10} - city,
+        /// {11} - state,
+        /// {12} - clientMutationId
+        /// </summary>
+        public static string MutationUpdateFestival =>
+            "mutation {updateFestival(input: {" +
+            " name: \"{0}\", " +
+            " month: {1}, " +
+            " day: {2}, " +
+            " endMonth: {3}, " +
+            " endDay: {4}, " +
+            " description: \"{5}\", " +
+            " imageName: \"{6}\", " +
+            " latitude: {7}, " +
+            " longitude: {8}, " +
+            " address: \"{9}\", " +
+            " city: \"{10}\", " +
+            " state: \"{11}\", " +
+            " clientMutationId: \"{12}\", " +
+            " festivalId: \"{13}\", " +
+            " checkName: {14} " +
+            "}){clientMutationId}}";
+
     }
 }

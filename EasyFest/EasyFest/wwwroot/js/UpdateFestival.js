@@ -2,7 +2,20 @@
 var layerGroup = null;
 
 $(document).ready(function () {
-    map = L.map('newMap').setView([44.824894, 20.450627], 6.0);
+
+    var latitude = 44.824894;
+    var longitude = 20.450627;
+    var posLat = $('#PosLat').val();
+    var posLng = $('#PosLng').val();
+
+    if (!isNullOrUndefOrEmpty(posLat)) {
+        latitude = posLat;
+    }
+    if (!isNullOrUndefOrEmpty(posLng)) {
+        longitude = posLng;
+    }
+
+    map = L.map('newMap').setView([latitude, longitude], 6.0);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=sk.eyJ1IjoiZGFuaWplbGdsaXNvdmljIiwiYSI6ImNrcmt6YXgzODE3YnIyb3BlOWRwNW5nMWYifQ.rEAIMDQbEa1ui2bA3sCUNg', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
@@ -13,6 +26,10 @@ $(document).ready(function () {
     }).addTo(map);
     layerGroup = L.layerGroup().addTo(map);
     map.on('click', onMapClick);
+
+    if (!isNullOrUndefOrEmpty(posLat) && !isNullOrUndefOrEmpty(posLng)) {
+        L.marker([posLat, posLng]).addTo(layerGroup);
+    }
 
     $('.newFestivalNavLink').click(function () {
         var thisId = $(this).prop('id');
@@ -54,7 +71,7 @@ $(document).ready(function () {
         L.marker([latVal, newLngVal]).addTo(layerGroup);
     });
 
-    $('#newFestForm').submit(function () {
+    $('#editFestForm').submit(function () {
 
         var dateFrom = Date.parse($('#StartDate').val());
         var dateTo = Date.parse($('#EndDate').val());
@@ -67,7 +84,7 @@ $(document).ready(function () {
         var address = $('#FestivalLocation_Address').val();
         var name = $('#FestivalLocation_Address').val();
         //isNullOrUndefOrEmpty
-        if (isNullOrUndefOrEmpty($('#Name').val()) || isNullOrUndefOrEmpty($('#StartDate').val()) || isNullOrUndefOrEmpty($('#EndDate').val()) || isNullOrUndefOrEmpty($('#Image').val()) || isNullOrUndefOrEmpty($('#FestivalLocation_Latitude').val()) || isNullOrUndefOrEmpty($('#FestivalLocation_Longitude').val()) || isNullOrUndefOrEmpty($('#FestivalLocation_Address').val())) {
+        if (isNullOrUndefOrEmpty($('#Name').val()) || isNullOrUndefOrEmpty($('#StartDate').val()) || isNullOrUndefOrEmpty($('#EndDate').val()) || isNullOrUndefOrEmpty($('#FestivalLocation_Latitude').val()) || isNullOrUndefOrEmpty($('#FestivalLocation_Longitude').val()) || isNullOrUndefOrEmpty($('#FestivalLocation_Address').val())) {
             setModal('You did not provide us with some neccessary data for new festival. Have in mind that there are two sections for creating new festival, the "Festival details" and "Location details" sections.');
             return false;
         }

@@ -19,7 +19,7 @@
                     <p>@Model.Data.Festival.Description</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <svg style="background-color: white; margin-left: 20px;" class="progress blue noselect" x="0px" y="0px" viewBox="0 0 80 80">
                     <path class="track" d="M5,40a35,35 0 1,0 70,0a35,35 0 1,0 -70,0" />
                     <path class="fill" d="M5,40a35,35 0 1,0 70,0a35,35 0 1,0 -70,0" />
@@ -40,8 +40,11 @@
             </div>
             @if (isAdmin)
             {
-                <div class="col-md-1">
-                    <button type="button" onclick="deleteFestival()" class="btn btn-danger">Delete festival</button>
+                <div class="col-md-2">
+                    <button type="button" onclick="updateFestival()" class="btn btn-outline-info">Update festival</button>
+                @*</div>
+                <div class="col-md-1">*@
+                    <button type="button" onclick="deleteFestival()" class="btn btn-outline-danger">Delete festival</button>
                 </div>
             }
         </div>
