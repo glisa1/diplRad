@@ -90,6 +90,43 @@ namespace EasyFest.Models
         public double Rate { get; set; }
     }
 
+    #region Pagination
+
+    public class FestivalPaginate
+    {
+        [JsonProperty("festivals")]
+        public FestivalNodes FestivalNodes { get; set; }
+    }
+
+    public class FestivalNodes
+    {
+        [JsonProperty("edges")]
+        public IEnumerable<FestivalEdge> FestivalEdges { get; set; }
+
+        [JsonProperty("pageInfo")]
+        public PageInfo InfoPage { get; set; }
+
+        [JsonProperty("totalCount")]
+        public int TotalCount { get; set; }
+    }
+
+    public class FestivalEdge
+    {
+        [JsonProperty("cursor")]
+        public string CursorName { get; set; }
+
+        [JsonProperty("node")]
+        public Festival Festival { get; set; }
+    }
+
+    public class PageInfo
+    {
+        [JsonProperty("hasNextPage")]
+        public bool HasNextPage { get; set; }
+    }
+
+    #endregion
+
     public class NewFestivalViewModel
     {
         public string Id { get; set; }

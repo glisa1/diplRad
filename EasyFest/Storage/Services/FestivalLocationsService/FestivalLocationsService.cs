@@ -6,6 +6,7 @@ using Storage.Models;
 using Storage.Services.MongoDbConnectService;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,8 +31,13 @@ namespace Storage.Services.FestivalLocationsService
 
         public IExecutable<FestivalLocation> GetFestivalLocations() => _festivalLocations.AsExecutable();
 
+        public IQueryable<FestivalLocation> GetFestivalLocationsQueryable() => _festivalLocations.AsQueryable();
+
         public async Task<FestivalLocation> GetFestivalLocationForFestival(string festivalId)
             => await _festivalLocations.Find(x => x.FestivalId == festivalId).FirstOrDefaultAsync();
+
+        public IEnumerable<FestivalLocation> GetFestivalLocationForFestivalEnum(string festivalId)
+            => _festivalLocations.Find(x => x.FestivalId == festivalId).ToEnumerable();
 
         public FestivalLocation GetFestivalLocation(string festivalId) => _festivalLocations.Find(x => x.FestivalId == festivalId).FirstOrDefault();
 

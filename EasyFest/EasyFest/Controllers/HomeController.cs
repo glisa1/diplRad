@@ -28,9 +28,23 @@ namespace EasyFest.Controllers
             //FestivalFactory fact = new FestivalFactory();
             //await fact.PrepareFestival();
 
-            var festivals = await _client.QueryGet<FestivalList>(GraphQLCommModel.QueryFestival);
+            var festivals = await _client.QueryGet<FestivalPaginate>(GraphQLCommModel.QueryFestival);
 
             return View(festivals);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(string term)
+        {
+            TempData.Remove("searchValue");
+            TempData.Add("searchValue", term);
+
+            var query = GraphQLCommModel.QueryFestivalSearch
+                            .Replace("{0}", term)
+                            .Replace("{1}", term);
+            var festivals = await _client.QueryGet<FestivalPaginate>(query);
+
+            return View("Index", festivals);
         }
 
         public IActionResult Privacy()

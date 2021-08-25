@@ -10,8 +10,23 @@ namespace EasyFest.Models
         /// <summary>
         /// Gets all about festival.
         /// </summary>
-        public static string QueryFestival => "query {festivals { id name day month rate description numberOfComments imageName" +
-            " festivalLocation{city state} }}";
+        //public static string QueryFestival => "query {festivals { id name day month rate description numberOfComments imageName" +
+        //    " festivalLocation{city state} }}";
+
+        /// <summary>
+        /// Gets all about festival.
+        /// </summary>
+        public static string QueryFestival => "query {festivals(first: 10){ edges{ cursor node{ id name day month rate description numberOfComments imageName" +
+            " festivalLocation{city state}}} pageInfo{hasNextPage} totalCount }}";
+
+        /// <summary>
+        /// Gets all festivals by term.
+        /// {0} - festival name (term)
+        /// {1} - festival description (term)
+        /// </summary>
+        public static string QueryFestivalSearch => "query {festivals(first: 10, where:{or: [{name: {contains: \"{0}\"}}, {description: {contains: \"{1}\"}}]}){ edges{ " + 
+            " cursor node{ id name day month rate description numberOfComments imageName" +
+            " festivalLocation{city state}}} pageInfo{hasNextPage} totalCount }}";
 
         /// <summary>
         /// Used to get informations about currently logged in user.

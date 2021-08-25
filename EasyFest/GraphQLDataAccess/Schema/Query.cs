@@ -7,6 +7,7 @@ using Storage.Services.FestivalLocationsService;
 using Storage.Services.FestivalService;
 using Storage.Services.RateService;
 using Storage.Services.UserService;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -39,23 +40,49 @@ namespace GraphQLDataAccess.Schema
 
         #region Methods
 
-        [UseProjection]
-        public IExecutable<Storage.Models.Festival> GetFestivals()
+        //[UsePaging(IncludeTotalCount = true)]
+        //[UseProjection]
+        //[UseFiltering]
+        //[UseSorting]
+        //public IExecutable<Storage.Models.Festival> GetFestivals()
+        //{
+        //    return _festivalService.GetFestivals().AsExecutable();
+        //}
+
+        //[UsePaging(IncludeTotalCount = true)]
+        //[UseProjection]
+        //[UseFiltering]
+        //[UseSorting]
+        //public IEnumerable<Storage.Models.Festival> GetFestivals()
+        //{
+        //    return _festivalService.GetFestivals().Source;
+        //}
+
+        [UsePaging(IncludeTotalCount = true)]
+        [UseFiltering]
+        [UseSorting]
+        public IQueryable<Storage.Models.Festival> GetFestivals()
         {
             return _festivalService.GetFestivals();
         }
 
-        //[UseProjection]
-        //public IExecutable<Storage.Models.Festival> GetFestivalById(string id)
-        //{
-        //    return _festivalService.GetFestivalById(id);
-        //}
+        [UseProjection]
+        public IExecutable<Storage.Models.Festival> GetFestivalsInfo()
+        {
+            return _festivalService.GetFestivalsExec();
+        }
 
         [UseProjection]
-        public async Task<Storage.Models.Festival> GetFestivalById(string id)
+        public IExecutable<Storage.Models.Festival> GetFestivalById(string id)
         {
-            return await _festivalService.GetFestivalByIdAsync(id);
+            return _festivalService.GetFestivalById(id);
         }
+
+        //[UseProjection]
+        //public async Task<Storage.Models.Festival> GetFestivalById(string id)
+        //{
+        //    return await _festivalService.GetFestivalByIdAsync(id);
+        //}
 
         [UseProjection]
         public async Task<Storage.Models.User> GetUserById(string id)
@@ -63,8 +90,24 @@ namespace GraphQLDataAccess.Schema
             return await _usersService.GetUserWithIdAsync(id);
         }
 
-        [UseProjection]
-        public IExecutable<Storage.Models.FestivalLocation> GetFestivalLocations()
+        //[UsePaging(IncludeTotalCount = true)]
+        //[UseProjection]
+        //[UseFiltering]
+        //[UseSorting]
+        //public IExecutable<Storage.Models.FestivalLocation> GetFestivalLocations()
+        //{
+        //    return _festivalLocationsService.GetFestivalLocations();
+        //}
+
+        [UsePaging(IncludeTotalCount = true)]
+        [UseFiltering]
+        [UseSorting]
+        public IQueryable<Storage.Models.FestivalLocation> GetFestivalLocations()
+        {
+            return _festivalLocationsService.GetFestivalLocationsQueryable();
+        }
+
+        public IExecutable<Storage.Models.FestivalLocation> GetFestivalLocationsInfo()
         {
             return _festivalLocationsService.GetFestivalLocations();
         }

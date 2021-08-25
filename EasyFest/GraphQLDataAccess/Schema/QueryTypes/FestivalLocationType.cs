@@ -39,14 +39,14 @@ namespace GraphQLDataAccess.Schema.Types
             descriptor.Field(f => f.FestivalId)
                 .Description("Identificator of festival.")
                 .Type<NonNullType<StringType>>();
-            descriptor.Field(f => f.Festival)
-                .Description("Festival.")
-                .Type<FestivalType>()
-                .Resolve(async context =>
-                {
-                    var initiative = context.Parent<Storage.Models.FestivalLocation>();
-                    return await _festivalService.GetFestivalByIdAsync(initiative.FestivalId);
-                });
+            //descriptor.Field(f => f.Festival)
+            //    .Description("Festival.")
+            //    .Type<FestivalType>()
+            //    .Resolve(async context =>
+            //    {
+            //        var initiative = context.Parent<Storage.Models.FestivalLocation>();
+            //        return await _festivalService.GetFestivalByIdAsync(initiative.FestivalId);
+            //    });
         }
     }
 }

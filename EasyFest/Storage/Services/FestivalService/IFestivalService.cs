@@ -3,6 +3,7 @@ using MongoDB.Driver;
 using Storage.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,9 +22,13 @@ namespace Storage.Services.FestivalService
 
         void DeleteFestival(string objectId);
 
+        IExecutable<Festival> GetFestivalsExec();
+
         Task InsertFestivalAsync(Festival model);
 
-        IExecutable<Festival> GetFestivals();
+        //IExecutable<Festival> GetFestivals();
+        //IEnumerable<Festival> GetFestivals();
+        IQueryable<Festival> GetFestivals();
 
         IExecutable<Festival> GetFestivalById(string id);
 

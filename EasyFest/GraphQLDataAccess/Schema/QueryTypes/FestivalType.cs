@@ -81,14 +81,12 @@ namespace GraphQLDataAccess.Schema.Types
                     var initiative = context.Parent<Storage.Models.Festival>();
                     return await _commentsService.GetNumberOfCommentsForFestival(initiative.Id);
                 });
-            descriptor.Field(f => f.FestivalLocation)
-                .Description("Location of festival.")
-                .Type<FestivalLocationType>()
-                .Resolve(async context =>
-                {
-                    var initiative = context.Parent<Storage.Models.Festival>();
-                    return await _festivalLocationsService.GetFestivalLocationForFestival(initiative.Id);
-                });
+            //descriptor.Field(f => f.FestivalLocation)
+            //    .Description("Location of festival.")
+            //    .Type<FestivalLocationType>()
+            //    //.UseProjection()
+            //    .UseFiltering()
+            //    .UseSorting();
             descriptor.Field(f => f.CommentsList)
                 .Description("Comments written about festival.")
                 .Type<ListType<CommentType>>()

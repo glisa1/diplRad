@@ -1,7 +1,9 @@
 ﻿using HotChocolate;
+using MongoDB.Driver;
 using Storage.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +13,11 @@ namespace Storage.Services.FestivalLocationsService
     {
         IExecutable<FestivalLocation> GetFestivalLocations();
 
+        IQueryable<FestivalLocation> GetFestivalLocationsQueryable();
+
         Task<FestivalLocation> GetFestivalLocationForFestival(string festivalId);
+
+        IEnumerable<FestivalLocation> GetFestivalLocationForFestivalEnum(string festivalId);
 
         FestivalLocation GetFestivalLocation(string festivalId);
 

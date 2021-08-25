@@ -79,6 +79,7 @@ namespace EasyFest
                 .AddGraphQLServer()
                 .AddQueryType<Query>()
                 .AddMutationType<Mutation>()
+                //.AddType<QueryType>()
                 .AddType<FestivalType>()
                 .AddType<FestivalLocationType>()
                 .AddType<CommentType>()
@@ -94,9 +95,9 @@ namespace EasyFest
                 //.AddType<RateMutationType>()
                 //.AddType<FestivalLocationMutationType>()
                 //.AddType<FestivalMutationType>()
-                //.AddMongoDbFiltering()
-                //.AddMongoDbSorting()
-                .AddMongoDbProjections();
+                .AddProjections()
+                .AddFiltering()
+                .AddSorting();
                 //.AddQueryType<CommentQLQuery>();
         }
 
