@@ -15,14 +15,14 @@ namespace GraphQLDataAccess.Schema
 
         IExecutable<Storage.Models.Festival> GetFestivalsInfo();
 
-        IExecutable<Storage.Models.FestivalLocation> GetFestivalLocationsInfo();
+        //IExecutable<Storage.Models.FestivalLocation> GetFestivalLocationsInfo();
 
-        IExecutable<Storage.Models.Festival> GetFestivalById(string id);
+        //IExecutable<Storage.Models.Festival> GetFestivalById(string id);
 
-        //Task<Storage.Models.Festival> GetFestivalById(string id);
+        Task<Storage.Models.Festival> GetFestivalById(string id);
 
         //IExecutable<Storage.Models.FestivalLocation> GetFestivalLocations();
-        IQueryable<Storage.Models.FestivalLocation> GetFestivalLocations();
+        //IQueryable<Storage.Models.FestivalLocation> GetFestivalLocations();
 
         IExecutable<Storage.Models.Comment> GetComments();
 

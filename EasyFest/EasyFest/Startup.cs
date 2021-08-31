@@ -11,15 +11,12 @@ using Storage;
 using Storage.Models;
 using Storage.Services.MongoDbConnectService;
 using Storage.Services.FestivalService;
-using Storage.Services.FestivalLocationsService;
 using Storage.Services.CommentsService;
 using Storage.Services.AuthenticationService;
 using Storage.Services.UserService;
 using Storage.Services.RateService;
 using GraphQL.Server.Ui.Voyager;
 using GraphQLDataAccess.Schema.Types;
-using GraphQLDataAccess.Schema.Mutations;
-using GraphQLDataAccess.Schema.MutationTypes;
 using EasyFest.Factories;
 
 namespace EasyFest
@@ -49,7 +46,6 @@ namespace EasyFest
             services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
 
             services.AddSingleton<IFestivalService, FestivalService>();
-            services.AddSingleton<IFestivalLocationsService, FestivalLocationsService>();
             services.AddSingleton<ICommentsService, CommentsService>();
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<IRateService, RateService>();
@@ -81,7 +77,6 @@ namespace EasyFest
                 .AddMutationType<Mutation>()
                 //.AddType<QueryType>()
                 .AddType<FestivalType>()
-                .AddType<FestivalLocationType>()
                 .AddType<CommentType>()
                 .AddType<RateType>()
                 .AddType<UserType>()

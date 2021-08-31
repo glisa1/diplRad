@@ -20,15 +20,23 @@
         </div>
 
         int festivalLocations = 0;
+        int imageCounterPerFest = 0;
         foreach(var fest in Model.Data.Festivals)
         {
-            if (fest.FestivalLocation != null)
+            if (fest.Longitude != 0 && fest.Latitude != 0)
             {
+                imageCounterPerFest = 0;
                 @Html.Hidden("festLocId" + festivalLocations.ToString(), fest.Id);
                 @Html.Hidden("festLocName" + festivalLocations.ToString(), fest.Name);
                 @Html.Hidden("festLocRate" + festivalLocations.ToString(), fest.Rate);
-                @Html.Hidden("festLocLat" + festivalLocations.ToString(), fest.FestivalLocation.Latitude);
-                @Html.Hidden("festLocLon" + festivalLocations.ToString(), fest.FestivalLocation.Longitude);
+                @Html.Hidden("festLocLat" + festivalLocations.ToString(), fest.Latitude);
+                @Html.Hidden("festLocLon" + festivalLocations.ToString(), fest.Longitude);
+                foreach(var image in fest.Images)
+                {
+                    @Html.Hidden("fest_" + festivalLocations + "_img_" + imageCounterPerFest, image);
+                    imageCounterPerFest++;
+                }
+                @Html.Hidden("fest_" + festivalLocations + "_imgCount", imageCounterPerFest);
                 festivalLocations++;
             }
         }

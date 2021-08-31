@@ -85,7 +85,8 @@ body {
 }
 
 .festInfoContainer {
-    max-height: 150px;
+    --max-height: 150px;
+    height: 100%;
     overflow-y: auto;
 }
 
@@ -159,6 +160,17 @@ body {
 .descriptionContainer{
     overflow-y: auto;
     max-height: 100px;
+}
+
+.allMapPopup{
+    width: 300px;
+    height: 200px;
+}
+
+.img-details-custom{
+    width: 1400px;
+    height: 400px;
+    object-fit: cover;
 }
 
 /*CUSTOM MODAL*/

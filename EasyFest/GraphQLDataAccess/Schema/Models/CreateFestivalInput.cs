@@ -12,7 +12,7 @@ namespace GraphQLDataAccess.Schema.Models
                                     int endMonth,
                                     int endDay,
                                     string description,
-                                    string imageName,
+                                    List<string> images,
                                     double latitude,
                                     double longitude,
                                     string address,
@@ -32,7 +32,7 @@ namespace GraphQLDataAccess.Schema.Models
             City = city;
             State = state;
             ClientMutationId = clientMutationId;
-            ImageName = imageName;
+            Images = new List<string>(images[0].Split(','));
         }
 
         public string Name { get; set; }
@@ -47,7 +47,9 @@ namespace GraphQLDataAccess.Schema.Models
 
         public string Description { get; set; }
 
-        public string ImageName { get; set; }
+        //public string ImageName { get; set; }
+
+        public List<string> Images { get; set; }
 
         public double Latitude { get; set; }
 

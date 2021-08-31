@@ -1,6 +1,5 @@
 ﻿using HotChocolate.Types;
 using Storage.Services.CommentsService;
-using Storage.Services.FestivalLocationsService;
 using Storage.Services.RateService;
 using System;
 using System.Collections.Generic;
@@ -13,17 +12,14 @@ namespace GraphQLDataAccess.Schema.Types
         #region Init
 
         //private readonly IFestivalService _festivalService;
-        private readonly IFestivalLocationsService _festivalLocationsService;
         private readonly ICommentsService _commentsService;
         private readonly IRateService _rateService;
         //private readonly IUserService _usersService;
 
-        public FestivalType(IFestivalLocationsService locationsService,
-                                ICommentsService comentsService,
+        public FestivalType(ICommentsService comentsService,
                                 IRateService rateService)
                                 //IUserService usersService)
         {
-            _festivalLocationsService = locationsService;
             _commentsService = comentsService;
             _rateService = rateService;
         }
@@ -54,9 +50,9 @@ namespace GraphQLDataAccess.Schema.Types
             descriptor.Field(f => f.Description)
                 .Description("Description for festival.")
                 .Type<StringType>();
-            descriptor.Field(f => f.ImageName)
-                .Description("Image for festival")
-                .Type<StringType>();
+            descriptor.Field(f => f.Images)
+                .Description("Festival images.")
+                .Type<ListType<StringType>>();
             descriptor.Field(f => f.Rate)
                 .Description("Rate of festival.")
                 .Type<NonNullType<FloatType>>()

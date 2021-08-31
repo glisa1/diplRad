@@ -118,7 +118,7 @@ namespace EasyFest.Controllers
                 return Json(new { code = 400, authorized = false });
             }
 
-            queryString = GraphQLCommModel.QueryFestivalImageName
+            queryString = GraphQLCommModel.QueryFestivalImages
                 .Replace("{0}", festivalId);
 
             var festival = await _client.QueryGet<FestivalById>(queryString);
@@ -138,7 +138,10 @@ namespace EasyFest.Controllers
                 return Json(new { code = 400, message = result.Errors[0].Message, authorized = true });
             }
 
-            System.IO.File.Delete("..\\EasyFest\\Images\\" + festival.Data.Festival.ImageName + ".jpg");
+            foreach (var image in festival.Data.Festival.Images)
+            {
+                System.IO.File.Delete("..\\EasyFest\\Images\\" + image + ".jpg");
+            }
 
             return Json(new { code = 200 });
         }
@@ -159,7 +162,15 @@ namespace EasyFest.Controllers
                 return RedirectToAction("NewFestival");
             }
 
-            model.ImageName = Guid.NewGuid().ToString();
+            foreach (var image in model.UploadedImages)
+            {
+                string imageName = Guid.NewGuid().ToString();
+                model.Images.Add(imageName);
+                using (FileStream fs = System.IO.File.Create("..\\EasyFest\\Images\\" + imageName + ".jpg"))
+                {
+                    await image.CopyToAsync(fs);
+                }
+            }
 
             var mutationString = GraphQLCommModel.MutationCreateFestival
                 .Replace("{0}", model.Name)
@@ -168,7 +179,7 @@ namespace EasyFest.Controllers
                 .Replace("{3}", model.EndDate.Month.ToString())
                 .Replace("{4}", model.EndDate.Day.ToString())
                 .Replace("{5}", model.Description)
-                .Replace("{6}", model.ImageName)
+                .Replace("{6}", string.Join(',', model.Images))
                 .Replace("{7}", model.FestivalLocation.Latitude.ToString())
                 .Replace("{8}", model.FestivalLocation.Longitude.ToString())
                 .Replace("{9}", model.FestivalLocation.Address)
@@ -180,11 +191,6 @@ namespace EasyFest.Controllers
             if (result.Errors != null)
             {
                 return Json(new { code = 400, message = result.Errors[0].Message, authorized = true });
-            }
-
-            using (FileStream fs = System.IO.File.Create("..\\EasyFest\\Images\\" + model.ImageName + ".jpg"))
-            {
-                await model.Image.CopyToAsync(fs);
             }
 
             return RedirectToAction("Index", "Home");
@@ -213,15 +219,15 @@ namespace EasyFest.Controllers
                 Id = festivalId,
                 Name = festival.Name,
                 OldName = festival.Name,
-                ImageName = festival.ImageName,
+                Images = festival.Images,
                 StartDate = new DateTime(DateTime.Now.Year, festival.Month, festival.Day),
                 FestivalLocation = new FestivalLocationViewModel
                 {
-                    Address = festival.FestivalLocation.Address,
-                    City = festival.FestivalLocation.City,
-                    Latitude = festival.FestivalLocation.Latitude,
-                    Longitude = festival.FestivalLocation.Longitude,
-                    State = festival.FestivalLocation.State
+                    Address = festival.Address,
+                    City = festival.City,
+                    Latitude = festival.Latitude,
+                    Longitude = festival.Longitude,
+                    State = festival.State
                 }
             };
 
@@ -250,7 +256,7 @@ namespace EasyFest.Controllers
                     .Replace("{3}", model.EndDate.Month.ToString())
                     .Replace("{4}", model.EndDate.Day.ToString())
                     .Replace("{5}", model.Description)
-                    .Replace("{6}", model.ImageName)
+                    .Replace("{6}", string.Join(',', model.Images))
                     .Replace("{7}", model.FestivalLocation.Latitude.ToString())
                     .Replace("{8}", model.FestivalLocation.Longitude.ToString())
                     .Replace("{9}", model.FestivalLocation.Address)
@@ -269,7 +275,7 @@ namespace EasyFest.Controllers
                     .Replace("{3}", model.EndDate.Month.ToString())
                     .Replace("{4}", model.EndDate.Day.ToString())
                     .Replace("{5}", model.Description)
-                    .Replace("{6}", model.ImageName)
+                    .Replace("{6}", string.Join(',', model.Images))
                     .Replace("{7}", model.FestivalLocation.Latitude.ToString())
                     .Replace("{8}", model.FestivalLocation.Longitude.ToString())
                     .Replace("{9}", model.FestivalLocation.Address)
@@ -288,13 +294,18 @@ namespace EasyFest.Controllers
             }
 
             // Only if new picture was uploaded we copy it.
-            if (model.Image != null)
+            if (model.UploadedImages.Any())
             {
-                using (FileStream fs = System.IO.File.Create("..\\EasyFest\\Images\\" + model.ImageName + ".jpg"))
+                foreach (var image in model.UploadedImages)
                 {
-                    await model.Image.CopyToAsync(fs);
+                    string imageName = Guid.NewGuid().ToString();
+                    using (FileStream fs = System.IO.File.Create("..\\EasyFest\\Images\\" + imageName + ".jpg"))
+                    {
+                        await image.CopyToAsync(fs);
+                    }
                 }
             }
+
             return RedirectToAction("Index", "Home");
         }
     }

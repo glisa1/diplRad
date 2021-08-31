@@ -3,7 +3,6 @@ using HotChocolate.Data;
 using HotChocolate.Types;
 using MongoDB.Driver;
 using Storage.Services.CommentsService;
-using Storage.Services.FestivalLocationsService;
 using Storage.Services.FestivalService;
 using Storage.Services.RateService;
 using Storage.Services.UserService;
@@ -18,19 +17,16 @@ namespace GraphQLDataAccess.Schema
         #region Init
 
         private readonly IFestivalService _festivalService;
-        private readonly IFestivalLocationsService _festivalLocationsService;
         private readonly ICommentsService _commentsService;
         private readonly IRateService _rateService;
         private readonly IUserService _usersService;
 
         public Query(IFestivalService festivalService,
-                                IFestivalLocationsService locationsService,
                                 ICommentsService festivalLocationsService,
                                 IRateService rateService,
                                 IUserService usersService)
         {
             _festivalService = festivalService;
-            _festivalLocationsService = locationsService;
             _commentsService = festivalLocationsService;
             _rateService = rateService;
             _usersService = usersService;
@@ -72,17 +68,17 @@ namespace GraphQLDataAccess.Schema
             return _festivalService.GetFestivalsExec();
         }
 
-        [UseProjection]
-        public IExecutable<Storage.Models.Festival> GetFestivalById(string id)
-        {
-            return _festivalService.GetFestivalById(id);
-        }
-
         //[UseProjection]
-        //public async Task<Storage.Models.Festival> GetFestivalById(string id)
+        //public IExecutable<Storage.Models.Festival> GetFestivalById(string id)
         //{
-        //    return await _festivalService.GetFestivalByIdAsync(id);
+        //    return _festivalService.GetFestivalById(id);
         //}
+
+        [UseProjection]
+        public async Task<Storage.Models.Festival> GetFestivalById(string id)
+        {
+            return await _festivalService.GetFestivalByIdAsync(id);
+        }
 
         [UseProjection]
         public async Task<Storage.Models.User> GetUserById(string id)
@@ -99,18 +95,18 @@ namespace GraphQLDataAccess.Schema
         //    return _festivalLocationsService.GetFestivalLocations();
         //}
 
-        [UsePaging(IncludeTotalCount = true)]
-        [UseFiltering]
-        [UseSorting]
-        public IQueryable<Storage.Models.FestivalLocation> GetFestivalLocations()
-        {
-            return _festivalLocationsService.GetFestivalLocationsQueryable();
-        }
+        //[UsePaging(IncludeTotalCount = true)]
+        //[UseFiltering]
+        //[UseSorting]
+        //public IQueryable<Storage.Models.FestivalLocation> GetFestivalLocations()
+        //{
+        //    return _festivalLocationsService.GetFestivalLocationsQueryable();
+        //}
 
-        public IExecutable<Storage.Models.FestivalLocation> GetFestivalLocationsInfo()
-        {
-            return _festivalLocationsService.GetFestivalLocations();
-        }
+        //public IExecutable<Storage.Models.FestivalLocation> GetFestivalLocationsInfo()
+        //{
+        //    return _festivalLocationsService.GetFestivalLocations();
+        //}
 
         [UseProjection]
         public IExecutable<Storage.Models.Comment> GetComments()

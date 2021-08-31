@@ -54,6 +54,11 @@ namespace EasyFest.Controllers
 
         public IActionResult Image(string imageName)
         {
+            if (string.IsNullOrEmpty(imageName))
+            {
+                return null;
+            }
+
             var image = System.IO.File.OpenRead("..\\EasyFest\\Images\\" + imageName + ".jpg");
             return File(image, "image/jpeg");
         }

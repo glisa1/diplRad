@@ -64,10 +64,8 @@ $(document).ready(function () {
             return false;
         }
 
-        var address = $('#FestivalLocation_Address').val();
-        var name = $('#FestivalLocation_Address').val();
         //isNullOrUndefOrEmpty
-        if (isNullOrUndefOrEmpty($('#Name').val()) || isNullOrUndefOrEmpty($('#StartDate').val()) || isNullOrUndefOrEmpty($('#EndDate').val()) || isNullOrUndefOrEmpty($('#Image').val()) || isNullOrUndefOrEmpty($('#FestivalLocation_Latitude').val()) || isNullOrUndefOrEmpty($('#FestivalLocation_Longitude').val()) || isNullOrUndefOrEmpty($('#FestivalLocation_Address').val())) {
+        if (isNullOrUndefOrEmpty($('#Name').val()) || isNullOrUndefOrEmpty($('#StartDate').val()) || isNullOrUndefOrEmpty($('#EndDate').val()) || isNullOrUndefOrEmpty($('#UploadedImages').val()) || isNullOrUndefOrEmpty($('#FestivalLocation_Latitude').val()) || isNullOrUndefOrEmpty($('#FestivalLocation_Longitude').val()) || isNullOrUndefOrEmpty($('#FestivalLocation_Address').val())) {
             setModal('You did not provide us with some neccessary data for new festival. Have in mind that there are two sections for creating new festival, the "Festival details" and "Location details" sections.');
             return false;
         }

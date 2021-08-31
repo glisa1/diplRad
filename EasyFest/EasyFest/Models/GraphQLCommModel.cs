@@ -10,14 +10,14 @@ namespace EasyFest.Models
         /// <summary>
         /// Gets all about festival.
         /// </summary>
-        //public static string QueryFestival => "query {festivals { id name day month rate description numberOfComments imageName" +
-        //    " festivalLocation{city state} }}";
+        //public static string QueryFestival => "query {festivals { id name day month rate description numberOfComments images" +
+        //    " city state }}";
 
         /// <summary>
         /// Gets all about festival.
         /// </summary>
-        public static string QueryFestival => "query {festivals(first: 10){ edges{ cursor node{ id name day month rate description numberOfComments imageName" +
-            " festivalLocation{city state}}} pageInfo{hasNextPage} totalCount }}";
+        public static string QueryFestival => "query {festivals(first: 10){ edges{ cursor node{ id name day month rate description numberOfComments images" +
+            " city state}} pageInfo{hasNextPage} totalCount }}";
 
         /// <summary>
         /// Gets all festivals by term.
@@ -25,8 +25,8 @@ namespace EasyFest.Models
         /// {1} - festival description (term)
         /// </summary>
         public static string QueryFestivalSearch => "query {festivals(first: 10, where:{or: [{name: {contains: \"{0}\"}}, {description: {contains: \"{1}\"}}]}){ edges{ " + 
-            " cursor node{ id name day month rate description numberOfComments imageName" +
-            " festivalLocation{city state}}} pageInfo{hasNextPage} totalCount }}";
+            " cursor node{ id name day month rate description numberOfComments images" +
+            " city state}} pageInfo{hasNextPage} totalCount }}";
 
         /// <summary>
         /// Used to get informations about currently logged in user.
@@ -39,17 +39,17 @@ namespace EasyFest.Models
         /// </summary>
         public static string QueryFestivalDetailsWithLocation => 
             "query {festivalById(id: \"{0}\")" +
-            " { id name day month rate description imageName endDay endMonth " + 
-            " festivalLocation{ address city state longitude latitude } " + 
+            " { id name day month rate description images endDay endMonth " + 
+            " address city state longitude latitude " + 
             " commentsList{id commentBody createdOn user{id username}} }}";
 
         /// <summary>
         /// Gets query by id with details and location.
         /// {0} - id of festival
         /// </summary>
-        public static string QueryFestivalImageName =>
+        public static string QueryFestivalImages =>
             "query {festivalById(id: \"{0}\")" +
-            " { imageName }}";
+            " { images }}";
 
         /// <summary>
         /// Gets rate given by user for festival.
@@ -77,7 +77,7 @@ namespace EasyFest.Models
         /// Gets list of festivals for festivals map.
         /// </summary>
         public static string QueryGetFestivalMap =>
-            "query{festivals{id name rate numberOfComments festivalLocation{latitude longitude}}}";
+            "query{festivals: festivalsInfo{id name rate numberOfComments latitude longitude images}}";
 
         /// <summary>
         /// Gets query by id with details and location.
@@ -85,8 +85,8 @@ namespace EasyFest.Models
         /// </summary>
         public static string QueryGetFestivalForEdit =>
             "query {festivalById(id: \"{0}\")" +
-            " { id name day month description imageName endDay endMonth " +
-            " festivalLocation{ address city state longitude latitude } " +
+            " { id name day month description images endDay endMonth " +
+            " address city state longitude latitude " +
             " }}";
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace EasyFest.Models
         /// {3} - endMonth,
         /// {4} - endDay,
         /// {5} - description,
-        /// {6} - imageName,
+        /// {6} - images,
         /// {7} - latitude,
         /// {8} - longitude,
         /// {9} - address,
@@ -192,7 +192,7 @@ namespace EasyFest.Models
             " endMonth: {3}, " +
             " endDay: {4}, " +
             " description: \"{5}\", " +
-            " imageName: \"{6}\", " +
+            " images: \"{6}\", " +
             " latitude: {7}, " +
             " longitude: {8}, " +
             " address: \"{9}\", " +
@@ -210,7 +210,7 @@ namespace EasyFest.Models
         /// {3} - endMonth,
         /// {4} - endDay,
         /// {5} - description,
-        /// {6} - imageName,
+        /// {6} - images,
         /// {7} - latitude,
         /// {8} - longitude,
         /// {9} - address,
@@ -226,7 +226,7 @@ namespace EasyFest.Models
             " endMonth: {3}, " +
             " endDay: {4}, " +
             " description: \"{5}\", " +
-            " imageName: \"{6}\", " +
+            " images: \"{6}\", " +
             " latitude: {7}, " +
             " longitude: {8}, " +
             " address: \"{9}\", " +

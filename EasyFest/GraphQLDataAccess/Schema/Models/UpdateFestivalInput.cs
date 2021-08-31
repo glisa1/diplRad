@@ -13,7 +13,7 @@ namespace GraphQLDataAccess.Schema.Models
                                     string description,
                                     int endMonth,
                                     int endDay,
-                                    string imageName,
+                                    List<string> images,
                                     double latitude,
                                     double longitude,
                                     string address,
@@ -29,7 +29,7 @@ namespace GraphQLDataAccess.Schema.Models
             EndMonth = endMonth;
             EndDay = endDay;
             Description = description;
-            ImageName = imageName;
+            Images = images;
             Latitude = latitude;
             Longitude = longitude;
             Address = address;
@@ -53,7 +53,9 @@ namespace GraphQLDataAccess.Schema.Models
 
         public string Description { get; set; }
 
-        public string ImageName { get; set; }
+        //public string ImageName { get; set; }
+
+        public List<string> Images { get; set; }
 
         public double Latitude { get; set; }
 

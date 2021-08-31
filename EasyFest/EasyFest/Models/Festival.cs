@@ -12,6 +12,7 @@ namespace EasyFest.Models
         public Festival()
         {
             Comments = new List<Comment>();
+            Images = new List<string>();
         }
 
         [JsonProperty("id")]
@@ -35,8 +36,11 @@ namespace EasyFest.Models
         [JsonProperty("description")]
         public string Description { get; set; }
 
-        [JsonProperty("imageName")]
-        public string ImageName { get; set; }
+        //[JsonProperty("imageName")]
+        //public string ImageName { get; set; }
+
+        [JsonProperty("images")]
+        public List<string> Images { get; set; }
 
         [JsonProperty("rate")]
         public double Rate { get; set; }
@@ -48,11 +52,30 @@ namespace EasyFest.Models
         [JsonProperty("numberOfComments")]
         public int NumberOfComments { get; set; }
 
-        [JsonProperty("festivalLocation")]
-        public FestivalLocation FestivalLocation { get; set; }
+        //[JsonProperty("festivalLocation")]
+        //public FestivalLocation FestivalLocation { get; set; }
 
         [JsonProperty("commentsList")]
         public List<Comment> Comments { get; set; }
+
+        #region Location
+
+        [JsonProperty("address")]
+        public string Address { get; set; }
+
+        [JsonProperty("city")]
+        public string City { get; set; }
+
+        [JsonProperty("state")]
+        public string State { get; set; }
+
+        [JsonProperty("latitude")]
+        public double Latitude { get; set; }
+
+        [JsonProperty("longitude")]
+        public double Longitude { get; set; }
+
+        #endregion
     }
 
     //public class FestivalWithLocation : Festival
@@ -129,6 +152,12 @@ namespace EasyFest.Models
 
     public class NewFestivalViewModel
     {
+        public NewFestivalViewModel()
+        {
+            Images = new List<string>();
+            UploadedImages = new List<IFormFile>();
+        }
+
         public string Id { get; set; }
 
         [Required]
@@ -148,17 +177,24 @@ namespace EasyFest.Models
         [StringLength(500)]
         public string Description { get; set; }
 
-        public string ImageName { get; set; }
+        //public string ImageName { get; set; }
+
+        public List<string> Images { get; set; }
 
         [Required]
         [Display(Name = "File")]
-        public IFormFile Image { get; set; }
+        public List<IFormFile> UploadedImages { get; set; }
 
         public FestivalLocationViewModel FestivalLocation { get; set; }
     }
 
     public class UpdateFestivalViewModel
     {
+        public UpdateFestivalViewModel()
+        {
+            Images = new List<string>();
+            UploadedImages = new List<IFormFile>();
+        }
         public string Id { get; set; }
 
         [Required]
@@ -180,10 +216,12 @@ namespace EasyFest.Models
         [StringLength(500)]
         public string Description { get; set; }
 
-        public string ImageName { get; set; }
+        //public string ImageName { get; set; }
 
-        [Display(Name = "File")]
-        public IFormFile Image { get; set; }
+        public List<string> Images { get; set; }
+
+        [Display(Name = "Files")]
+        public List<IFormFile> UploadedImages { get; set; }
 
         public FestivalLocationViewModel FestivalLocation { get; set; }
     }

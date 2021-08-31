@@ -4,7 +4,6 @@ using HotChocolate.Execution;
 using Storage.Models;
 using Storage.Services.AuthenticationService;
 using Storage.Services.CommentsService;
-using Storage.Services.FestivalLocationsService;
 using Storage.Services.FestivalService;
 using Storage.Services.RateService;
 using Storage.Services.UserService;
@@ -23,7 +22,6 @@ namespace GraphQLDataAccess.Schema
         #region Fields
 
         private readonly IFestivalService _festivalService;
-        private readonly IFestivalLocationsService _locationService;
         private readonly IRateService _rateService;
         private readonly ICommentsService _commentService;
         private readonly IUserService _userService;
@@ -32,14 +30,12 @@ namespace GraphQLDataAccess.Schema
         #endregion
 
         public Mutation(IFestivalService festivalService,
-                                IFestivalLocationsService locationsService,
                                 IRateService rateService,
                                 ICommentsService commentsService,
                                 IUserService userService,
                                 IAuthenticationService authenticationService)
         {
             _festivalService = festivalService;
-            _locationService = locationsService;
             _rateService = rateService;
             _commentService = commentsService;
             _userService = userService;
@@ -168,86 +164,86 @@ namespace GraphQLDataAccess.Schema
 
         #region Festival locations mutations
 
-        public async Task<FestivalLocationCreatedPayload> CreateFestivalLocation(CreateFestivalLocationInput input)
-        {
-            if (string.IsNullOrEmpty(input.FestivalId))
-            {
-                throw new QueryException(
-                    ErrorBuilder.New()
-                        .SetMessage("The festivalId cannot be empty.")
-                        .SetCode("FESTIVALID_EMPTY")
-                        .Build());
-            }
+        //public async Task<FestivalLocationCreatedPayload> CreateFestivalLocation(CreateFestivalLocationInput input)
+        //{
+        //    if (string.IsNullOrEmpty(input.FestivalId))
+        //    {
+        //        throw new QueryException(
+        //            ErrorBuilder.New()
+        //                .SetMessage("The festivalId cannot be empty.")
+        //                .SetCode("FESTIVALID_EMPTY")
+        //                .Build());
+        //    }
 
 
-            var festLocation = await _locationService.GetFestivalLocationAsync(input.FestivalId);
-            if (festLocation != null)
-            {
-                throw new QueryException(
-                    ErrorBuilder.New()
-                        .SetMessage("Location for this festival already exists.")
-                        .SetCode("LOCATION_ALREADY_EXISTS")
-                        .Build());
-            }
+        //    var festLocation = await _locationService.GetFestivalLocationAsync(input.FestivalId);
+        //    if (festLocation != null)
+        //    {
+        //        throw new QueryException(
+        //            ErrorBuilder.New()
+        //                .SetMessage("Location for this festival already exists.")
+        //                .SetCode("LOCATION_ALREADY_EXISTS")
+        //                .Build());
+        //    }
 
-            var newFestivalLocation = new FestivalLocation
-            {
-                Address = input.Address,
-                City = input.City,
-                FestivalId = input.FestivalId,
-                Latitude = input.Latitude,
-                Longitude = input.Longitude,
-                State = input.State
-            };
+        //    var newFestivalLocation = new FestivalLocation
+        //    {
+        //        Address = input.Address,
+        //        City = input.City,
+        //        FestivalId = input.FestivalId,
+        //        Latitude = input.Latitude,
+        //        Longitude = input.Longitude,
+        //        State = input.State
+        //    };
 
-            await _locationService.InsertFestivalLocationAsync(newFestivalLocation);
+        //    await _locationService.InsertFestivalLocationAsync(newFestivalLocation);
 
-            return new FestivalLocationCreatedPayload(newFestivalLocation, input.ClientMutationId);
-        }
+        //    return new FestivalLocationCreatedPayload(newFestivalLocation, input.ClientMutationId);
+        //}
 
-        public async Task<FestivalLocationCreatedPayload> UpdateFestivalLocation(UpdateFestivalLocationInput input)
-        {
-            if (string.IsNullOrEmpty(input.FestivalLocationId))
-            {
-                throw new QueryException(
-                    ErrorBuilder.New()
-                        .SetMessage("The festivalId cannot be empty.")
-                        .SetCode("FESTIVALID_EMPTY")
-                        .Build());
-            }
+        //public async Task<FestivalLocationCreatedPayload> UpdateFestivalLocation(UpdateFestivalLocationInput input)
+        //{
+        //    if (string.IsNullOrEmpty(input.FestivalLocationId))
+        //    {
+        //        throw new QueryException(
+        //            ErrorBuilder.New()
+        //                .SetMessage("The festivalId cannot be empty.")
+        //                .SetCode("FESTIVALID_EMPTY")
+        //                .Build());
+        //    }
 
-            var newFestivalLocation = new FestivalLocation
-            {
-                Id = input.FestivalLocationId,
-                Address = input.Address,
-                City = input.City,
-                Latitude = input.Latitude,
-                Longitude = input.Longitude,
-                State = input.State
-            };
+        //    var newFestivalLocation = new FestivalLocation
+        //    {
+        //        Id = input.FestivalLocationId,
+        //        Address = input.Address,
+        //        City = input.City,
+        //        Latitude = input.Latitude,
+        //        Longitude = input.Longitude,
+        //        State = input.State
+        //    };
 
-            // Razmisliti da se koristi model za create jer on vraca i festival i festivalId
+        //    // Razmisliti da se koristi model za create jer on vraca i festival i festivalId
 
-            await _locationService.UpdateFestivalLocationAsync(newFestivalLocation);
+        //    await _locationService.UpdateFestivalLocationAsync(newFestivalLocation);
 
-            return new FestivalLocationCreatedPayload(newFestivalLocation, input.ClientMutationId);
-        }
+        //    return new FestivalLocationCreatedPayload(newFestivalLocation, input.ClientMutationId);
+        //}
 
-        public async Task<bool> DeleteFestivalLocation(string festivalLocationId)
-        {
-            if (string.IsNullOrEmpty(festivalLocationId))
-            {
-                throw new QueryException(
-                    ErrorBuilder.New()
-                        .SetMessage("The festivalId cannot be empty.")
-                        .SetCode("FESTIVALID_EMPTY")
-                        .Build());
-            }
+        //public async Task<bool> DeleteFestivalLocation(string festivalLocationId)
+        //{
+        //    if (string.IsNullOrEmpty(festivalLocationId))
+        //    {
+        //        throw new QueryException(
+        //            ErrorBuilder.New()
+        //                .SetMessage("The festivalId cannot be empty.")
+        //                .SetCode("FESTIVALID_EMPTY")
+        //                .Build());
+        //    }
 
-            await _locationService.DeleteFestivalLocationAsync(festivalLocationId);
+        //    await _locationService.DeleteFestivalLocationAsync(festivalLocationId);
 
-            return true;
-        }
+        //    return true;
+        //}
 
         #endregion
 
@@ -283,33 +279,15 @@ namespace GraphQLDataAccess.Schema
                 Description = input.Description,
                 EndDay = input.EndDay,
                 EndMonth = input.EndMonth,
-                ImageName = input.ImageName
-            };
-
-            await _festivalService.InsertFestivalAsync(newFestival);
-
-            var newFest = await _festivalService.GetFestivalIdByNameAsync(input.Name);
-
-            if (newFest == null)
-            {
-                throw new QueryException(
-                    ErrorBuilder.New()
-                        .SetMessage("Error creating festival.")
-                        .SetCode("FESTIVAL_CREATE_EXISTS")
-                        .Build());
-            }
-
-            var newFestivalLocation = new FestivalLocation
-            {
+                Images = input.Images,
                 Address = input.Address,
                 City = input.City,
                 Latitude = input.Latitude,
                 Longitude = input.Longitude,
                 State = input.State,
-                FestivalId = newFest
             };
 
-            await _locationService.InsertFestivalLocationAsync(newFestivalLocation);
+            await _festivalService.InsertFestivalAsync(newFestival);
 
             return new FestivalCreatedPayload(newFestival, input.ClientMutationId);
         }
@@ -357,14 +335,7 @@ namespace GraphQLDataAccess.Schema
                 Description = input.Description,
                 EndDay = input.EndDay,
                 EndMonth = input.EndMonth,
-                ImageName = input.ImageName
-            };
-
-            await _festivalService.UpdateFestivalAsync(newFestival);
-
-            var newFestivalLocation = new FestivalLocation
-            {
-                FestivalId = input.FestivalId,
+                Images = input.Images,
                 Address = input.Address,
                 City = input.City,
                 Latitude = input.Latitude,
@@ -372,7 +343,7 @@ namespace GraphQLDataAccess.Schema
                 State = input.State
             };
 
-            await _locationService.UpdateFestivalLocationAsync(newFestivalLocation);
+            await _festivalService.UpdateFestivalAsync(newFestival);
 
             return new FestivalCreatedPayload(newFestival, input.ClientMutationId);
         }
@@ -385,7 +356,7 @@ namespace GraphQLDataAccess.Schema
         public async Task<bool> DeleteFestival(string festivalId)
         {
             //We call each service that deletes adjacent data.
-            await _locationService.DeleteFestivalLocationByFestivalIdAsync(festivalId);
+            //await _locationService.DeleteFestivalLocationByFestivalIdAsync(festivalId);
             await _rateService.DeleteRatesByFestivalidAsync(festivalId);
             await _commentService.DeleteCommentsByFestivalIdAsync(festivalId);
             await _festivalService.DeleteFestivalAsync(festivalId);

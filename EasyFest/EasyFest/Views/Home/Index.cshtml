@@ -15,102 +15,156 @@
     }
 }
 
-@Html.Hidden("lastCursor", Model.Data.FestivalNodes.FestivalEdges.LastOrDefault().CursorName)
+@if (!Model.Data.FestivalNodes.FestivalEdges.Any())
+{
+    <h3>We are sorry!</h3>
+    <p>We could not find specified festival.</p>
+}
+else
+{
+    @Html.Hidden("lastCursor", Model.Data.FestivalNodes.FestivalEdges.LastOrDefault().CursorName)
+    <div class="container">
 
-<div class="container">
-
-    <!-- Page Heading -->
-    <div class="row">
-        <div class="col-md-10">
-            <h1 class="my-4">
-                Find the best festival
-                <small>it's easy!</small>
-            </h1>
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-md-10">
+                <h1 class="my-4">
+                    Find the best festival
+                    <small>it's easy!</small>
+                </h1>
+            </div>
+            @await Component.InvokeAsync("NewFestivalBtn")
         </div>
-        @await Component.InvokeAsync("NewFestivalBtn")
-    </div>
-    <div class="row">
-        <div class="mb-4 col-12">
-            <form id="searchForm" asp-action="Search" asp-controller="Home" method="post" autocomplete="off">
-                <div class="input-group" style="width:100%; display:flex; justify-content: center;">
-                    <input id="term" name="term" style="width:45%;" class="form-control" type="text" value="@searchData"/>
-                    <div class="input-group-append">
-                        <button id="searchButton" class="btn btn-outline-primary" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+        <div class="row">
+            <div class="mb-4 col-12">
+                <form id="searchForm" asp-action="Search" asp-controller="Home" method="post" autocomplete="off">
+                    <div class="input-group" style="width:100%; display:flex; justify-content: center;">
+                        <input id="term" name="term" style="width:45%;" class="form-control" type="text" value="@searchData" />
+                        <div class="input-group-append">
+                            <button id="searchButton" class="btn btn-outline-primary" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                        @*<button type="button"><i class="glyphicon glyphicon-search"></i></button>*@
                     </div>
-                    @*<button type="button"><i class="glyphicon glyphicon-search"></i></button>*@
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
-    <div id="festivalsContainer" class="row">
-        @foreach (var data in Model.Data.FestivalNodes.FestivalEdges)
-        {
-            <div class="col-lg-6 mb-4">
-                <div class="card h-100">
-                    @if (string.IsNullOrEmpty(data.Festival.ImageName))
-                    {
-                        <a href="#"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt=""></a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("FestivalDetails", "Festival", new { festivalId = data.Festival.Id })"><img class="card-img-top" src='@Url.Action("Image", "Home", new { imageName = data.Festival.ImageName})' alt=""></a>
-                    }
-                    <div class="card-body festInfoContainer">
-                        <div style="width: 100%;">
-                            <h4 class="card-title" style="float:left; width:80%;">
-                                <a href="#">@data.Festival.Name</a>
-                            </h4>
-                            <div style="float:right; width:auto;">
-                                <i class="glyphicon glyphicon-star"><span>@data.Festival.Rate</span></i>
-                                <i class="glyphicon glyphicon-comment"><span>@data.Festival.NumberOfComments</span></i>
+        <div id="festivalsContainer" class="row">
+            @foreach (var data in Model.Data.FestivalNodes.FestivalEdges)
+            {
+                int imageCounter = 0;
+                <div class="col-lg-6 mb-4">
+                    <div class="card h-100">
+                        @*@if (string.IsNullOrEmpty(data.Festival.Images[0]))
+                        {
+                            <a href="#"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt=""></a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("FestivalDetails", "Festival", new { festivalId = data.Festival.Id })"><img class="card-img-top" src='@Url.Action("Image", "Home", new { imageName = data.Festival.Images[0] })' alt=""></a>
+                        }*@
+                        
+                        <div id="carouselFestivalList" class="carousel slide" data-ride="carousel">
+                            @*<ol class="carousel-indicators">
+                                @foreach (var image in data.Festival.Images)
+                                {
+                                    if (imageCounter == 0)
+                                    {
+                                    <li data-target="#carouselFestivalList" data-slide-to="0" class="active"></li>
+                                    }
+                                    else
+                                    {
+                                    <li data-target="#carouselFestivalList" data-slide-to="@imageCounter"></li>
+                                    }
+                                    imageCounter++;
+                                }
+                            </ol>*@
+                            <div class="carousel-inner">
+                                @{ imageCounter = 0;}
+                                @foreach (var image in data.Festival.Images)
+                                {
+                                    if (imageCounter == 0)
+                                    {
+                                        <div class="carousel-item active">
+                                            <a href="@Url.Action("FestivalDetails", "Festival", new { festivalId = data.Festival.Id })"><img src='@Url.Action("Image", "Home", new { imageName = image })' class="d-block w-100" alt="..."></a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="carousel-item">
+                                            <a href="@Url.Action("FestivalDetails", "Festival", new { festivalId = data.Festival.Id })"><img src='@Url.Action("Image", "Home", new { imageName = image })' class="d-block w-100" alt="..."></a>
+                                        </div>
+                                    }
+                                    imageCounter++;
+                                }
+                            </div>
+                            @*@if (data.Festival.Images.Count > 1)
+                            {
+                                <a class="carousel-control-prev" href="#carouselFestivalList" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselFestivalList" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            }*@
+                        </div>                        
+                        <div class="card-body festInfoContainer">
+                            <div style="width: 100%;">
+                                <h4 class="card-title" style="float:left; width:80%;">
+                                    <a href="@Url.Action("FestivalDetails", "Festival", new { festivalId = data.Festival.Id })">@data.Festival.Name</a>
+                                </h4>
+                                <div style="float:right; width:auto;">
+                                    <i class="glyphicon glyphicon-star"><span>@data.Festival.Rate</span></i>
+                                    <i class="glyphicon glyphicon-comment"><span>@data.Festival.NumberOfComments</span></i>
+                                </div>
+                            </div>
+                            <div style="float:left;">
+                                <p class="card-text">
+                                    @data.Festival.Description
+                                </p>
                             </div>
                         </div>
-                        <div style="float:left;">
-                            <p class="card-text">
-                                @data.Festival.Description
-                            </p>
-                        </div>
                     </div>
+                </div>
+            }
+        </div>
+        @if (Model.Data.FestivalNodes.InfoPage.HasNextPage)
+        {
+            <div class="row" id="loadMoreFestsContainer">
+                <div class="col-12" style="display:flex; justify-content:center;">
+                    <button type="button" onclick="getMoreFestivals()" title="Load more!" style="border-radius: 25px;" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i></button>
                 </div>
             </div>
         }
+        <!-- /.row -->
+        <!-- Pagination -->
+        @*<ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>*@
+
     </div>
-    @if (Model.Data.FestivalNodes.InfoPage.HasNextPage)
-    {
-        <div class="row" id="loadMoreFestsContainer">
-            <div class="col-12" style="display:flex; justify-content:center;">
-                <button type="button" onclick="getMoreFestivals()" title="Load more!" style="border-radius: 25px;" class="btn btn-primary" ><i class="glyphicon glyphicon-plus"></i></button>
-            </div>
-        </div>
-    }
-    <!-- /.row -->
-    <!-- Pagination -->
-    @*<ul class="pagination justify-content-center">
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
-            </a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">1</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">3</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
-            </a>
-        </li>
-    </ul>*@
-
-</div>
-
+}
 @*    <div>
         @Html.ActionLink("Login", "Login", "User")
     </div>*@
