@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
 using EasyFest.Factories;
 using EasyFest.Models;
 using GraphQLDataAccess.Schema.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Storage.Models;
 using Storage.Services.AuthenticationService;
@@ -120,6 +120,24 @@ namespace EasyFest.Controllers
             var result = await _client.QueryGet<DeleteUserPayload>(mutation);
 
             return Json(new { code = 200 });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProfileImage(IFormFile fileBytes, string imageGuid)
+        {
+            try
+            {
+                using (FileStream fs = System.IO.File.Create("..\\EasyFest\\Images\\ProfileImages\\" + imageGuid + ".jpg"))
+                {
+                    await fileBytes.CopyToAsync(fs);
+                }
+
+                return Json(new { code = 200 });
+            }
+            catch(Exception)
+            {
+                return Json(new { code = 500 });
+            }
         }
 
         #endregion

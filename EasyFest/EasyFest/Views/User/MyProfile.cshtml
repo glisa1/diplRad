@@ -17,14 +17,22 @@
 }
 else
 {
+    @Html.Hidden("imageGuid", Model.Data.User.ImageId)
     var userModel = Model.Data.User;
     <div class="container-fluid">
         <div class="row">
             <div class="profileImage col-md-4 col-lg-4">
-                <img src="https://placekitten.com/150/150" />
-                @*<span class="sub-text">@comment.User.Username</span>*@
+                <img id="profileImgContainer" class="profileImageImg" src='@Url.Action("ProfileImage", "Home", new { imageName = userModel.ImageId })' />
+                <div class="editProfileImg">
+                    <div id="editImgBtn" class="textEditProfileImg"><i class="glyphicon glyphicon-pencil"></i>Change</div>
+                </div>
             </div>
             <div class="col-md-8 col-lg-8">
+                <button type="button" style="float:right;" onclick="deleteAccount('@userModel.Id')" class="btn btn-outline-danger mt-2">Delete account</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-lg-5">
                 <div class="form-control">
                     <label>Username:</label>
                     <span>@userModel.Username</span>
@@ -45,7 +53,9 @@ else
         </div>
     </div>
 
-    <button type="button" onclick="deleteAccount('@userModel.Id')" class="btn btn-danger mt-2">Delete account</button>
+    <form>
+        <input id="file-input" type="file" name="name" accept=".jpg" style="display: none;" />
+    </form>
 
     <div id="myModal" class="modal">
 
@@ -59,6 +69,17 @@ else
             </div>
         </div>
 
+    </div>
+    <div id="myErrorModal" class="modal">
+
+        <!-- Modal error content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p style="margin-top:5px; font-size:20px;" id="errorMessageModal">We are sorry, but an error happened while editing your profile image.</p>
+            <div style="width:100%;">
+                <button id="btnOk" type="button" class="btn btn-danger float-right">Ok</button>
+            </div>
+        </div>
     </div>
 }
 

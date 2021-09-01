@@ -132,7 +132,7 @@
                         {
                             <li>
                                 <div class="commenterImage">
-                                    <img src="https://placekitten.com/50/50" />
+                                    <img src='@Url.Action("ProfileImage", "Home", new { imageName = comment.User.ImageId })' />
                                     <span class="sub-text">@comment.User.Username</span>
                                 </div>
                                 <div class="commentText">

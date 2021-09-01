@@ -18,6 +18,9 @@ namespace EasyFest.Models
         [JsonProperty("email")]
         public string Email { get; set; }
 
+        [JsonProperty("imageId")]
+        public string ImageId { get; set; }
+
         [JsonProperty("isAdmin")]
         public bool IsAdmin { get; set; }
 

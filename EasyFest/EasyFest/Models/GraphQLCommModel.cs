@@ -41,7 +41,7 @@ namespace EasyFest.Models
             "query {festivalById(id: \"{0}\")" +
             " { id name day month rate description images endDay endMonth " + 
             " address city state longitude latitude " + 
-            " commentsList{id commentBody createdOn user{id username}} }}";
+            " commentsList{id commentBody createdOn user{id username imageId}} }}";
 
         /// <summary>
         /// Gets query by id with details and location.
@@ -64,7 +64,7 @@ namespace EasyFest.Models
         /// {0} - User id
         /// </summary>
         public static string QueryGetUserById =>
-            "query {userById(id: \"{0}\"){id username email commentsPostedByUser ratesGivenByUser}}";
+            "query {userById(id: \"{0}\"){id username email commentsPostedByUser ratesGivenByUser imageId}}";
 
         /// <summary>
         /// Gets user by id.

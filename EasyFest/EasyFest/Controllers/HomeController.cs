@@ -63,6 +63,17 @@ namespace EasyFest.Controllers
             return File(image, "image/jpeg");
         }
 
+        public IActionResult ProfileImage(string imageName)
+        {
+            if (string.IsNullOrEmpty(imageName))
+            {
+                return null;
+            }
+
+            var image = System.IO.File.OpenRead("..\\EasyFest\\Images\\ProfileImages\\" + imageName + ".jpg");
+            return File(image, "image/jpeg");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

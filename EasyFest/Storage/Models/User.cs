@@ -17,6 +17,8 @@ namespace Storage.Models
 
         public string Email { get; set; }
 
+        public string ImageId { get; set; }
+
         public bool IsAdmin { get; set; }
 
         [BsonIgnore]
