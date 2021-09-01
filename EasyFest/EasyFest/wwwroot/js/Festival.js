@@ -1,4 +1,5 @@
 ﻿var ratedByUser = 0;
+var mymap = null;
 
 $(document).ready(function () {
     var mapArea = $('#map');
@@ -10,14 +11,17 @@ $(document).ready(function () {
     var longitude = $('#Longitude').val();
     var latitude = $('#Latitude').val();
 
-    var mymap = L.map('map').setView([latitude, longitude], 14.95);
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=sk.eyJ1IjoiZGFuaWplbGdsaXNvdmljIiwiYSI6ImNrcmt6YXgzODE3YnIyb3BlOWRwNW5nMWYifQ.rEAIMDQbEa1ui2bA3sCUNg', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: 'your.mapbox.access.token'
+    mymap = L.map('map').setView([latitude, longitude], 5.00);
+    //L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=sk.eyJ1IjoiZGFuaWplbGdsaXNvdmljIiwiYSI6ImNrcmt6YXgzODE3YnIyb3BlOWRwNW5nMWYifQ.rEAIMDQbEa1ui2bA3sCUNg', {
+    //    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    //    maxZoom: 18,
+    //    id: 'mapbox/streets-v11',
+    //    tileSize: 512,
+    //    zoomOffset: -1,
+    //    accessToken: 'your.mapbox.access.token'
+    //}).addTo(mymap);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mymap);
 
     var marker = L.marker([latitude, longitude]).addTo(mymap);
@@ -39,6 +43,9 @@ $(document).ready(function () {
 
     //SetRating($('#RatedByUser').val());
     //SetRating();
+    mymap.on('locationfound', onLocationFound);
+
+    mymap.locate(/*{ setView: true, maxZoom: 16 }*/);
 });
 
 $('#addNewComment').click(function () {
@@ -277,4 +284,32 @@ function setErrorModal() {
 function setErrorModalText(text) {
     $('#errorMessageModalError').text('');
     $('#errorMessageModalError').text(text);
+}
+
+function onLocationFound(e) {
+    var circleStyle = {};
+    circleStyle.radius = e.accuracy;
+    circleStyle.color = 'red';
+    circleStyle.fillColor = '#f03';
+    circleStyle.fillOpacity = 0.5;
+
+    var customIcon = L.icon({
+        iconUrl: '/Festival/GetPin',
+        shadowUrl: '/Festival/GetShadow',
+
+        iconSize: [75, 75], // size of the icon
+        shadowSize: [50, 64], // size of the shadow
+        iconAnchor: [35, 75], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+
+    var markerStyle = {};
+    markerStyle.color = 'red';
+    markerStyle.icon = customIcon;
+
+    L.marker(e.latlng, markerStyle).addTo(mymap)
+        .bindPopup("You are within " + circleStyle.radius + " meters from this point");//.openPopup();
+
+    L.circle(e.latlng, circleStyle).addTo(mymap);
 }

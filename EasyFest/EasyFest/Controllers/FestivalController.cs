@@ -308,5 +308,17 @@ namespace EasyFest.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult GetPin()
+        {
+            var image = System.IO.File.OpenRead(".\\wwwroot\\locPin.png");
+            return File(image, "image/jpeg");
+        }
+
+        public IActionResult GetShadow()
+        {
+            var image = System.IO.File.OpenRead(".\\wwwroot\\locPinSh.png");
+            return File(image, "image/png");
+        }
     }
 }

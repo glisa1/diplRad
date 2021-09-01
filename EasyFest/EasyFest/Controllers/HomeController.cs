@@ -39,9 +39,13 @@ namespace EasyFest.Controllers
             TempData.Remove("searchValue");
             TempData.Add("searchValue", term);
 
+            string termUpper = term.ToUpper();
+
             var query = GraphQLCommModel.QueryFestivalSearch
                             .Replace("{0}", term)
-                            .Replace("{1}", term);
+                            .Replace("{1}", termUpper)
+                            .Replace("{2}", term)
+                            .Replace("{3}", termUpper);
             var festivals = await _client.QueryGet<FestivalPaginate>(query);
 
             return View("Index", festivals);

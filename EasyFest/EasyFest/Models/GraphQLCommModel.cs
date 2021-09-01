@@ -24,7 +24,7 @@ namespace EasyFest.Models
         /// {0} - festival name (term)
         /// {1} - festival description (term)
         /// </summary>
-        public static string QueryFestivalSearch => "query {festivals(first: 10, where:{or: [{name: {contains: \"{0}\"}}, {description: {contains: \"{1}\"}}]}){ edges{ " + 
+        public static string QueryFestivalSearch => "query {festivals(first: 10, where:{or: [{name: {contains: \"{0}\"}}, {name: {contains: \"{1}\"}}, {description: {contains: \"{2}\"}}, {description: {contains: \"{3}\"}}]}){ edges{ " + 
             " cursor node{ id name day month rate description numberOfComments images" +
             " city state}} pageInfo{hasNextPage} totalCount }}";
 
