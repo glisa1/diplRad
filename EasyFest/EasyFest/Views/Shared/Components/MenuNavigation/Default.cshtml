@@ -13,11 +13,20 @@
         </button>
         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
             <ul class="navbar-nav flex-grow-1">
+                @*<li class="nav-item navBarAction">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                </li>*@
                 <li class="nav-item navBarAction">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                </li>
-                <li class="nav-item navBarAction">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Festival" asp-action="FestivalMap">Festival maps</a>
+                    <a class="nav-link" asp-area="" asp-controller="Festival" asp-action="FestivalMap">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-map" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M15.817.113A.5.5 0 0 1 16 .5v14a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 15.01l-4.902.98A.5.5 0 0 1 0 15.5v-14a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0L10.5.99l4.902-.98a.5.5 0 0 1 .415.103zM10 1.91l-4-.8v12.98l4 .8V1.91zm1 12.98 4-.8V1.11l-4 .8v12.98zm-6-.8V1.11l-4 .8v12.98l4-.8z" />
+                            </svg>
+                            <strong>
+                                Festival maps
+                            </strong>
+                        </div>
+                    </a>
                 </li>
                 @if (!hasModel)
                 {
@@ -26,10 +35,10 @@
                     TempData.Remove("IsAdmin");
                     TempData.Add("IsAdmin", false);
                     <li class="nav-item navBarAction">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Register">Register</a>
+                        <a class="nav-link" asp-area="" asp-controller="User" asp-action="Register">Register</a>
                     </li>
                     <li class="nav-item navBarAction">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
+                        <a class="nav-link" asp-area="" asp-controller="User" asp-action="Login">Login</a>
                     </li>
                 }
                 else
@@ -39,11 +48,11 @@
                     @Html.Hidden("LoggedUserId", Model.Id);
                     @Html.Hidden("LoggedUsername", Model.Username);
                     <li class="nav-item navBarAction">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
+                        <a class="nav-link" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
                     </li>
-                    <li class="nav-item navBarAction">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="MyProfile" asp-route-userId="@Model.Id"><div style="font-weight: 600;"><i class="glyphicon glyphicon-user"></i> @Model.Username</div></a>
-                    </li>
+                    @*<li class="nav-item navBarAction">
+                        <a class="nav-link" asp-area="" asp-controller="User" asp-action="MyProfile" asp-route-userId="@Model.Id"><div style="font-weight: 600;"><i class="glyphicon glyphicon-user"></i> @Model.Username</div></a>
+                    </li>*@
                     if (Model.IsAdmin)
                     {
                         TempData.Remove("IsAdmin");
@@ -60,6 +69,12 @@
                     }
                 }
             </ul>
+            @if (hasModel)
+            {
+                <div class="nav-item navBarAction float-md-right float-lg-right">
+                    <a style="color:rgb(255, 255, 255)" class="nav-link" asp-area="" asp-controller="User" asp-action="MyProfile" asp-route-userId="@Model.Id"><div class="pt-lg-2 pt-md-2" style="font-weight: 600;"><i class="glyphicon glyphicon-user"></i> @Model.Username</div></a>
+                </div>
+            }
         </div>
     </div>
 </nav>

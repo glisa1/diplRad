@@ -51,11 +51,6 @@ namespace EasyFest.Controllers
             return View("Index", festivals);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         public IActionResult Image(string imageName)
         {
             if (string.IsNullOrEmpty(imageName))
