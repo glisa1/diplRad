@@ -119,6 +119,7 @@ body {
 .allMapContainer {
     height: 600px;
     z-index: 1;
+    border: 2px solid #007bff;
 }
 
 .newMapContainer {
@@ -217,6 +218,10 @@ body {
     outline: 0;
     box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
     -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
+}
+
+.festivalFader:hover {
+    box-shadow: rgba(102 175 233 / 60%) 0px 54px 55px, rgba(102 175 233 / 60%) 0px -12px 30px, rgba(102 175 233 / 60%) 0px 4px 6px, rgba(102 175 233 / 60%) 0px 12px 13px, rgba(102 175 233 / 60%) 0px -3px 5px;
 }
 
 /*CUSTOM MODAL*/
