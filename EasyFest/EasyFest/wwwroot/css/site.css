@@ -174,7 +174,7 @@ body {
 .img-details-custom{
     width: 1400px;
     height: 550px;
-    --object-fit: cover;
+    object-fit: cover;
 }
 
 .textEditProfileImg {
