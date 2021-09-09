@@ -35,6 +35,8 @@ namespace Storage.Models
 
         public List<string> Images { get; set; }
 
+        public List<string> Tags { get; set; }
+
         public int Day { get; set; }
 
         public int EndDay { get; set; }
@@ -49,6 +51,9 @@ namespace Storage.Models
 
         [BsonIgnore]
         public ICollection<Comment> CommentsList { get; set; } = new List<Comment>();
+
+        [BsonIgnore]
+        public ICollection<Storage.Models.Tag> TagsList { get; set; } = new List<Storage.Models.Tag>();
 
         #region Location
 

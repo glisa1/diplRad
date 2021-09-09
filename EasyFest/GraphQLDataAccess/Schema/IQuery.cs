@@ -29,5 +29,7 @@ namespace GraphQLDataAccess.Schema
         IExecutable<Storage.Models.Rate> GetRates();
 
         IExecutable<Storage.Models.User> GetUsers();
+
+        IExecutable<Storage.Models.Tag> GetTags();
     }
 }

@@ -41,5 +41,7 @@ namespace Storage.Services.FestivalService
         Task<string> GetFestivalIdByNameAsync(string festivalName);
 
         Task DeleteFestivalAsync(string festivalId);
+
+        Task<List<string>> GetTagIdsListForFestivalByFestivalId(string festivalId);
     }
 }

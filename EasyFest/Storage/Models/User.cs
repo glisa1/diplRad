@@ -21,6 +21,11 @@ namespace Storage.Models
 
         public bool IsAdmin { get; set; }
 
+        public List<string> Tags { get; set; }
+
+        [BsonIgnore]
+        public ICollection<Storage.Models.Tag> TagsList { get; set; } = new List<Storage.Models.Tag>();
+
         [BsonIgnore]
         public int CommentsPostedByUser { get; set; }
 

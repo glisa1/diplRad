@@ -83,4 +83,13 @@ namespace EasyFest.Models
         [Display(Name = "Repeat password")]
         public string PasswordRepeat { get; set; }
     }
+
+    public class MyProfileModel
+    {
+        [JsonProperty("tags")]
+        public List<Tag> Tags { get; set; }
+
+        [JsonProperty("userById")]
+        public User User { get; set; }
+    }
 }

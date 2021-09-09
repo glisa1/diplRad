@@ -6,6 +6,7 @@ using Storage.Services.AuthenticationService;
 using Storage.Services.CommentsService;
 using Storage.Services.FestivalService;
 using Storage.Services.RateService;
+using Storage.Services.TagService;
 using Storage.Services.UserService;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace GraphQLDataAccess.Schema
         private readonly IRateService _rateService;
         private readonly ICommentsService _commentService;
         private readonly IUserService _userService;
+        private readonly ITagService _tagService;
         private readonly IAuthenticationService _authService;
 
         #endregion
@@ -33,12 +35,14 @@ namespace GraphQLDataAccess.Schema
                                 IRateService rateService,
                                 ICommentsService commentsService,
                                 IUserService userService,
+                                ITagService tagService,
                                 IAuthenticationService authenticationService)
         {
             _festivalService = festivalService;
             _rateService = rateService;
             _commentService = commentsService;
             _userService = userService;
+            _tagService = tagService;
             _authService = authenticationService;
         }
 
@@ -631,6 +635,65 @@ namespace GraphQLDataAccess.Schema
             await _userService.DeleteUserAsync(userId);
 
             return true;
+        }
+
+        #endregion
+
+        #region Tag mutations
+
+        public async Task/*<RateCreatedPayload>*/ CreateTag(CreateTagInput input)
+        {
+            //if (string.IsNullOrEmpty(input.TagColor))
+            //{
+            //    throw new QueryException(
+            //        ErrorBuilder.New()
+            //            .SetMessage("Color value is empty.")
+            //            .SetCode("NO_COLOR")
+            //            .Build());
+            //}
+            //if (string.IsNullOrEmpty(input.TagName))
+            //{
+            //    throw new QueryException(
+            //        ErrorBuilder.New()
+            //            .SetMessage("Name value is empty.")
+            //            .SetCode("NO_Name")
+            //            .Build());
+            //}
+
+            //var tag = await _festivalService.GetFestivalByIdAsync(input.FestivalId);
+
+            //if (festival == null)
+            //{
+            //    throw new QueryException(
+            //        ErrorBuilder.New()
+            //            .SetMessage("Festival not found.")
+            //            .SetCode("FESTIVAL_NOT_FOUND")
+            //            .Build());
+            //}
+
+            //var user = await _userService.GetUserWithIdAsync(input.UserId);
+
+            //if (user == null)
+            //{
+            //    throw new QueryException(
+            //        ErrorBuilder.New()
+            //            .SetMessage("User not found.")
+            //            .SetCode("USER_NOT_FOUND")
+            //            .Build());
+            //}
+
+            //var newRate = new Rate
+            //{
+            //    RateValue = input.RateValue,
+            //    FestivalId = input.FestivalId,
+            //    UserId = input.UserId,
+            //    Festival = festival,
+            //    User = user
+            //};
+
+            //await _rateService.InsertRateAsync(newRate);
+
+            //return new RateCreatedPayload(newRate, festival, input.ClientMutationId);
         }
 
         #endregion

@@ -1,6 +1,9 @@
-﻿using HotChocolate.Types;
+﻿using GraphQLDataAccess.Schema.QueryTypes;
+using HotChocolate.Types;
 using Storage.Services.CommentsService;
+using Storage.Services.FestivalService;
 using Storage.Services.RateService;
+using Storage.Services.TagService;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,17 +14,22 @@ namespace GraphQLDataAccess.Schema.Types
     {
         #region Init
 
-        //private readonly IFestivalService _festivalService;
+        private readonly IFestivalService _festivalService;
         private readonly ICommentsService _commentsService;
         private readonly IRateService _rateService;
+        private readonly ITagService _tagService;
         //private readonly IUserService _usersService;
 
         public FestivalType(ICommentsService comentsService,
-                                IRateService rateService)
+                                IRateService rateService,
+                                IFestivalService festivalService,
+                                ITagService tagService)
                                 //IUserService usersService)
         {
             _commentsService = comentsService;
             _rateService = rateService;
+            _festivalService = festivalService;
+            _tagService = tagService;
         }
 
         #endregion
@@ -61,6 +69,9 @@ namespace GraphQLDataAccess.Schema.Types
                     var initiative = context.Parent<Storage.Models.Festival>();
                     return await _rateService.GetRateForFestivalAsync(initiative.Id);
                 });
+            descriptor.Field(f => f.Tags)
+                .Description("Festival tags.")
+                .Type<ListType<StringType>>();
             //descriptor.Field(f => f.RateByCurrentUser)
             //    .Description("Rate given to festival by current user.")
             //    .Type<FloatType>()
@@ -98,6 +109,17 @@ namespace GraphQLDataAccess.Schema.Types
                 {
                     var initiative = context.Parent<Storage.Models.Festival>();
                     return _rateService.GetRatesForFestival(initiative.Id);
+                });
+            descriptor.Field(f => f.TagsList)
+                .Description("List of tag objects.")
+                .Type<ListType<TagType>>()
+                .Resolve(context =>
+                {
+                    var initiative = context.Parent<Storage.Models.Festival>();
+                    var tags = initiative.Tags;
+                    if (tags.Count == 0)
+                        return new List<TagType>();
+                    return _tagService.GetTagsByIdList(tags);
                 });
         }
     }

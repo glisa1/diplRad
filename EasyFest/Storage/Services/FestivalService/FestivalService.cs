@@ -88,6 +88,12 @@ namespace Storage.Services.FestivalService
 
         public async Task DeleteFestivalAsync(string festivalId) => await _festivals.DeleteOneAsync(x => x.Id == festivalId);
 
+        public async Task<List<string>> GetTagIdsListForFestivalByFestivalId(string festivalId)
+        {
+            var fest = await _festivals.Find(f => f.Id == festivalId).FirstOrDefaultAsync();
+            return fest.Tags;
+        }
+
         #endregion
     }
 }

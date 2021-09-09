@@ -18,6 +18,7 @@ using Storage.Services.RateService;
 using GraphQL.Server.Ui.Voyager;
 using GraphQLDataAccess.Schema.Types;
 using EasyFest.Factories;
+using Storage.Services.TagService;
 
 namespace EasyFest
 {
@@ -49,6 +50,7 @@ namespace EasyFest
             services.AddSingleton<ICommentsService, CommentsService>();
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<IRateService, RateService>();
+            services.AddSingleton<ITagService, TagService>();
             services.AddSingleton<IQuery, Query>();
 
             services.AddHttpContextAccessor();

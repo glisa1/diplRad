@@ -12,6 +12,7 @@ namespace Storage.Models
         public string CommentsCollectionName { get; set; }
         public string UserCollectionName { get; set; }
         public string RateCollectionName { get; set; }
+        public string TagCollectionName { get; set; }
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
     }
@@ -23,6 +24,7 @@ namespace Storage.Models
         string CommentsCollectionName { get; set; }
         string UserCollectionName { get; set; }
         string RateCollectionName { get; set; }
+        string TagCollectionName { get; set; }
         string ConnectionString { get; set; }
         string DatabaseName { get; set; }
     }

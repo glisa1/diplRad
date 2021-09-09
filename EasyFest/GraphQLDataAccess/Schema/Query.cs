@@ -5,6 +5,7 @@ using MongoDB.Driver;
 using Storage.Services.CommentsService;
 using Storage.Services.FestivalService;
 using Storage.Services.RateService;
+using Storage.Services.TagService;
 using Storage.Services.UserService;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,16 +21,19 @@ namespace GraphQLDataAccess.Schema
         private readonly ICommentsService _commentsService;
         private readonly IRateService _rateService;
         private readonly IUserService _usersService;
+        private readonly ITagService _tagService;
 
         public Query(IFestivalService festivalService,
                                 ICommentsService festivalLocationsService,
                                 IRateService rateService,
-                                IUserService usersService)
+                                IUserService usersService,
+                                ITagService tagService)
         {
             _festivalService = festivalService;
             _commentsService = festivalLocationsService;
             _rateService = rateService;
             _usersService = usersService;
+            _tagService = tagService;
         }
 
         #endregion
@@ -124,6 +128,11 @@ namespace GraphQLDataAccess.Schema
         public IExecutable<Storage.Models.User> GetUsers()
         {
             return _usersService.GetUsers();
+        }
+
+        public IExecutable<Storage.Models.Tag> GetTags()
+        {
+            return _tagService.GetTags();
         }
 
         public async Task<double> GetUserRateForFestival(string festivalId, string userId)

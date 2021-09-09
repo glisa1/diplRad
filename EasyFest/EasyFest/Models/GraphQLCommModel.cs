@@ -66,6 +66,11 @@ namespace EasyFest.Models
         public static string QueryGetUserById =>
             "query {userById(id: \"{0}\"){id username email commentsPostedByUser ratesGivenByUser imageId}}";
 
+        public static string QueryMyProfile =>
+            "query {userById(id: \"{0}\"){id username email commentsPostedByUser ratesGivenByUser imageId} " +
+            " tags{id name color}" +
+            "}";
+
         /// <summary>
         /// Gets user by id.
         /// {0} - User id
@@ -88,6 +93,9 @@ namespace EasyFest.Models
             " { id name day month description images endDay endMonth " +
             " address city state longitude latitude " +
             " }}";
+
+        public static string QuerySettingsPage =>
+            "query {tags{id name color} users{id username isAdmin imageId}}";
 
         /// <summary>
         /// Given user is loged in.

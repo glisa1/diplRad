@@ -78,5 +78,14 @@ namespace EasyFest.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        
+        public async Task<IActionResult> Settings()
+        {
+            //QuerySettingsPage
+            //Zabraniti neulogovanom korisniku ulazak
+            var model = await _client.QueryGet<SettingsPage>(GraphQLCommModel.QuerySettingsPage);
+
+            return View(model);
+        }
     }
 }

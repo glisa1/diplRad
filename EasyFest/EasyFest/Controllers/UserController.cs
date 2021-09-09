@@ -105,9 +105,9 @@ namespace EasyFest.Controllers
         [HttpGet]
         public async Task<IActionResult> MyProfile(string userId)
         {
-            var queryString = GraphQLCommModel.QueryGetUserById.Replace("{0}", userId);
-            var model = await _client.QueryGet<UserById>(queryString);
-
+            var queryString = GraphQLCommModel.QueryMyProfile.Replace("{0}", userId);
+            var model = await _client.QueryGet<MyProfileModel>(queryString);
+            //Ovde treba promeniti da se uzimaju samo tagovi za korisnika
             return View(model);
         }
 
