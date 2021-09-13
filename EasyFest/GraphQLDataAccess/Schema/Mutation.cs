@@ -641,59 +641,53 @@ namespace GraphQLDataAccess.Schema
 
         #region Tag mutations
 
-        public async Task/*<RateCreatedPayload>*/ CreateTag(CreateTagInput input)
+        public async Task<bool> CreateTag(CreateTagInput input)
         {
-            //if (string.IsNullOrEmpty(input.TagColor))
-            //{
-            //    throw new QueryException(
-            //        ErrorBuilder.New()
-            //            .SetMessage("Color value is empty.")
-            //            .SetCode("NO_COLOR")
-            //            .Build());
-            //}
-            //if (string.IsNullOrEmpty(input.TagName))
-            //{
-            //    throw new QueryException(
-            //        ErrorBuilder.New()
-            //            .SetMessage("Name value is empty.")
-            //            .SetCode("NO_Name")
-            //            .Build());
-            //}
+            if (string.IsNullOrEmpty(input.TagColor))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("Color value is empty.")
+                        .SetCode("NO_COLOR")
+                        .Build());
+            }
+            if (string.IsNullOrEmpty(input.TagName))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("Name value is empty.")
+                        .SetCode("NO_Name")
+                        .Build());
+            }
+            if (input.TagName.Length > 15)
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("Name value too long.")
+                        .SetCode("NO_Name_Long")
+                        .Build());
+            }
 
-            //var tag = await _festivalService.GetFestivalByIdAsync(input.FestivalId);
+            var tagExists = await _tagService.GetTagByNameAsync(input.TagName);
 
-            //if (festival == null)
-            //{
-            //    throw new QueryException(
-            //        ErrorBuilder.New()
-            //            .SetMessage("Festival not found.")
-            //            .SetCode("FESTIVAL_NOT_FOUND")
-            //            .Build());
-            //}
+            if (tagExists != null)
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("Tag name is taken.")
+                        .SetCode("TAKEN_Name")
+                        .Build());
+            }
 
-            //var user = await _userService.GetUserWithIdAsync(input.UserId);
+            Tag newTag = new Tag
+            {
+                Color = input.TagColor,
+                Name = input.TagName
+            };
 
-            //if (user == null)
-            //{
-            //    throw new QueryException(
-            //        ErrorBuilder.New()
-            //            .SetMessage("User not found.")
-            //            .SetCode("USER_NOT_FOUND")
-            //            .Build());
-            //}
+            await _tagService.InsertTagAsync(newTag);
 
-            //var newRate = new Rate
-            //{
-            //    RateValue = input.RateValue,
-            //    FestivalId = input.FestivalId,
-            //    UserId = input.UserId,
-            //    Festival = festival,
-            //    User = user
-            //};
-
-            //await _rateService.InsertRateAsync(newRate);
-
-            //return new RateCreatedPayload(newRate, festival, input.ClientMutationId);
+            return true;
         }
 
         #endregion

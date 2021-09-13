@@ -7,6 +7,7 @@ using GraphQL.Types;
 using GraphQLDataAccess.Schema.Types;
 using GraphQLDataAccess.Schema;
 using EasyFest.Factories;
+using System;
 
 namespace EasyFest.Controllers
 {
@@ -86,6 +87,30 @@ namespace EasyFest.Controllers
             var model = await _client.QueryGet<SettingsPage>(GraphQLCommModel.QuerySettingsPage);
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> NewTag(string TagName, string TagColor)
+        {
+            var mutationString = GraphQLCommModel.MutationCreateTag
+            .Replace("{0}", TagName)
+            .Replace("{1}", TagColor)
+            .Replace("{2}", "newTag");
+
+            var model = await _client.QueryGet<SettingsPage>(mutationString);
+            if (model.Errors != null)
+            {
+                if (model.Errors[0].Extensions.Code == "TAKEN_Name")
+                {
+                    return Json(new { code = 400, status = "ERROR", message = "Tag with same name already exists!" });
+                }
+
+                return Json(new { code = 400, status = "ERROR" });
+            }
+            else
+            {
+                return Json(new { code = 200 });
+            }
         }
     }
 }

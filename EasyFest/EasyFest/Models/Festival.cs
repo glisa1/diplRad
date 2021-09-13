@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,9 @@ namespace EasyFest.Models
         [JsonProperty("commentsList")]
         public List<Comment> Comments { get; set; }
 
+        [JsonProperty("tagsList")]
+        public List<Tag> Tags { get; set; }
+
         #region Location
 
         [JsonProperty("address")]
@@ -94,6 +98,15 @@ namespace EasyFest.Models
     {
         [JsonProperty("festivalById")]
         public Festival Festival { get; set; }
+    }
+
+    public class FestivalWithTags
+    {
+        [JsonProperty("festivalById")]
+        public Festival Festival { get; set; }
+
+        [JsonProperty("tags")]
+        public List<Tag> Tags { get; set; }
     }
 
     public class FestivalList
@@ -222,6 +235,11 @@ namespace EasyFest.Models
 
         [Display(Name = "Files")]
         public List<IFormFile> UploadedImages { get; set; }
+
+        [Display(Name = "Festival tags")]
+        public SelectList TagsList { get; set; }
+
+        public int[] SelectedTags { get; set; }
 
         public FestivalLocationViewModel FestivalLocation { get; set; }
     }

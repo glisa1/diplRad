@@ -7,6 +7,7 @@ namespace EasyFest.Models
 {
     public static class GraphQLCommModel
     {
+        #region Queries
         /// <summary>
         /// Gets all about festival.
         /// </summary>
@@ -91,11 +92,19 @@ namespace EasyFest.Models
         public static string QueryGetFestivalForEdit =>
             "query {festivalById(id: \"{0}\")" +
             " { id name day month description images endDay endMonth " +
-            " address city state longitude latitude " +
-            " }}";
+            " address city state longitude latitude tagsList{ id }" +
+            " }" + 
+            " tags{" +
+            " id name color" +
+            " }" +
+            " }";
 
         public static string QuerySettingsPage =>
             "query {tags{id name color} users{id username isAdmin imageId}}";
+
+        #endregion
+
+        #region Mutations
 
         /// <summary>
         /// Given user is loged in.
@@ -245,5 +254,9 @@ namespace EasyFest.Models
             " checkName: {14} " +
             "}){clientMutationId}}";
 
+        public static string MutationCreateTag =>
+            "mutation {createTag(input: {tagName: \"{0}\", tagColor: \"{1}\", clientMutationId: \"{2}\"})}";
+
+        #endregion
     }
 }

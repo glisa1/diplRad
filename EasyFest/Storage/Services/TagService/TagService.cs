@@ -33,7 +33,7 @@ namespace Storage.Services.TagService
 
         public async Task DeleteTagAsync(string id) => await _tags.DeleteOneAsync(x => x.Id == id);
 
-        public async Task<Storage.Models.Tag> GetTagByName(string name) => await _tags.Find(x => x.Name == name).FirstOrDefaultAsync();
+        public async Task<Storage.Models.Tag> GetTagByNameAsync(string name) => await _tags.Find(x => x.Name == name).FirstOrDefaultAsync();
 
         public IExecutable<Storage.Models.Tag> GetTagsByIdList(List<string> ids)
         {

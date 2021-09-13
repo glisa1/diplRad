@@ -5,5 +5,30 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Settings</h1>
+<h2>Settings</h2>
 
+<h3>Tags</h3>
+<div class="row">
+    <div class="col">
+        <div id="settings-tags-container" class="tag-container">
+            @foreach (var tag in Model.Data.Tags)
+            {
+                <button class="btn tag-btn mr-2 mb-2" style="background-color: @tag.Color" type="button">@tag.Name</button>
+            }
+        </div>
+        <div class="mt-2 form-inline">
+            <input type="text" id="tag-name" maxlength="20" class="form-control" />
+            <input type="color" id="tag-cl-picker" class="form-control" style="width: 50px;" />
+            <button type="button" id="newTagBtn" class="btn btn-outline-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                </svg>
+            </button>
+        </div>
+        <p id="new-tag-error" style="display:none; color:red;" class="mt-2"></p>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Settings.js"></script>

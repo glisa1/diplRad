@@ -203,7 +203,7 @@ namespace EasyFest.Controllers
                 return Forbid();
 
             var queryString = GraphQLCommModel.QueryGetFestivalForEdit.Replace("{0}", festivalId);
-            var data = await _client.QueryGet<FestivalById>(queryString);
+            var data = await _client.QueryGet<FestivalWithTags>(queryString);
 
             if (data.Errors != null)
             {
@@ -230,6 +230,8 @@ namespace EasyFest.Controllers
                     State = festival.State
                 }
             };
+
+            model.TagsList = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(data.Data.Tags, nameof(Tag.Id), nameof(Tag.Name));
 
             return View(model);
         }
