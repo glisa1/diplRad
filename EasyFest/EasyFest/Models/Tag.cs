@@ -17,4 +17,10 @@ namespace EasyFest.Models
         [JsonProperty("color")]
         public string Color { get; set; }
     }
+
+    public class TagsModel
+    {
+        [JsonProperty("tags")]
+        public List<Tag> Tags { get; set; }
+    }
 }

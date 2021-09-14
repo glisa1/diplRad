@@ -7,6 +7,10 @@
 @Html.Hidden("PosLat", Model.FestivalLocation.Latitude)
 @Html.Hidden("PosLng", Model.FestivalLocation.Longitude)
 
+<script>
+    let selectedTags = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.SelectedTags) as string);
+</script>
+
 <h1>Update festival</h1>
 
 <ul class="nav nav-pills">
@@ -54,11 +58,16 @@
             <small id="imgHelp" class="form-text text-muted">Upload new images if you have better.</small>
             <span asp-validation-for="UploadedImages" class="text-danger"></span>
         </div>
-        <div>
-            <label asp-for="TagsList" class="control-label"></label>
-            <select asp-for="SelectedTags" asp-items="@Model.TagsList" aria-describedby="passwordHelp" class="form-control" />
-            <small id="tagsHelp" class="form-text text-muted">Upload new image if you have better.</small>
-            <span asp-validation-for="TagsList" class="text-danger"></span>
+        <div class="tags-select-group">
+            <div class="w-100">
+                <label asp-for="TagsList" class="control-label"></label>
+            </div>
+            <div class="w-100 mb-2" style="max-height: 150px; overflow-y: auto;">
+                @foreach (var tag in Model.TagsList)
+                {
+                    <button class="btn tag-btn mr-2 mb-2" style="background-color: @tag.Color" type="button" value="@tag.Id">@tag.Name</button>
+                }
+            </div>
         </div>
         @Html.HiddenFor(m => m.Images)
     </div>

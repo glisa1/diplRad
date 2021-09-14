@@ -102,6 +102,9 @@ namespace EasyFest.Models
         public static string QuerySettingsPage =>
             "query {tags{id name color} users{id username isAdmin imageId}}";
 
+        public static string QueryGetTags =>
+            "query {tags{id name color}}";
+
         #endregion
 
         #region Mutations

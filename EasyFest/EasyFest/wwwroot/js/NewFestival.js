@@ -1,5 +1,6 @@
 ﻿let map = null;
 var layerGroup = null;
+let selectedTags = [];
 
 $(document).ready(function () {
     map = L.map('newMap').setView([44.824894, 20.450627], 6.0);
@@ -63,6 +64,7 @@ $(document).ready(function () {
 
         var dateFrom = Date.parse($('#StartDate').val());
         var dateTo = Date.parse($('#EndDate').val());
+        var form = $(this);
 
         if (dateFrom > dateTo) {
             setModal('Start date can not be greater than end date.');
@@ -75,7 +77,36 @@ $(document).ready(function () {
             return false;
         }
 
+        selectedTags.forEach(function (val, i) {
+            form.append('<input type="hidden" name="model.SelectedTags[' + i + ']" value="' + val + '">');
+        });
+
         return true;
+    });
+
+    $('.tag-btn').click(function () {
+        if ($(this).hasClass('selected-tag')) {
+
+            const index = selectedTags.indexOf($(this).val());
+            if (index > -1) {
+                selectedTags.splice(index, 1);
+            }
+
+            $('svg', this).remove();
+
+            $(this).removeClass('selected-tag');
+        }
+        else {
+            selectedTags.push($(this).val());
+
+            let newElem = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">';
+            newElem += '<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />';
+            newElem += '</svg>';
+
+            $(this).append(newElem);
+
+            $(this).addClass('selected-tag');
+        }
     });
 });
 

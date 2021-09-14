@@ -147,12 +147,21 @@ namespace EasyFest.Controllers
         }
 
         [HttpGet]
-        public IActionResult NewFestival()
+        public async Task<IActionResult> NewFestival()
         {
             if (!(bool)TempData["IsAdmin"])
                 return Forbid();
 
-            return View();
+            var result = await _client.QueryGet<TagsModel>(GraphQLCommModel.QueryGetTags);
+
+            NewFestivalViewModel model = new NewFestivalViewModel
+            {
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddDays(10),
+                TagsList = result.Data.Tags
+            };
+
+            return View(model);
         }
 
         public async Task<IActionResult> NewFestival(NewFestivalViewModel model)
@@ -231,7 +240,12 @@ namespace EasyFest.Controllers
                 }
             };
 
-            model.TagsList = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(data.Data.Tags, nameof(Tag.Id), nameof(Tag.Name));
+            foreach(var tag in festival.Tags)
+            {
+                model.SelectedTags.Add(tag.Id);
+            }
+
+            model.TagsList = data.Data.Tags;
 
             return View(model);
         }

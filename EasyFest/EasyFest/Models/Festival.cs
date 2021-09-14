@@ -169,6 +169,7 @@ namespace EasyFest.Models
         {
             Images = new List<string>();
             UploadedImages = new List<IFormFile>();
+            SelectedTags = new List<string>();
         }
 
         public string Id { get; set; }
@@ -198,6 +199,11 @@ namespace EasyFest.Models
         [Display(Name = "File")]
         public List<IFormFile> UploadedImages { get; set; }
 
+        [Display(Name = "Festival tags")]
+        public List<Tag> TagsList { get; set; }
+
+        public List<string> SelectedTags { get; set; }
+
         public FestivalLocationViewModel FestivalLocation { get; set; }
     }
 
@@ -207,6 +213,7 @@ namespace EasyFest.Models
         {
             Images = new List<string>();
             UploadedImages = new List<IFormFile>();
+            SelectedTags = new List<string>(); 
         }
         public string Id { get; set; }
 
@@ -237,9 +244,9 @@ namespace EasyFest.Models
         public List<IFormFile> UploadedImages { get; set; }
 
         [Display(Name = "Festival tags")]
-        public SelectList TagsList { get; set; }
+        public List<Tag> TagsList { get; set; }
 
-        public int[] SelectedTags { get; set; }
+        public List<string> SelectedTags { get; set; }
 
         public FestivalLocationViewModel FestivalLocation { get; set; }
     }

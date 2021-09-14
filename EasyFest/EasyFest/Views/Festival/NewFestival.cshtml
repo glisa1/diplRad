@@ -49,6 +49,17 @@
             <small id="passwordHelp" class="form-text text-muted">Give us nice pictures of festival.</small>
             <span asp-validation-for="UploadedImages" class="text-danger"></span>
         </div>
+        <div class="tags-select-group">
+            <div class="w-100">
+                <label asp-for="TagsList" class="control-label"></label>
+            </div>
+            <div class="w-100 mb-2" style="max-height: 150px; overflow-y: auto;">
+                @foreach (var tag in Model.TagsList)
+                {
+                    <button class="btn tag-btn mr-2 mb-2" style="background-color: @tag.Color" type="button" value="@tag.Id">@tag.Name</button>
+                }
+            </div>
+        </div>
     </div>
     <div id="festivalLocationContainer" style="display:none;">
         <div id="newMap" class="newMapContainer mb-3 mt-3"></div>
