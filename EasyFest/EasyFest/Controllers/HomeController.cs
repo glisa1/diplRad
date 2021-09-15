@@ -112,5 +112,10 @@ namespace EasyFest.Controllers
                 return Json(new { code = 200 });
             }
         }
+
+        public IActionResult DeleteTag(string tagId)
+        {
+            return Ok();
+        }
     }
 }

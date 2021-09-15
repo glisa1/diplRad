@@ -38,8 +38,31 @@
                 }
             },
             error: function(result) {
-                    $('#new-tag-error').text('There was an error creating new tag.');
+                $('#new-tag-error').text('There was an error creating new tag.');
+                $('#new-tag-error').show();
             }
         });
     });
 });
+
+function deleteTag(tagId) {
+    $.ajax({
+        method: 'POST',
+        url: '/Home/DeleteTag',
+        data: { 'tagId': tagId },
+        success(response) {
+            if (response.code == 200) {
+                $('#' + tagId).parent().remove();
+                $('#new-tag-error').hide();
+            }
+            else {
+                $('#new-tag-error').text('There was an error deleting tag.');
+                $('#new-tag-error').show();
+            }
+        },
+        error(response) {
+            $('#new-tag-error').text('There was an error deleting tag.');
+            $('#new-tag-error').show();
+        }
+    })
+}

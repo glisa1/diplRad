@@ -77,8 +77,9 @@ $(document).ready(function () {
             return false;
         }
 
+        //form.append('<input type="hidden" id="selectedTag" name="model.SelectedTags" value="System.Collections.Generic.List`1[System.String]">');
         selectedTags.forEach(function (val, i) {
-            form.append('<input type="hidden" name="model.SelectedTags[' + i + ']" value="' + val + '">');
+            form.append('<input type="hidden" id="selectedTag_' + i + '" name="SelectedTags" value="' + val + '">');//[' + i + '] 
         });
 
         return true;

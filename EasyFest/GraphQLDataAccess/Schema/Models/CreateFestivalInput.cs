@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 
 namespace GraphQLDataAccess.Schema.Models
 {
@@ -13,6 +14,7 @@ namespace GraphQLDataAccess.Schema.Models
                                     int endDay,
                                     string description,
                                     List<string> images,
+                                    List<string> tags,
                                     double latitude,
                                     double longitude,
                                     string address,
@@ -33,6 +35,7 @@ namespace GraphQLDataAccess.Schema.Models
             State = state;
             ClientMutationId = clientMutationId;
             Images = new List<string>(images[0].Split(','));
+            Tags = new List<string>(tags[0].Split(','));
         }
 
         public string Name { get; set; }
@@ -50,6 +53,8 @@ namespace GraphQLDataAccess.Schema.Models
         //public string ImageName { get; set; }
 
         public List<string> Images { get; set; }
+
+        public List<string> Tags { get; set; }
 
         public double Latitude { get; set; }
 

@@ -85,6 +85,8 @@ $(document).ready(function () {
             return false;
         }
 
+        var form = $(this);
+
         var address = $('#FestivalLocation_Address').val();
         var name = $('#FestivalLocation_Address').val();
         //isNullOrUndefOrEmpty
@@ -94,7 +96,7 @@ $(document).ready(function () {
         }
 
         selectedTags.forEach(function (val, i) {
-            form.append('<input type="hidden" name="model.SelectedTags[' + i + ']" value="' + val + '">');
+            form.append('<input type="hidden" id="selectedTag_' + i + '" name="SelectedTags" value="' + val + '">');//[' + i + '] 
         });
 
         return true;

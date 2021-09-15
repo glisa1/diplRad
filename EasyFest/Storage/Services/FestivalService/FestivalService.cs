@@ -79,7 +79,8 @@ namespace Storage.Services.FestivalService
                 .Set(s => s.Day, model.Day)
                 .Set(s => s.EndDay, model.EndDay)
                 .Set(s => s.EndMonth, model.EndMonth)
-                .Set(s => s.Month, model.Month);
+                .Set(s => s.Month, model.Month)
+                .Set(s => s.Tags, model.Tags);
 
             await _festivals.UpdateOneAsync(filter, update);
         }

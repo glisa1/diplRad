@@ -14,6 +14,7 @@ namespace GraphQLDataAccess.Schema.Models
                                     int endMonth,
                                     int endDay,
                                     List<string> images,
+                                    List<string> tags,
                                     double latitude,
                                     double longitude,
                                     string address,
@@ -37,6 +38,7 @@ namespace GraphQLDataAccess.Schema.Models
             State = state;
             CheckName = checkName;
             ClientMutationId = clientMutationId;
+            Tags = new List<string>(tags[0].Split(','));
         }
 
         public string FestivalId { get; set; }
@@ -56,6 +58,8 @@ namespace GraphQLDataAccess.Schema.Models
         //public string ImageName { get; set; }
 
         public List<string> Images { get; set; }
+
+        public List<string> Tags { get; set; }
 
         public double Latitude { get; set; }
 

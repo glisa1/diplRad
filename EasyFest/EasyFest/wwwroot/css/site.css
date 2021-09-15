@@ -229,6 +229,14 @@ body {
     overflow: auto;
 }
 
+.tagsContainer{
+    overflow-y: auto;
+}
+
+#carouselFestivalList{
+    position:relative;
+}
+
 /*CUSTOM MODAL*/
 .modal {
     display: none; /* Hidden by default */

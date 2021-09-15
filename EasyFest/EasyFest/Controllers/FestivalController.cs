@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using EasyFest.Factories;
 using EasyFest.Models;
@@ -193,7 +194,8 @@ namespace EasyFest.Controllers
                 .Replace("{8}", model.FestivalLocation.Longitude.ToString())
                 .Replace("{9}", model.FestivalLocation.Address)
                 .Replace("{10}", model.FestivalLocation.City)
-                .Replace("{11}", model.FestivalLocation.State);
+                .Replace("{11}", model.FestivalLocation.State)
+                .Replace("{13}", string.Join(',', model.SelectedTags));
 
             var result = await _client.MutationDo<UpdateRateQueryModel>(mutationString);
 
@@ -280,7 +282,8 @@ namespace EasyFest.Controllers
                     .Replace("{11}", model.FestivalLocation.State)
                     .Replace("{12}", string.Empty)
                     .Replace("{13}", model.Id)
-                    .Replace("{14}", 0.ToString());
+                    .Replace("{14}", 0.ToString())
+                    .Replace("{15}", string.Join(',', model.SelectedTags));
             }
             else
             {
@@ -299,7 +302,8 @@ namespace EasyFest.Controllers
                     .Replace("{11}", model.FestivalLocation.State)
                     .Replace("{12}", string.Empty)
                     .Replace("{13}", model.Id)
-                    .Replace("{14}", 1.ToString());
+                    .Replace("{14}", 1.ToString())
+                    .Replace("{15}", string.Join(',', model.SelectedTags));
             }
 
             var result = await _client.MutationDo<UpdateRateQueryModel>(mutationString);

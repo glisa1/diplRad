@@ -18,7 +18,7 @@ namespace EasyFest.Models
         /// Gets all about festival.
         /// </summary>
         public static string QueryFestival => "query {festivals(first: 10){ edges{ cursor node{ id name day month rate description numberOfComments images" +
-            " city state}} pageInfo{hasNextPage} totalCount }}";
+            " city state tagsList{name color}}} pageInfo{hasNextPage} totalCount }}";
 
         /// <summary>
         /// Gets all festivals by term.
@@ -27,7 +27,7 @@ namespace EasyFest.Models
         /// </summary>
         public static string QueryFestivalSearch => "query {festivals(first: 10, where:{or: [{name: {contains: \"{0}\"}}, {name: {contains: \"{1}\"}}, {description: {contains: \"{2}\"}}, {description: {contains: \"{3}\"}}]}){ edges{ " + 
             " cursor node{ id name day month rate description numberOfComments images" +
-            " city state}} pageInfo{hasNextPage} totalCount }}";
+            " city state tagsList{name color}}} pageInfo{hasNextPage} totalCount }}";
 
         /// <summary>
         /// Used to get informations about currently logged in user.
@@ -42,7 +42,8 @@ namespace EasyFest.Models
             "query {festivalById(id: \"{0}\")" +
             " { id name day month rate description images endDay endMonth " + 
             " address city state longitude latitude " + 
-            " commentsList{id commentBody createdOn user{id username imageId}} }}";
+            " commentsList{id commentBody createdOn user{id username imageId}} " +
+            "tagsList{ id name color } }}";
 
         /// <summary>
         /// Gets query by id with details and location.
@@ -219,6 +220,7 @@ namespace EasyFest.Models
             " city: \"{10}\", " +
             " state: \"{11}\", " +
             " clientMutationId: \"{12}\", " +
+            " tags: \"{13}\" " +
             "}){clientMutationId}}";
 
 
@@ -254,7 +256,8 @@ namespace EasyFest.Models
             " state: \"{11}\", " +
             " clientMutationId: \"{12}\", " +
             " festivalId: \"{13}\", " +
-            " checkName: {14} " +
+            " checkName: {14}, " +
+            " tags: \"{15}\" " +
             "}){clientMutationId}}";
 
         public static string MutationCreateTag =>

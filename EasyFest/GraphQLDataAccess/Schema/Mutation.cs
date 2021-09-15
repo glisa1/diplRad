@@ -289,6 +289,7 @@ namespace GraphQLDataAccess.Schema
                 Latitude = input.Latitude,
                 Longitude = input.Longitude,
                 State = input.State,
+                Tags = input.Tags
             };
 
             await _festivalService.InsertFestivalAsync(newFestival);
@@ -344,7 +345,8 @@ namespace GraphQLDataAccess.Schema
                 City = input.City,
                 Latitude = input.Latitude,
                 Longitude = input.Longitude,
-                State = input.State
+                State = input.State,
+                Tags = input.Tags
             };
 
             await _festivalService.UpdateFestivalAsync(newFestival);
