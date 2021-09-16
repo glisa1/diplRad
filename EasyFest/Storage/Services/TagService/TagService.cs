@@ -40,6 +40,11 @@ namespace Storage.Services.TagService
             return _tags.Find(x => ids.Contains(x.Id)).AsExecutable();
         }
 
+        public async Task DeleteTag(string tagId)
+        {
+            await _tags.DeleteOneAsync(t => t.Id == tagId);
+        }
+
         #endregion
     }
 }

@@ -263,6 +263,13 @@ namespace EasyFest.Models
         public static string MutationCreateTag =>
             "mutation {createTag(input: {tagName: \"{0}\", tagColor: \"{1}\", clientMutationId: \"{2}\"})}";
 
+        /// <summary>
+        /// Deletes given user.
+        /// {0} - User id
+        /// </summary>
+        public static string MutationDeleteTag =>
+            "mutation {deleteTag(tagId: \"{0}\")}";
+
         #endregion
     }
 }

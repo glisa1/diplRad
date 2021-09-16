@@ -692,6 +692,26 @@ namespace GraphQLDataAccess.Schema
             return true;
         }
 
+        public async Task<bool> DeleteTag(string tagId)
+        {
+            if (string.IsNullOrEmpty(tagId))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("Tag id value is empty.")
+                        .SetCode("ERR_ID_EMPTYNULL")
+                        .Build());
+            }
+
+            await _festivalService.RemoveTagFromFestivals(tagId);
+
+            await _userService.RemoveTagFromUsers(tagId);
+
+            await _tagService.DeleteTag(tagId);
+
+            return true;
+        }
+
         #endregion
 
         #endregion

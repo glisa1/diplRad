@@ -49,6 +49,18 @@ namespace Storage.Services.UserService
 
         public async Task DeleteUserAsync(string userId) => await _users.DeleteOneAsync(x => x.Id == userId);
 
+        public async Task RemoveTagFromUsers(string tagId)
+        {
+            var usersToUpdate = await _users.FindAsync(x => x.Tags.Contains(tagId));
+            var enumTags = usersToUpdate.ToEnumerable();
+            foreach (var user in enumTags)
+            {
+                user.Tags.Remove(tagId);
+                var filter = Builders<User>.Filter.Eq(s => s.Id, user.Id);
+                await _users.ReplaceOneAsync(filter, user);
+            }
+        }
+
         #endregion
     }
 }

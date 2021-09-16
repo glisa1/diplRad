@@ -26,5 +26,7 @@ namespace Storage.Services.UserService
         void DeleteUser(string userId);
 
         Task DeleteUserAsync(string userId);
+
+        Task RemoveTagFromUsers(string tagId);
     }
 }

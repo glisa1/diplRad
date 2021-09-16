@@ -19,5 +19,7 @@ namespace Storage.Services.TagService
         Task<Storage.Models.Tag> GetTagByNameAsync(string name);
 
         IExecutable<Storage.Models.Tag> GetTagsByIdList(List<string> ids);
+
+        Task DeleteTag(string tagId);
     }
 }

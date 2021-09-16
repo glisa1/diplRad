@@ -113,9 +113,22 @@ namespace EasyFest.Controllers
             }
         }
 
-        public IActionResult DeleteTag(string tagId)
+        public async Task<IActionResult> DeleteTag(string tagId)
         {
-            return Ok();
+            //MutationDeleteTag
+            try
+            {
+                var mutationString = GraphQLCommModel.MutationDeleteTag
+                .Replace("{0}", tagId);
+
+                await _client.MutationDo<SettingsPage>(mutationString);
+
+                return Json(new { code = 200 });
+            }
+            catch(Exception)
+            {
+                return Json(new { code = 400 });
+            }
         }
     }
 }

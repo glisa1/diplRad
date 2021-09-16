@@ -95,6 +95,18 @@ namespace Storage.Services.FestivalService
             return fest.Tags;
         }
 
+        public async Task RemoveTagFromFestivals(string tagId)
+        {
+            var festsToUpdate = await _festivals.FindAsync(x => x.Tags.Contains(tagId));
+            var enumTags = festsToUpdate.ToEnumerable();
+            foreach (var fest in enumTags)
+            {
+                fest.Tags.Remove(tagId);
+                var filter = Builders<Festival>.Filter.Eq(s => s.Id, fest.Id);
+                await _festivals.ReplaceOneAsync(filter, fest);
+            }
+        }
+
         #endregion
     }
 }
