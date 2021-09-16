@@ -14,6 +14,7 @@ namespace EasyFest.Models
         {
             Comments = new List<Comment>();
             Images = new List<string>();
+            Tags = new List<Tag>();
         }
 
         [JsonProperty("id")]

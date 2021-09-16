@@ -61,6 +61,22 @@ namespace Storage.Services.UserService
             }
         }
 
+        public async Task AddTagToUser(string tagId, string userId)
+        {
+            var user = await _users.Find(x => x.Id == userId).FirstOrDefaultAsync();
+            var filter = Builders<User>.Filter.Eq(s => s.Id, user.Id);
+            user.Tags.Add(tagId);
+            await _users.ReplaceOneAsync(filter, user);
+        }
+
+        public async Task RemoveTagFromUser(string tagId, string userId)
+        {
+            var user = await _users.Find(x => x.Id == userId).FirstOrDefaultAsync();
+            var filter = Builders<User>.Filter.Eq(s => s.Id, user.Id);
+            user.Tags.Remove(tagId);
+            await _users.ReplaceOneAsync(filter, user);
+        }
+
         #endregion
     }
 }

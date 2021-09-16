@@ -9,6 +9,11 @@ namespace EasyFest.Models
 {
     public class User
     {
+        public User()
+        {
+            Tags = new List<Tag>();
+        }
+
         [JsonProperty("id")]
         public string Id { get; set; }
 
@@ -29,6 +34,12 @@ namespace EasyFest.Models
 
         [JsonProperty("ratesGivenByUser")]
         public int RatesGivenByUser { get; set; }
+
+        [JsonProperty("tags")]
+        public List<string> SelectedTags { get; set; }
+
+        [JsonProperty("tagsList")]
+        public List<Tag> Tags { get; set; }
 
         //public string Password { get; set; }
         //public string Salt { get; set; }

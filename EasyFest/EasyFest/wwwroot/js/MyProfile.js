@@ -136,4 +136,86 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('.my-prof-tag-btn').each(function (index) {
+        if ($.inArray($(this).val(), selectedTags) !== -1) {
+            let newElem = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">';
+            newElem += '<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />';
+            newElem += '</svg>';
+
+            $(this).append(newElem);
+            $(this).addClass('user-selected-tag');
+        }
+    });
+
+    $('.my-prof-tag-btn').click(function () {
+        const userId = $('#userId').val();
+        if ($(this).hasClass('user-selected-tag')) {
+            removeTag(this, userId, $(this).val());
+        }
+        else {
+            addTag(this, userId, $(this).val());
+        }
+    });
 });
+
+function addTag(elem, userId, tagId) {
+    $.ajax({
+        method: 'POST',
+        data: { 'userId': userId, 'tagId': tagId },
+        url: '/User/AddTagToUser',
+        success(response) {
+            if (response.code == 200) {
+                selectedTags.push($(elem).val());
+
+                let newElem = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">';
+                newElem += '<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />';
+                newElem += '</svg>';
+
+                $(elem).append(newElem);
+
+                $(elem).addClass('user-selected-tag');
+            }
+            else {
+                setTimeout(function () {
+                    $('#tags-error-p').show();
+                }, 2000);
+            }
+        },
+        error: function () {
+            setTimeout(function () {
+                $('#tags-error-p').show();
+            }, 2000);
+        }
+    });
+}
+
+function removeTag(elem, userId, tagId) {
+    $.ajax({
+        method: 'POST',
+        data: {'userId': userId, 'tagId': tagId},
+        url: '/User/RemoveTagFromUser',
+        success: function (response) {
+            if (response.code == 200) {
+                const index = selectedTags.indexOf(tagId);
+                if (index > -1) {
+                    selectedTags.splice(index, 1);
+                }
+
+                $('svg', elem).remove();
+
+                $(elem).removeClass('user-selected-tag');
+            }
+            else {
+                setTimeout(function () {
+                    $('#tags-error-p').show();
+                }, 2000);
+            }
+        },
+        error: function () {
+            setTimeout(function () {
+                $('#tags-error-p').show();
+            }, 2000);
+        }
+    });
+}

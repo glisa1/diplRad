@@ -237,6 +237,14 @@ body {
     position:relative;
 }
 
+.selected-tag {
+    border: 2px solid;
+}
+
+.user-selected-tag {
+    border: 2px solid;
+}
+
 /*CUSTOM MODAL*/
 .modal {
     display: none; /* Hidden by default */

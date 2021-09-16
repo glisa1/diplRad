@@ -712,6 +712,54 @@ namespace GraphQLDataAccess.Schema
             return true;
         }
 
+        public async Task<bool> AddTagToUser(string tagId, string userId)
+        {
+            if (string.IsNullOrEmpty(tagId))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("TagId value is empty.")
+                        .SetCode("NO_TAGID")
+                        .Build());
+            }
+            if (string.IsNullOrEmpty(userId))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("UserId value is empty.")
+                        .SetCode("NO_USERID")
+                        .Build());
+            }
+
+            await _userService.AddTagToUser(tagId, userId);
+
+            return true;
+        }
+
+        public async Task<bool> RemoveTagFromUser(string tagId, string userId)
+        {
+            if (string.IsNullOrEmpty(tagId))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("TagId value is empty.")
+                        .SetCode("NO_TAGID")
+                        .Build());
+            }
+            if (string.IsNullOrEmpty(userId))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("UserId value is empty.")
+                        .SetCode("NO_USERID")
+                        .Build());
+            }
+
+            await _userService.RemoveTagFromUser(tagId, userId);
+
+            return true;
+        }
+
         #endregion
 
         #endregion

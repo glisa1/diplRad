@@ -140,6 +140,38 @@ namespace EasyFest.Controllers
             }
         }
 
+        public async Task<IActionResult> AddTagToUser(string userId, string tagId)
+        {
+            var mutation = GraphQLCommModel
+                .MutationAddTagToUser
+                .Replace("{0}", tagId)
+                .Replace("{1}", userId);
+            var result = await _client.QueryGet<DeleteUserPayload>(mutation);
+
+            if (result.Errors != null)
+            {
+                return Json(new { code = 400, status = "ERROR" });
+            }
+
+            return Json(new { code = 200 });
+        }
+
+        public async Task<IActionResult> RemoveTagFromUser(string userId, string tagId)
+        {
+            var mutation = GraphQLCommModel
+                .MutationRemoveTagFromUser
+                .Replace("{0}", tagId)
+                .Replace("{1}", userId);
+            var result = await _client.QueryGet<DeleteUserPayload>(mutation);
+
+            if (result.Errors != null)
+            {
+                return Json(new { code = 400, status = "ERROR" });
+            }
+
+            return Json(new { code = 200 });
+        }
+
         #endregion
 
     }

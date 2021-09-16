@@ -69,7 +69,7 @@ namespace EasyFest.Models
             "query {userById(id: \"{0}\"){id username email commentsPostedByUser ratesGivenByUser imageId}}";
 
         public static string QueryMyProfile =>
-            "query {userById(id: \"{0}\"){id username email commentsPostedByUser ratesGivenByUser imageId} " +
+            "query {userById(id: \"{0}\"){id username email commentsPostedByUser ratesGivenByUser imageId tags} " +
             " tags{id name color}" +
             "}";
 
@@ -269,6 +269,11 @@ namespace EasyFest.Models
         /// </summary>
         public static string MutationDeleteTag =>
             "mutation {deleteTag(tagId: \"{0}\")}";
+
+        public static string MutationAddTagToUser =>
+            "mutation {addTagToUser(tagId: \"{0}\", userId: \"{1}\")}";
+        public static string MutationRemoveTagFromUser =>
+            "mutation {removeTagFromUser(tagId: \"{0}\", userId: \"{1}\")}";
 
         #endregion
     }
