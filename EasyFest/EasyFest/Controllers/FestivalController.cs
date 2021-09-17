@@ -159,7 +159,9 @@ namespace EasyFest.Controllers
             {
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddDays(10),
-                TagsList = result.Data.Tags
+                TagsList = result.Data.Tags,
+                BillingDateStart = DateTime.Now.AddDays(-13),
+                BillingDateEnd = DateTime.Now.AddDays(-3)
             };
 
             return View(model);
@@ -195,7 +197,11 @@ namespace EasyFest.Controllers
                 .Replace("{9}", model.FestivalLocation.Address)
                 .Replace("{10}", model.FestivalLocation.City)
                 .Replace("{11}", model.FestivalLocation.State)
-                .Replace("{13}", string.Join(',', model.SelectedTags));
+                .Replace("{13}", string.Join(',', model.SelectedTags))
+                .Replace("{14}", model.BillingDateStart.Day.ToString())
+                .Replace("{15}", model.BillingDateStart.Month.ToString())
+                .Replace("{16}", model.BillingDateEnd.Day.ToString())
+                .Replace("{17}", model.BillingDateEnd.Month.ToString());
 
             var result = await _client.MutationDo<UpdateRateQueryModel>(mutationString);
 

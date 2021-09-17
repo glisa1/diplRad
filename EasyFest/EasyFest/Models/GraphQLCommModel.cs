@@ -17,7 +17,7 @@ namespace EasyFest.Models
         /// <summary>
         /// Gets all about festival.
         /// </summary>
-        public static string QueryFestival => "query {festivals(first: 10){ edges{ cursor node{ id name day month rate description numberOfComments images" +
+        public static string QueryFestival => "query {festivals(first: 10, order: {createdOn: DESC}){ edges{ cursor node{ id name day month rate description numberOfComments images" +
             " city state tagsList{name color}}} pageInfo{hasNextPage} totalCount }}";
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace EasyFest.Models
         /// {0} - festival name (term)
         /// {1} - festival description (term)
         /// </summary>
-        public static string QueryFestivalSearch => "query {festivals(first: 10, where:{or: [{name: {contains: \"{0}\"}}, {name: {contains: \"{1}\"}}, {description: {contains: \"{2}\"}}, {description: {contains: \"{3}\"}}]}){ edges{ " + 
+        public static string QueryFestivalSearch => "query {festivals(first: 10, where:{or: [{name: {contains: \"{0}\"}}, {name: {contains: \"{1}\"}}, {description: {contains: \"{2}\"}}, {description: {contains: \"{3}\"}}]}, order: {createdOn: DESC}){ edges{ " + 
             " cursor node{ id name day month rate description numberOfComments images" +
             " city state tagsList{name color}}} pageInfo{hasNextPage} totalCount }}";
 
@@ -222,7 +222,11 @@ namespace EasyFest.Models
             " city: \"{10}\", " +
             " state: \"{11}\", " +
             " clientMutationId: \"{12}\", " +
-            " tags: \"{13}\" " +
+            " tags: \"{13}\", " +
+            " billingDayStart: {14}, " +
+            " billingMonthStart: {15}, " +
+            " billingDayEnd: {16}, " +
+            " billingMonthEnd: {17} " +
             "}){clientMutationId}}";
 
 

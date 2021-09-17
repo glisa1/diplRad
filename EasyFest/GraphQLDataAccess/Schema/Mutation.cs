@@ -253,6 +253,13 @@ namespace GraphQLDataAccess.Schema
 
         #region Festival mutations
 
+        public async Task<bool> MigrateFest()
+        {
+            await _festivalService.UpdateAllTest();
+
+            return true;
+        }
+
         public async Task<FestivalCreatedPayload> CreateFestival(CreateFestivalInput input)
         {
             if (string.IsNullOrEmpty(input.Name))
@@ -289,7 +296,12 @@ namespace GraphQLDataAccess.Schema
                 Latitude = input.Latitude,
                 Longitude = input.Longitude,
                 State = input.State,
-                Tags = input.Tags
+                Tags = input.Tags,
+                BillingDayStart = input.BillingDayStart,
+                BillingDayEnd = input.BillingDayEnd,
+                BillingMonthEnd = input.BillingMonthEnd,
+                BillingMonthStart = input.BillingMonthStart,
+                CreatedOn = DateTime.Now
             };
 
             await _festivalService.InsertFestivalAsync(newFestival);

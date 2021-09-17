@@ -45,5 +45,7 @@ namespace Storage.Services.FestivalService
         Task<List<string>> GetTagIdsListForFestivalByFestivalId(string festivalId);
 
         Task RemoveTagFromFestivals(string tagId);
+
+        Task UpdateAllTest();
     }
 }

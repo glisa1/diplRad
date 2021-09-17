@@ -63,6 +63,21 @@ namespace EasyFest.Models
         [JsonProperty("tagsList")]
         public List<Tag> Tags { get; set; }
 
+        [JsonProperty("createdOn")]
+        public DateTime CreatedOn { get; set; }
+
+        [JsonProperty("billingDayStart")]
+        public int BillingDayStart { get; set; }
+
+        [JsonProperty("billingDayEnd")]
+        public int BillingDayEnd { get; set; }
+
+        [JsonProperty("billingMonthStart")]
+        public int BillingMonthStart { get; set; }
+
+        [JsonProperty("billingMonthEnd")]
+        public int BillingMonthEnd { get; set; }
+
         #region Location
 
         [JsonProperty("address")]
@@ -204,6 +219,16 @@ namespace EasyFest.Models
         public List<Tag> TagsList { get; set; }
 
         public List<string> SelectedTags { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Ticket sale start")]
+        public DateTime BillingDateStart { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Ticket sale end")]
+        public DateTime BillingDateEnd { get; set; }
 
         public FestivalLocationViewModel FestivalLocation { get; set; }
     }

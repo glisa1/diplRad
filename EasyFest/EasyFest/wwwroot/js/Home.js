@@ -37,6 +37,15 @@ $(document).ready(function () {
     //    createSearchFestivalQuery(searchVal);
     //});
     lastCursorName = $('#lastCursor').val();
+
+    $('#searchForm').submit(function () {
+        const searchTerm = $('#term').val();
+        if (searchTerm == '' || searchTerm == undefined || searchTerm == null) {
+            return false;
+        }
+
+        return true;
+    });
 });
 
 function newFestival() {
@@ -47,11 +56,11 @@ function getMoreFestivals() {
     var searchTerm = $('#term').val();
     let query = '';
     if (searchTerm == '' || searchTerm == undefined || searchTerm == null) {
-        query = 'query {festivals(first: 10, after: "' + lastCursorName + '"){ edges { '
+        query = 'query {festivals(first: 10, after: "' + lastCursorName + '", order: {createdOn: DESC}){ edges { '
             + ' cursor node{ id name day month rate description numberOfComments images }} pageInfo{hasNextPage} totalCount }}';
     }
     else {
-        query = 'query {festivals(first: 10, after: "' + lastCursorName + '", where:{or: [{name: {contains: "' + searchTerm + '"}}, {description: {contains: "' + searchTerm + '"}}]}){ edges { '
+        query = 'query {festivals(first: 10, after: "' + lastCursorName + '", where:{or: [{name: {contains: "' + searchTerm + '"}}, {description: {contains: "' + searchTerm + '"}}]}, order: {createdOn: DESC}){ edges { '
             + ' cursor node{ id name day month rate description numberOfComments images }} pageInfo{hasNextPage} totalCount }}';
     }
 

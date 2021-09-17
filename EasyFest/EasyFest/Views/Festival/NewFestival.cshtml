@@ -42,6 +42,18 @@
                 <small id="passwordHelp" class="form-text text-muted">Day everyone goes home.</small>
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
+            <div class="form-group mb-2">
+                <label asp-for="BillingDateStart" class="control-label" style="justify-content: left;"></label>
+                <input asp-for="BillingDateStart" aria-describedby="passwordRepeatHelp" class="form-control" />
+                <small id="passwordRepeatHelp" class="form-text text-muted">When to buy tickets.</small>
+                <span asp-validation-for="BillingDateStart" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="BillingDateEnd" class="control-label ml-3" style="justify-content: left;"></label>
+                <input asp-for="BillingDateEnd" aria-describedby="passwordHelp" class="form-control mx-sm-3" />
+                <small id="passwordHelp" class="form-text text-muted">No more tickets.</small>
+                <span asp-validation-for="BillingDateEnd" class="text-danger"></span>
+            </div>
         </div>
         <div class="form-group mb-2">
             <label asp-for="UploadedImages" class="control-label"></label>

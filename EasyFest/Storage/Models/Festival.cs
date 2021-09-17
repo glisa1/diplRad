@@ -42,10 +42,20 @@ namespace Storage.Models
         public int EndDay { get; set; }
 
         public int EndMonth { get; set; }
-        
+
+        public DateTime CreatedOn { get; set; }
+
+        public int BillingDayStart { get; set; }
+
+        public int BillingDayEnd { get; set; }
+
+        public int BillingMonthStart { get; set; }
+
+        public int BillingMonthEnd { get; set; }
+
         //[BsonIgnore]
         //public FestivalLocation FestivalLocation { get; set; }
-        
+
         [BsonIgnore]
         public ICollection<Rate> RatesList { get; set; } = new List<Rate>();
 

@@ -107,6 +107,23 @@ namespace Storage.Services.FestivalService
             }
         }
 
+        public async Task UpdateAllTest()
+        {
+            var fests = _festivals.Find(f => true).ToEnumerable();
+            foreach (var fest in fests)
+            {
+                var filter = Builders<Festival>.Filter.Eq(s => s.Id, fest.Id);
+                var r = new Random();
+                fest.BillingDayStart = r.Next(1, 15);
+                fest.BillingDayEnd = r.Next(16, 29);
+                fest.BillingMonthStart = r.Next(1, 12);
+                fest.BillingMonthEnd = fest.BillingMonthStart;
+                fest.CreatedOn = DateTime.Now.AddDays(r.Next(1, 6)).AddMonths(r.Next(1, 4));
+
+                await _festivals.ReplaceOneAsync(filter, fest);
+            }
+        }
+
         #endregion
     }
 }

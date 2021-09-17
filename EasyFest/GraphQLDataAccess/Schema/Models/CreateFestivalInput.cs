@@ -20,7 +20,11 @@ namespace GraphQLDataAccess.Schema.Models
                                     string address,
                                     string city,
                                     string state,
-                                    string clientMutationId)
+                                    string clientMutationId,
+                                    int billingDayStart,
+                                    int billingMonthStart,
+                                    int billingDayEnd,
+                                    int billingMonthEnd)
         {
             Name = name;
             Month = month;
@@ -36,6 +40,10 @@ namespace GraphQLDataAccess.Schema.Models
             ClientMutationId = clientMutationId;
             Images = new List<string>(images[0].Split(','));
             Tags = new List<string>(tags[0].Split(','));
+            BillingDayStart = billingDayStart;
+            BillingMonthStart = billingMonthStart;
+            BillingDayEnd = billingDayEnd;
+            BillingMonthEnd = billingMonthEnd;
         }
 
         public string Name { get; set; }
@@ -65,6 +73,14 @@ namespace GraphQLDataAccess.Schema.Models
         public string City { get; set; }
 
         public string State { get; set; }
+
+        public int BillingDayStart { get; set; }
+
+        public int BillingMonthStart { get; set; }
+
+        public int BillingDayEnd { get; set; }
+
+        public int BillingMonthEnd { get; set; }
 
         public string ClientMutationId { get; set; }
     }
