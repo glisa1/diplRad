@@ -245,6 +245,10 @@ body {
     border: 2px solid;
 }
 
+.reg-selected-tag {
+    border: 2px solid;
+}
+
 /*CUSTOM MODAL*/
 .modal {
     display: none; /* Hidden by default */

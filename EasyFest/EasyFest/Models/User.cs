@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -73,6 +74,12 @@ namespace EasyFest.Models
 
     public class UserRegisterModel
     {
+        public UserRegisterModel()
+        {
+            SelectedTags = new List<string>();
+            AllTags = new List<Tag>();
+        }
+
         [Required]
         [StringLength(20)]
         public string Username { get; set; }
@@ -93,6 +100,16 @@ namespace EasyFest.Models
         [StringLength(20, MinimumLength = 5)]
         [Display(Name = "Repeat password")]
         public string PasswordRepeat { get; set; }
+
+        public List<string> SelectedTags { get; set; }
+
+        public List<Tag> AllTags { get; set; }
+
+        [Required]
+        [Display(Name = "Image")]
+        public IFormFile UploadedImage { get; set; }
+
+        public string ImageId { get; set; }
     }
 
     public class MyProfileModel

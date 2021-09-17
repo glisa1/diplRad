@@ -133,6 +133,8 @@ namespace EasyFest.Models
             "username: \"{0}\", " +
             "password: \"{1}\", " +
             "email: \"{2}\", " +
+            "tags: \"{3}\", " +
+            "imageId: \"{4}\", " +
             "clientMutationId: \"testMutationId\"" +
             "}){clientMutationId} }";
 

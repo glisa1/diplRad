@@ -538,6 +538,15 @@ namespace GraphQLDataAccess.Schema
                         .Build());
             }
 
+            if (string.IsNullOrEmpty(input.ImageId))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("Image must be provided.")
+                        .SetCode("IMAGE_EMPTY")
+                        .Build());
+            }
+
             var user = await _userService.GetUserWithUsernameAsync(input.Username);
             if (user != null)
             {
@@ -571,7 +580,9 @@ namespace GraphQLDataAccess.Schema
                 Email = input.Email,
                 Password = Convert.ToBase64String(hash),
                 Salt = salt,
-                Username = input.Username
+                Username = input.Username,
+                Tags = input.Tags,
+                ImageId = input.ImageId
             };
 
             await _userService.AddUserAsync(model);

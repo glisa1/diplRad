@@ -69,10 +69,23 @@ namespace EasyFest.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
+            var tags = await _client.QueryGet<TagsModel>(GraphQLCommModel.QueryGetTags);
+
+            if  (tags.Errors != null)
+            {
+                TempData.Add("hasError", true);
+                return View();
+            }
+
+            UserRegisterModel model = new UserRegisterModel
+            {
+                AllTags = tags.Data.Tags
+            };
+
             TempData.Add("hasError", false);
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -83,10 +96,19 @@ namespace EasyFest.Controllers
                 return RedirectToAction("Register");
             }
 
+            string imageName = Guid.NewGuid().ToString();
+            model.ImageId = imageName;
+            using (FileStream fs = System.IO.File.Create("..\\EasyFest\\Images\\ProfileImages\\" + imageName + ".jpg"))
+            {
+                await model.UploadedImage.CopyToAsync(fs);
+            }
+
             var mutationString = GraphQLCommModel.MutationCreateUser
                 .Replace("{0}", model.Username)
                 .Replace("{1}", model.Password)
-                .Replace("{2}", model.Email);
+                .Replace("{2}", model.Email)
+                .Replace("{3}", string.Join(',', model.SelectedTags))
+                .Replace("{4}", imageName);
 
             var result = await _client.MutationDo<LoginInput>(mutationString);
 

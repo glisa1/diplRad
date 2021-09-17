@@ -13,7 +13,7 @@
 
 <h1 class="text-center mb-3" style="font-size: 3.5em;">Register</h1>
 
-<form asp-action="Register" asp-controller="User" method="post" class="g-3" autocomplete="off">
+<form id="newUserForm" asp-action="Register" asp-controller="User" method="post" class="g-3" enctype="multipart/form-data" autocomplete="off">
     <div class="form-group">
         <label asp-for="Username" class="control-label"></label>
         <input asp-for="Username" aria-describedby="usernameHelp" class="form-control" />
@@ -38,6 +38,20 @@
         <small id="passwordRepeatHelp" class="form-text text-muted">Same password, just to make sure you made no mistakes.</small>
         <span asp-validation-for="PasswordRepeat" class="text-danger"></span>
     </div>
+    <div class="form-group">
+        <label asp-for="UploadedImage" class="control-label"></label>
+        <input asp-for="UploadedImage" aria-describedby="passwordHelp" class="form-control-file" accept=".jpg" />
+        <small id="passwordHelp" class="form-text text-muted">Give us best of you.</small>
+        <span asp-validation-for="UploadedImage" class="text-danger"></span>
+    </div>
+
+    <div class="tags-container mb-3" style="max-height:300px; overflow-y: auto;">
+        <p>Select festival tags you are interested in!</p>
+        @foreach (var tag in Model.AllTags)
+        {
+            <button type="button" class="btn reg-tag-btn" style="background-color: @tag.Color;" value="@tag.Id">@tag.Name</button>
+        }
+    </div>
 
     <button type="submit" class="btn btn-primary">Register</button>
 </form>
@@ -54,6 +68,6 @@
 </div>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/js/Login.js"></script>
+<script src="~/js/Register.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
