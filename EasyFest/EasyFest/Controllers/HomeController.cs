@@ -8,6 +8,7 @@ using GraphQLDataAccess.Schema.Types;
 using GraphQLDataAccess.Schema;
 using EasyFest.Factories;
 using System;
+using System.Text;
 
 namespace EasyFest.Controllers
 {
@@ -31,7 +32,88 @@ namespace EasyFest.Controllers
 
             var festivals = await _client.QueryGet<FestivalPaginate>(GraphQLCommModel.QueryFestival);
 
+            TempData.Remove("searchDefault");
+            TempData.Add("searchDefault", true);
+
             return View(festivals);
+        }
+
+        public async Task<IActionResult> SearchByTags(string userId, string term, string lastCursorName, bool isAjax = false)
+        {
+            #region Get user tags 
+
+            var query = GraphQLCommModel.QueryGetUserTagsById
+                .Replace("{0}", userId);
+
+            var userTags = await _client.QueryGet<UserById>(query);
+
+            if (userTags.Errors != null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            if (userTags.Data.User.SelectedTags.Count == 0)
+            {
+                return RedirectToAction("Index");
+            }
+
+            StringBuilder userTagsFormat = new StringBuilder();
+            foreach(var tag in userTags.Data.User.SelectedTags)
+            {
+                userTagsFormat.Append("\"");
+                userTagsFormat.Append(tag);
+                userTagsFormat.Append("\",");
+            }
+
+            userTagsFormat = userTagsFormat.Remove(userTagsFormat.Length - 1, 1);
+
+            #endregion
+
+            query = string.Empty;
+            
+            query = GraphQLCommModel.QueryFestivalByTagsSearch;
+
+            if (string.IsNullOrEmpty(term))
+            {
+                string wherePart = "where: {tags: {some: {in: [{0}]}}}"
+                    .Replace("{0}", userTagsFormat.ToString());
+                query = query.Replace("{0}", wherePart);
+            }
+            else
+            {
+                string termUpper = term.ToUpper();
+                string wherePart = "where:{and: [{tags: {some: {in: [{0}]}}}, {or: [{name: {contains: \"{1}\"}}, {name: {contains: \"{2}\"}}, {description: {contains: \"{3}\"}}, {description: {contains: \"{4}\"}}]}]}";
+                wherePart = wherePart
+                    .Replace("{0}", userTagsFormat.ToString())
+                    .Replace("{1}", term)
+                    .Replace("{2}", termUpper)
+                    .Replace("{3}", term)
+                    .Replace("{4}", termUpper);
+                query = query.Replace("{0}", wherePart);
+            }
+
+            if (!string.IsNullOrEmpty(lastCursorName))
+            {
+                string afterPart = "after: \"{0}\""
+                    .Replace("{0}", lastCursorName);
+                query = query.Replace("{1}", afterPart);
+            }
+            else
+            {
+                query = query.Replace("{1}", string.Empty);
+            }
+
+            var festivals = await _client.QueryGet<FestivalPaginate>(query);
+
+            TempData.Remove("searchDefault");
+            TempData.Add("searchDefault", false);
+
+            if (isAjax)
+            {
+                return Json(new { data = festivals.Data.FestivalNodes});
+            }
+
+            return View("Index", festivals);
         }
 
         [HttpPost]
@@ -39,6 +121,8 @@ namespace EasyFest.Controllers
         {
             TempData.Remove("searchValue");
             TempData.Add("searchValue", term);
+            TempData.Remove("searchDefault");
+            TempData.Add("searchDefault", true);
 
             string termUpper = term.ToUpper();
 

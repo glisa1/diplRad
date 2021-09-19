@@ -238,6 +238,8 @@ namespace EasyFest.Controllers
                 OldName = festival.Name,
                 Images = festival.Images,
                 StartDate = new DateTime(DateTime.Now.Year, festival.Month, festival.Day),
+                BillingDateStart = new DateTime(DateTime.Now.Year, festival.BillingMonthStart, festival.BillingDayStart),
+                BillingDateEnd = new DateTime(DateTime.Now.Year, festival.BillingMonthEnd, festival.BillingDayEnd),
                 FestivalLocation = new FestivalLocationViewModel
                 {
                     Address = festival.Address,
@@ -289,7 +291,11 @@ namespace EasyFest.Controllers
                     .Replace("{12}", string.Empty)
                     .Replace("{13}", model.Id)
                     .Replace("{14}", 0.ToString())
-                    .Replace("{15}", string.Join(',', model.SelectedTags));
+                    .Replace("{15}", string.Join(',', model.SelectedTags))
+                    .Replace("{16}", model.BillingDateStart.Day.ToString())
+                    .Replace("{17}", model.BillingDateStart.Month.ToString())
+                    .Replace("{18}", model.BillingDateEnd.Day.ToString())
+                    .Replace("{19}", model.BillingDateEnd.Month.ToString());
             }
             else
             {
@@ -309,7 +315,11 @@ namespace EasyFest.Controllers
                     .Replace("{12}", string.Empty)
                     .Replace("{13}", model.Id)
                     .Replace("{14}", 1.ToString())
-                    .Replace("{15}", string.Join(',', model.SelectedTags));
+                    .Replace("{15}", string.Join(',', model.SelectedTags))
+                    .Replace("{16}", model.BillingDateStart.Day.ToString())
+                    .Replace("{17}", model.BillingDateStart.Month.ToString())
+                    .Replace("{18}", model.BillingDateEnd.Day.ToString())
+                    .Replace("{19}", model.BillingDateEnd.Month.ToString());
             }
 
             var result = await _client.MutationDo<UpdateRateQueryModel>(mutationString);

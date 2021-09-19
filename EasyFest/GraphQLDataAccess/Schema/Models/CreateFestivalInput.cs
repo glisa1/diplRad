@@ -39,7 +39,10 @@ namespace GraphQLDataAccess.Schema.Models
             State = state;
             ClientMutationId = clientMutationId;
             Images = new List<string>(images[0].Split(','));
-            Tags = new List<string>(tags[0].Split(','));
+            if (tags[0] != "")
+                Tags = new List<string>(tags[0].Split(','));
+            else
+                Tags = new List<string>();
             BillingDayStart = billingDayStart;
             BillingMonthStart = billingMonthStart;
             BillingDayEnd = billingDayEnd;

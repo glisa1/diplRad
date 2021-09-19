@@ -13,6 +13,16 @@
     {
         searchData = TempData["searchValue"].ToString();
     }
+    string searchDefault = "Most popular";
+    bool isSearchDefault = true;
+    if (TempData["searchDefault"] != null)
+    {
+        if (!(bool)TempData["searchDefault"])
+        {
+            isSearchDefault = false;
+            searchDefault = "By my tags";
+        }
+    }
 }
 
 @if (!Model.Data.FestivalNodes.FestivalEdges.Any())
@@ -22,6 +32,7 @@
 }
 else
 {
+    @Html.Hidden("isSearchDefault", isSearchDefault)
     @Html.Hidden("lastCursor", Model.Data.FestivalNodes.FestivalEdges.LastOrDefault().CursorName)
     <div class="container">
 
@@ -41,10 +52,10 @@ else
                     <div class="input-group" style="width:100%; display:flex; justify-content: center;">
                         <input id="term" name="term" style="width:45%;" class="form-control searchInput" type="text" value="@searchData" />
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most popular</button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Most popular</a>
-                                <a class="dropdown-item" href="#">By my tags</a>
+                            <button class="btn btn-outline-primary dropdown-toggle loginonly" id="searchDropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@searchDefault</button>
+                            <div class="dropdown-menu loginonly">
+                                <a class="dropdown-item" href="/Home/Index">Most popular</a>
+                                <a class="dropdown-item" id="myTagsSearch" href="#">By my tags</a>
                             </div>
                             <button id="searchButton" class="btn btn-outline-primary" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                         </div>

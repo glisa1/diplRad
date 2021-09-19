@@ -29,6 +29,26 @@ namespace EasyFest.Models
             " cursor node{ id name day month rate description numberOfComments images" +
             " city state tagsList{name color}}} pageInfo{hasNextPage} totalCount }}";
 
+        public static string QueryFestivalByTagsSearch => "query {festivals(first: 10 {0} {1} order: {createdOn: DESC})" + 
+            "{ edges{ cursor node{ id name day month rate description numberOfComments images" +
+            " city state tagsList{name color}}} pageInfo{hasNextPage} totalCount }}";
+
+        //public static string QueryFestivalByTagsSearch => "query {festivals(first: 10, where: {tags: {some: {in: [{0}]}}} order: {createdOn: DESC})" +
+        //    "{ edges{ cursor node{ id name day month rate description numberOfComments images" +
+        //    " city state tagsList{name color}}} pageInfo{hasNextPage} totalCount }}";
+
+        //public static string QueryFestivalByTagsAfterSearch => "query {festivals(first: 10, where: {tags: {some: {in: [{0}]}}}, order: {createdOn: DESC}, after: \"{1}\")" +
+        //    "{ edges{ cursor node{ id name day month rate description numberOfComments images" +
+        //    " city state tagsList{name color}}} pageInfo{hasNextPage} totalCount }}";
+
+        //public static string QueryFestivalByTagsAfterTermSearch => "query {festivals(first: 10, where: {and: {tags: {some: {in: [{0}]}}}, {or: [{name: {contains: \"{1}\"}}, {name: {contains: \"{2}\"}}, {description: {contains: \"{3}\"}}, {description: {contains: \"{4}\"}}]}}, order: {createdOn: DESC}, after: \"{1}\")" +
+        //    "{ edges{ cursor node{ id name day month rate description numberOfComments images" +
+        //    " city state tagsList{name color}}} pageInfo{hasNextPage} totalCount }}";
+
+        //public static string QueryFestivalByTagsTermSearch => "query {festivals(first: 10, where: {tags: {and: {some: {in: [{0}]}}}}, order: {createdOn: DESC})" +
+        //    "{ edges{ cursor node{ id name day month rate description numberOfComments images" +
+        //    " city state tagsList{name color}}} pageInfo{hasNextPage} totalCount }}";
+
         /// <summary>
         /// Used to get informations about currently logged in user.
         /// </summary>
@@ -68,6 +88,13 @@ namespace EasyFest.Models
         public static string QueryGetUserById =>
             "query {userById(id: \"{0}\"){id username email commentsPostedByUser ratesGivenByUser imageId}}";
 
+        /// <summary>
+        /// Gets user by id.
+        /// {0} - User id
+        /// </summary>
+        public static string QueryGetUserTagsById =>
+            "query {userById(id: \"{0}\"){tags}}";
+
         public static string QueryMyProfile =>
             "query {userById(id: \"{0}\"){id username email commentsPostedByUser ratesGivenByUser imageId tags} " +
             " tags{id name color}" +
@@ -94,7 +121,7 @@ namespace EasyFest.Models
             "query {festivalById(id: \"{0}\")" +
             " { id name day month description images endDay endMonth " +
             " address city state longitude latitude tagsList{ id }" +
-            " }" + 
+            " billingDayStart billingDayEnd billingMonthStart billingMonthEnd}" + 
             " tags{" +
             " id name color" +
             " }" +
@@ -263,7 +290,11 @@ namespace EasyFest.Models
             " clientMutationId: \"{12}\", " +
             " festivalId: \"{13}\", " +
             " checkName: {14}, " +
-            " tags: \"{15}\" " +
+            " tags: \"{15}\", " +
+            " billingDayStart: {16}, " +
+            " billingMonthStart: {17}, " +
+            " billingDayEnd: {18}, " +
+            " billingMonthEnd: {19} " +
             "}){clientMutationId}}";
 
         public static string MutationCreateTag =>

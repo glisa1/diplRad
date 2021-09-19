@@ -274,6 +274,16 @@ namespace EasyFest.Models
 
         public List<string> SelectedTags { get; set; }
 
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Ticket sale start")]
+        public DateTime BillingDateStart { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Ticket sale end")]
+        public DateTime BillingDateEnd { get; set; }
+
         public FestivalLocationViewModel FestivalLocation { get; set; }
     }
 }

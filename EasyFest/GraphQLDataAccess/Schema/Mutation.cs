@@ -358,7 +358,11 @@ namespace GraphQLDataAccess.Schema
                 Latitude = input.Latitude,
                 Longitude = input.Longitude,
                 State = input.State,
-                Tags = input.Tags
+                Tags = input.Tags,
+                BillingDayStart = input.BillingDayStart,
+                BillingDayEnd = input.BillingDayEnd,
+                BillingMonthEnd = input.BillingMonthEnd,
+                BillingMonthStart = input.BillingMonthStart
             };
 
             await _festivalService.UpdateFestivalAsync(newFestival);
