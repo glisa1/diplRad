@@ -42,6 +42,9 @@ namespace EasyFest.Models
         [JsonProperty("tagsList")]
         public List<Tag> Tags { get; set; }
 
+        [JsonProperty("subscribedFestsList")]
+        public List<Festival> SubscribedFests { get; set; }
+
         //public string Password { get; set; }
         //public string Salt { get; set; }
     }

@@ -77,6 +77,38 @@ namespace Storage.Services.UserService
             await _users.ReplaceOneAsync(filter, user);
         }
 
+        public async Task FollowFestival(string userId, string festivalId)
+        {
+            var user = await _users.Find(x => x.Id == userId).FirstOrDefaultAsync();
+            var filter = Builders<User>.Filter.Eq(s => s.Id, user.Id);
+            user.SubscribedFests.Add(festivalId);
+            await _users.ReplaceOneAsync(filter, user);
+        }
+
+        public async Task UnfollowFestival(string userId, string festivalId)
+        {
+            var user = await _users.Find(x => x.Id == userId).FirstOrDefaultAsync();
+            var filter = Builders<User>.Filter.Eq(s => s.Id, user.Id);
+            user.SubscribedFests.Remove(festivalId);
+            await _users.ReplaceOneAsync(filter, user);
+        }
+
+        public async Task<bool> CheckIfUserFollows(string userId, string festivalId)
+        {
+            var user = await _users.Find(x => x.Id == userId).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return false;
+            }
+
+            if (user.SubscribedFests.Contains(festivalId))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         #endregion
     }
 }

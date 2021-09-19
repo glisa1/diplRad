@@ -32,5 +32,11 @@ namespace Storage.Services.UserService
         Task AddTagToUser(string tagId, string userId);
 
         Task RemoveTagFromUser(string tagId, string userId);
+
+        Task FollowFestival(string userId, string festivalId);
+
+        Task UnfollowFestival(string userId, string festivalId);
+
+        Task<bool> CheckIfUserFollows(string userId, string festivalId);
     }
 }

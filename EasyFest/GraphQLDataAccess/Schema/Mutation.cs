@@ -666,6 +666,79 @@ namespace GraphQLDataAccess.Schema
             return true;
         }
 
+        public async Task<bool> FollowFestival(string userId, string festivalId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("User id not provided.")
+                        .SetCode("ERR_USRID")
+                        .Build());
+            }
+
+            if (string.IsNullOrEmpty(festivalId))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("Festival id not provided.")
+                        .SetCode("ERR_FESTID")
+                        .Build());
+            }
+
+            await _userService.FollowFestival(userId, festivalId);
+
+            return true;
+        }
+
+        public async Task<bool> UnfollowFestival(string userId, string festivalId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("User id not provided.")
+                        .SetCode("ERR_USRID")
+                        .Build());
+            }
+
+            if (string.IsNullOrEmpty(festivalId))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("Festival id not provided.")
+                        .SetCode("ERR_FESTID")
+                        .Build());
+            }
+
+            await _userService.UnfollowFestival(userId, festivalId);
+
+            return true;
+        }
+
+        public async Task<bool> CheckIfUserFollows(string userId, string festivalId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("User id not provided.")
+                        .SetCode("ERR_USRID")
+                        .Build());
+            }
+
+            if (string.IsNullOrEmpty(festivalId))
+            {
+                throw new QueryException(
+                    ErrorBuilder.New()
+                        .SetMessage("Festival id not provided.")
+                        .SetCode("ERR_FESTID")
+                        .Build());
+            }
+
+            return await _userService.CheckIfUserFollows(userId, festivalId);
+        }
+
         #endregion
 
         #region Tag mutations

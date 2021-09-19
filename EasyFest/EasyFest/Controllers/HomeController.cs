@@ -92,7 +92,7 @@ namespace EasyFest.Controllers
                 query = query.Replace("{0}", wherePart);
             }
 
-            if (!string.IsNullOrEmpty(lastCursorName))
+            if (!string.IsNullOrEmpty(lastCursorName) && isAjax)
             {
                 string afterPart = "after: \"{0}\""
                     .Replace("{0}", lastCursorName);

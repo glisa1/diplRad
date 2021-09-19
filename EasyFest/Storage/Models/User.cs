@@ -23,8 +23,13 @@ namespace Storage.Models
 
         public List<string> Tags { get; set; }
 
+        public List<string> SubscribedFests { get; set; }
+
         [BsonIgnore]
         public ICollection<Storage.Models.Tag> TagsList { get; set; } = new List<Storage.Models.Tag>();
+
+        [BsonIgnore]
+        public ICollection<Storage.Models.Festival> SubscribedFestsList { get; set; } = new List<Storage.Models.Festival>();
 
         [BsonIgnore]
         public int CommentsPostedByUser { get; set; }

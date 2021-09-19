@@ -45,6 +45,38 @@ $(document).ready(function () {
     //SetRating();
     mymap.on('locationfound', onLocationFound);
 
+    $('#followFestBtn').click(function () {
+        const currentUserId = $('#LoggedUserId').val();
+        $.ajax({
+            method: 'POST',
+            url: '/User/FollowFestival',
+            data: { 'userId': currentUserId, 'festivalId': $('#FestivalId').val()},
+            success: function (result) {
+                if (result.code == 200) {
+                    $('#followFestBtn').hide();
+                    $('#unfollowFestBtn').show();
+                }
+            }
+        });
+    });
+
+    $('#unfollowFestBtn').click(function () {
+        const currentUserId = $('#LoggedUserId').val();
+        $.ajax({
+            method: 'POST',
+            url: '/User/UnfollowFestival',
+            data: { 'userId': currentUserId, 'festivalId': $('#FestivalId').val() },
+            success: function (result) {
+                if (result.code == 200) {
+                    $('#followFestBtn').show();
+                    $('#unfollowFestBtn').hide();
+                }
+            }
+        });
+    });
+
+    followOrNot();
+
     mymap.locate(/*{ setView: true, maxZoom: 16 }*/);
 });
 
@@ -312,4 +344,27 @@ function onLocationFound(e) {
         .bindPopup("You are within " + circleStyle.radius + " meters from this point");//.openPopup();
 
     L.circle(e.latlng, circleStyle).addTo(mymap);
+}
+
+function followOrNot() {
+    const currentUserId = $('#LoggedUserId').val();
+    if (currentUserId == '' || currentUserId == undefined || currentUserId == null) {
+        return;
+    }
+
+    $.ajax({
+        method: 'POST',
+        url: '/User/CheckIfUserFollows',
+        data: { 'userId': currentUserId, 'festivalId': $('#FestivalId').val() },
+        success: function (result) {
+            if (result.code == 200) {
+                if (result.follows) {
+                    $('#unfollowFestBtn').show();
+                }
+                else {
+                    $('#followFestBtn').show();
+                }
+            }
+        }
+    })
 }

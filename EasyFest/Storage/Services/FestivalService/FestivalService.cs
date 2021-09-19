@@ -128,6 +128,11 @@ namespace Storage.Services.FestivalService
             }
         }
 
+        public IExecutable<Festival> GetFestivalsByIds(List<string> festivalIds)
+        {
+            return _festivals.Find(x => festivalIds.Contains(x.Id)).AsExecutable();
+        }
+
         #endregion
     }
 }

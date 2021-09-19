@@ -69,9 +69,23 @@ else
                 </div>
                 <div>
                     <h3>Tags I follow:</h3>
-                    @foreach(var tag in Model.Data.Tags)
+                    <div style="max-height:150px; overflow-y:auto;">
+                        @foreach (var tag in Model.Data.Tags)
+                        {
+                            <button type="button" class="btn my-prof-tag-btn" style="background-color: @tag.Color;" value="@tag.Id">@tag.Name</button>
+                        }
+                    </div>
+                </div>
+                <div>
+                    @if (Model.Data.User.SubscribedFests.Count > 0)
                     {
-                        <button type="button" class="btn my-prof-tag-btn" style="background-color: @tag.Color;" value="@tag.Id">@tag.Name</button>
+                        <h3>Festivals I follow:</h3>
+                        <div>
+                            @foreach(var fest in Model.Data.User.SubscribedFests)
+                            {
+                                <a href="/Festival/FestivalDetails?festivalId=@fest.Id"><div class="btn btn-outline-primary">@fest.Name</div></a>
+                            }
+                        </div>
                     }
                 </div>
                 <p id="tags-error-p" hidden>There was an error selecting or deselecting tag, page will refresh.</p>

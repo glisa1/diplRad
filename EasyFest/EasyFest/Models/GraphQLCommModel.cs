@@ -96,7 +96,7 @@ namespace EasyFest.Models
             "query {userById(id: \"{0}\"){tags}}";
 
         public static string QueryMyProfile =>
-            "query {userById(id: \"{0}\"){id username email commentsPostedByUser ratesGivenByUser imageId tags} " +
+            "query {userById(id: \"{0}\"){id username email commentsPostedByUser ratesGivenByUser imageId tags subscribedFestsList{id name}} " +
             " tags{id name color}" +
             "}";
 
@@ -311,6 +311,15 @@ namespace EasyFest.Models
             "mutation {addTagToUser(tagId: \"{0}\", userId: \"{1}\")}";
         public static string MutationRemoveTagFromUser =>
             "mutation {removeTagFromUser(tagId: \"{0}\", userId: \"{1}\")}";
+
+        public static string MutationUserFollowFest =>
+            "mutation {followFestival(userId: \"{0}\", festivalId: \"{1}\")}";
+
+        public static string MutationUserUnfollowFest =>
+            "mutation {unfollowFestival(userId: \"{0}\", festivalId: \"{1}\")}";
+
+        public static string MutationCheckIfUserFollows =>
+            "mutation {checkIfUserFollows(userId: \"{0}\", festivalId: \"{1}\")}";
 
         #endregion
     }

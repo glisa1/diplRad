@@ -129,7 +129,7 @@ namespace EasyFest.Controllers
         {
             var queryString = GraphQLCommModel.QueryMyProfile.Replace("{0}", userId);
             var model = await _client.QueryGet<MyProfileModel>(queryString);
-            //Ovde treba promeniti da se uzimaju samo tagovi za korisnika
+            
             return View(model);
         }
 
@@ -189,6 +189,61 @@ namespace EasyFest.Controllers
             if (result.Errors != null)
             {
                 return Json(new { code = 400, status = "ERROR" });
+            }
+
+            return Json(new { code = 200 });
+        }
+
+        public async Task<IActionResult> CheckIfUserFollows(string userId, string festivalId)
+        {
+            var mutation = GraphQLCommModel
+                .MutationCheckIfUserFollows
+                .Replace("{0}", userId)
+                .Replace("{1}", festivalId);
+            var result = await _client.QueryGet<DeleteUserPayload>(mutation);
+
+            if (result.Errors != null)
+            {
+                return Json(new { code = 400 });
+            }
+
+            if (result.Data.Status)
+            {
+                return Json(new { code = 200, follows = true });
+            }
+            else
+            {
+                return Json(new { code = 200, follows = false });
+            }
+        }
+
+        public async Task<IActionResult> FollowFestival(string userId, string festivalId)
+        {
+            var mutation = GraphQLCommModel
+                .MutationUserFollowFest
+                .Replace("{0}", userId)
+                .Replace("{1}", festivalId);
+            var result = await _client.QueryGet<DeleteUserPayload>(mutation);
+
+            if (result.Errors != null)
+            {
+                return Json(new { code = 400 });
+            }
+
+            return Json(new { code = 200 });
+        }
+
+        public async Task<IActionResult> UnfollowFestival(string userId, string festivalId)
+        {
+            var mutation = GraphQLCommModel
+                .MutationUserUnfollowFest
+                .Replace("{0}", userId)
+                .Replace("{1}", festivalId);
+            var result = await _client.QueryGet<DeleteUserPayload>(mutation);
+
+            if (result.Errors != null)
+            {
+                return Json(new { code = 400 });
             }
 
             return Json(new { code = 200 });

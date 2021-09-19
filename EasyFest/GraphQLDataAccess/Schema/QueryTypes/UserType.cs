@@ -1,6 +1,7 @@
 ﻿using GraphQLDataAccess.Schema.QueryTypes;
 using HotChocolate.Types;
 using Storage.Services.CommentsService;
+using Storage.Services.FestivalService;
 using Storage.Services.RateService;
 using Storage.Services.TagService;
 using System;
@@ -16,14 +17,17 @@ namespace GraphQLDataAccess.Schema.Types
         private readonly ICommentsService _commentsService;
         private readonly IRateService _rateService;
         private readonly ITagService _tagService;
+        private readonly IFestivalService _festivalService;
 
         public UserType(ICommentsService commentsService,
                         IRateService rateService,
-                        ITagService tagService)
+                        ITagService tagService,
+                        IFestivalService festivalService)
         {
             _commentsService = commentsService;
             _rateService = rateService;
             _tagService = tagService;
+            _festivalService = festivalService;
         }
 
         #endregion
@@ -78,6 +82,17 @@ namespace GraphQLDataAccess.Schema.Types
                     if (tags.Count == 0)
                         return new List<TagType>();
                     return _tagService.GetTagsByIdList(tags);
+                });
+            descriptor.Field(f => f.SubscribedFestsList)
+                .Description("List of festivals that user follows.")
+                .Type<ListType<FestivalType>>()
+                .Resolve(context =>
+                {
+                    var initiative = context.Parent<Storage.Models.User>();
+                    var subs = initiative.SubscribedFests;
+                    if (subs.Count == 0)
+                        return new List<FestivalType>();
+                    return _festivalService.GetFestivalsByIds(subs);
                 });
         }
     }
