@@ -2,6 +2,7 @@
 using Storage.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,9 @@ namespace Storage.Services.UserService
     {
 
         IExecutable<User> GetUsers();
+
+        IQueryable<User> GetUsersQ();
+
         User GetUserWithId(string userId);
 
         Task<User> GetUserWithIdAsync(string userId);

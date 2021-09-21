@@ -25,11 +25,11 @@ namespace EasyFest.Models
         /// {0} - festival name (term)
         /// {1} - festival description (term)
         /// </summary>
-        public static string QueryFestivalSearch => "query {festivals(first: 10, where:{or: [{name: {contains: \"{0}\"}}, {name: {contains: \"{1}\"}}, {description: {contains: \"{2}\"}}, {description: {contains: \"{3}\"}}]}, order: {createdOn: DESC}){ edges{ " + 
+        public static string QueryFestivalSearch => "query {festivals(first: 10, where:{or: [{name: {contains: \"{0}\"}}, {name: {contains: \"{1}\"}}, {description: {contains: \"{2}\"}}, {description: {contains: \"{3}\"}}]}, order: {createdOn: DESC}){ edges{ " +
             " cursor node{ id name day month rate description numberOfComments images" +
             " city state tagsList{name color}}} pageInfo{hasNextPage} totalCount }}";
 
-        public static string QueryFestivalByTagsSearch => "query {festivals(first: 10 {0} {1} order: {createdOn: DESC})" + 
+        public static string QueryFestivalByTagsSearch => "query {festivals(first: 10 {0} {1} order: {createdOn: DESC})" +
             "{ edges{ cursor node{ id name day month rate description numberOfComments images" +
             " city state tagsList{name color}}} pageInfo{hasNextPage} totalCount }}";
 
@@ -58,10 +58,10 @@ namespace EasyFest.Models
         /// Gets query by id with details and location.
         /// {0} - id of festival
         /// </summary>
-        public static string QueryFestivalDetailsWithLocation => 
+        public static string QueryFestivalDetailsWithLocation =>
             "query {festivalById(id: \"{0}\")" +
-            " { id name day month rate description images endDay endMonth " + 
-            " address city state longitude latitude " + 
+            " { id name day month rate description images endDay endMonth " +
+            " address city state longitude latitude " +
             " commentsList{id commentBody createdOn user{id username imageId}} " +
             "tagsList{ id name color } }}";
 
@@ -121,7 +121,7 @@ namespace EasyFest.Models
             "query {festivalById(id: \"{0}\")" +
             " { id name day month description images endDay endMonth " +
             " address city state longitude latitude tagsList{ id }" +
-            " billingDayStart billingDayEnd billingMonthStart billingMonthEnd}" + 
+            " billingDayStart billingDayEnd billingMonthStart billingMonthEnd}" +
             " tags{" +
             " id name color" +
             " }" +
@@ -132,6 +132,25 @@ namespace EasyFest.Models
 
         public static string QueryGetTags =>
             "query {tags{id name color}}";
+
+        /// <summary>
+        /// {0} - startMonth
+        /// {1} - startDay
+        /// </summary>
+        public static string QueryGetFestStartFestivals =>
+            "query {festivals(where: {and: [{month: {eq: {0}}}, {day: {eq: {1}}}]}" +
+            "){edges{node{name}}}}";
+
+        /// <summary>
+        /// {0} - billingMonthStart
+        /// {1} - billingDayStart
+        /// </summary>
+        public static string QueryGetBillingStartFestivals =>
+            "query {festivals(where: {and: [{billingMonthStart: {eq: {0}}}, {billingDayStart: {eq: {1}}}]}" +
+            "){edges{node{name}}}}";
+
+        public static string QueryGetUsersForFestsMail =>
+            "query{usersFilter(where:{subscribedFests: {some: {in: [{0}]}}}){email username}}";
 
         #endregion
 

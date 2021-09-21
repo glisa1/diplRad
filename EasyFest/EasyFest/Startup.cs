@@ -19,6 +19,7 @@ using GraphQL.Server.Ui.Voyager;
 using GraphQLDataAccess.Schema.Types;
 using EasyFest.Factories;
 using Storage.Services.TagService;
+using EasyFest.Util.Quartz;
 
 namespace EasyFest
 {
@@ -34,6 +35,9 @@ namespace EasyFest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            QuartzConfiguration.ConfigureQuartz(services);
+            services.AddHostedService<QuartzHostedService>();
+
             services.AddControllersWithViews();
 
             services.Configure<FestDatabaseSettings>(
@@ -41,6 +45,12 @@ namespace EasyFest
 
             services.AddSingleton<IFestDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<FestDatabaseSettings>>().Value);
+
+            services.Configure<FestMailSettings>(
+                Configuration.GetSection(nameof(FestMailSettings)));
+
+            services.AddSingleton<IFestMailSettings>(sp =>
+                sp.GetRequiredService<IOptions<FestMailSettings>>().Value);
 
             services.AddSingleton<IMongoDbConnectService, MongoDbConnectService>();
 

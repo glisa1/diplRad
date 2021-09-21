@@ -130,6 +130,12 @@ namespace GraphQLDataAccess.Schema
             return _usersService.GetUsers();
         }
 
+        [UseFiltering]
+        public IQueryable<Storage.Models.User> GetUsersFilter()
+        {
+            return _usersService.GetUsersQ();
+        }
+
         public IExecutable<Storage.Models.Tag> GetTags()
         {
             return _tagService.GetTags();

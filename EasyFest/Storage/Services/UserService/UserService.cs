@@ -5,6 +5,7 @@ using Storage.Models;
 using Storage.Services.MongoDbConnectService;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,6 +27,8 @@ namespace Storage.Services.UserService
         #region Methods
 
         public IExecutable<User> GetUsers() => _users.AsExecutable();
+
+        public IQueryable<User> GetUsersQ() => _users.AsQueryable(); 
 
         public User GetUserWithId(string userId) => _users.Find(x => x.Id == userId).FirstOrDefault();
 

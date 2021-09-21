@@ -30,6 +30,8 @@ namespace GraphQLDataAccess.Schema
 
         IExecutable<Storage.Models.User> GetUsers();
 
+        IQueryable<Storage.Models.User> GetUsersFilter();
+
         IExecutable<Storage.Models.Tag> GetTags();
     }
 }

@@ -61,6 +61,17 @@ namespace EasyFest.Models
         public bool Status { get; set; }
     }
 
+    public class UserFilterModel
+    {
+        public UserFilterModel()
+        {
+            Users = new List<User>();
+        }
+
+        [JsonProperty("usersFilter")]
+        public List<User> Users { get; set; }
+    }
+
     public class UserLoginModel
     {
         [Required]
