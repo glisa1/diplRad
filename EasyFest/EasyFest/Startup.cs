@@ -20,6 +20,7 @@ using GraphQLDataAccess.Schema.Types;
 using EasyFest.Factories;
 using Storage.Services.TagService;
 using EasyFest.Util.Quartz;
+using EasyFest.QuartzService;
 
 namespace EasyFest
 {
@@ -61,6 +62,7 @@ namespace EasyFest
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<IRateService, RateService>();
             services.AddSingleton<ITagService, TagService>();
+            services.AddSingleton<IQuartzService, EasyFest.QuartzService.QuartzService>();
             services.AddSingleton<IQuery, Query>();
 
             services.AddHttpContextAccessor();

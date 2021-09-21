@@ -134,4 +134,10 @@ namespace EasyFest.Models
         [JsonProperty("userById")]
         public User User { get; set; }
     }
+
+    public class UserFollowsFestivalCheckModel
+    {
+        [JsonProperty("checkIfUserFollows")]
+        public bool Follows { get; set; }
+    }
 }

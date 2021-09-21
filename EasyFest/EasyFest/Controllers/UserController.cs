@@ -200,14 +200,14 @@ namespace EasyFest.Controllers
                 .MutationCheckIfUserFollows
                 .Replace("{0}", userId)
                 .Replace("{1}", festivalId);
-            var result = await _client.QueryGet<DeleteUserPayload>(mutation);
+            var result = await _client.MutationDo<UserFollowsFestivalCheckModel>(mutation);
 
             if (result.Errors != null)
             {
                 return Json(new { code = 400 });
             }
 
-            if (result.Data.Status)
+            if (result.Data.Follows)
             {
                 return Json(new { code = 200, follows = true });
             }
