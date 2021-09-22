@@ -37,6 +37,11 @@ namespace EasyFest.QuartzService
 
             var festivalsFound = festivals.Data.FestivalNodes.FestivalEdges;
 
+            if (!festivalsFound.Any())
+            {
+                return;
+            }
+
             await GetUsersAndSendMailsAsync(festivalsFound, true);
         }
 
@@ -49,6 +54,11 @@ namespace EasyFest.QuartzService
             var festivals = await _client.QueryGet<FestivalPaginate>(query);
 
             var festivalsFound = festivals.Data.FestivalNodes.FestivalEdges;
+
+            if (!festivalsFound.Any())
+            {
+                return;
+            }
 
             await GetUsersAndSendMailsAsync(festivalsFound, false);
         }
@@ -65,6 +75,8 @@ namespace EasyFest.QuartzService
             }
             email.Subject = mailRequest.Subject;
             var builder = new BodyBuilder();
+            builder.HtmlBody = mailRequest.Body;
+            email.Body = builder.ToMessageBody();
             using (var smtp = new SmtpClient())
             {
                 smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
@@ -72,19 +84,6 @@ namespace EasyFest.QuartzService
                 await smtp.SendAsync(email);
             }
         }
-
-        //private string GetFestivalIdsList(IEnumerable<FestivalEdge> festivals)
-        //{
-        //    StringBuilder sb = new StringBuilder();
-        //    foreach (var fest in festivals)
-        //    {
-        //        sb.Append("\"");
-        //        sb.Append(fest.Festival.Id);
-        //        sb.Append("\",");
-        //    }
-
-        //    return sb.ToString().TrimEnd(',');
-        //}
 
         private async Task GetUsersAndSendMailsAsync(IEnumerable<FestivalEdge> festivalsFound, bool billing)
         {

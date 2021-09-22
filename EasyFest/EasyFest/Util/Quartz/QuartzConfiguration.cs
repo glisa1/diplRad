@@ -22,12 +22,12 @@ namespace EasyFest.Util.Quartz
             services.AddSingleton<BillingInfoJob>();
             services.AddSingleton(new JobSchedule(
                 jobType: typeof(BillingInfoJob),
-                cronExpression: "0 0 3 ? * * *")); // run at 3am every day
+                cronExpression: "0 34 9 ? * * *")); 
 
             services.AddSingleton<FestStartJob>();
             services.AddSingleton(new JobSchedule(
                 jobType: typeof(FestStartJob),
-                cronExpression: "0 0 */2 ? * *")); // evry hour
+                cronExpression: "0 35 9 ? * * *")); 
         }
     }
 }

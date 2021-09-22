@@ -139,7 +139,7 @@ namespace EasyFest.Models
         /// </summary>
         public static string QueryGetFestStartFestivals =>
             "query {festivals(where: {and: [{month: {eq: {0}}}, {day: {eq: {1}}}]}" +
-            "){edges{node{name}}}}";
+            "){edges{node{id name}}}}";
 
         /// <summary>
         /// {0} - billingMonthStart
@@ -147,7 +147,7 @@ namespace EasyFest.Models
         /// </summary>
         public static string QueryGetBillingStartFestivals =>
             "query {festivals(where: {and: [{billingMonthStart: {eq: {0}}}, {billingDayStart: {eq: {1}}}]}" +
-            "){edges{node{name}}}}";
+            "){edges{node{id name}}}}";
 
         public static string QueryGetUsersForFestsMail =>
             "query{usersFilter(where:{subscribedFests: {some: {in: [{0}]}}}){email username}}";
